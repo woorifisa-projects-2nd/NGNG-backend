@@ -1,22 +1,19 @@
-package com.ngng.api.role.entity;
+package com.ngng.api.user.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
-@Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // 생성자를 통해서 값 변경 목적으로 접근하는 메시지들 차단
 @Builder
+@AllArgsConstructor
 @Entity
 @Table(name = "user_role")
-public class Role {
+public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "role_id")
     private Long roleId;
 
-//    @Column(name = "role_type")
     private String roleType;
 }

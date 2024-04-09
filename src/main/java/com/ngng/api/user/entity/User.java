@@ -1,4 +1,4 @@
-package com.ngng.api.User.entity;
+package com.ngng.api.user.entity;
 
 import com.ngng.api.role.entity.Role;
 import jakarta.persistence.*;
@@ -21,7 +21,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    private Long userId;
 
     private String name;
     private String nickname;

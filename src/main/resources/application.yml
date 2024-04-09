@@ -1,0 +1,35 @@
+#spring.application.name=api
+
+# JPA 설정
+spring:
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL8Dialect
+        show-sql: true
+        hibernate:
+            format_sql: true
+    #            ddl-auto: create
+
+    # DB 설정
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://0.tcp.jp.ngrok.io:10357/vmTest?serverTimezone=UTC&characterEncoding=UTF-8
+        username: root
+        password: 12341234
+
+    # 콘솔창 컬러
+    output:
+        ansi:
+            enabled: always
+
+#springdoc:
+#    packages-to-scan: com.jihwan.prince.controller
+#    default-consumes-media-type: application/json;charset=UTF-8
+#    default-produces-media-type: application/json;charset=UTF-8
+#    swagger-ui:
+#        path: /
+#        disable-swagger-default-url: true
+#        display-request-duration: true
+#        operations-sorter: alpha
+
+
+

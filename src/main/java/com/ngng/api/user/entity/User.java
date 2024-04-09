@@ -1,4 +1,4 @@
-package com.ngng.api.User.entity;
+package com.ngng.api.user.entity;
 
 import com.ngng.api.role.entity.Role;
 import jakarta.persistence.*;

@@ -1,6 +1,6 @@
 package com.ngng.api.product.dto;
 
-import com.ngng.api.User.entity.User;
+import com.ngng.api.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;

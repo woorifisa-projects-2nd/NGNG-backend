@@ -54,4 +54,15 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    public void accountConfirm(String accountBank, String accountNumber, Role role) {
+
+        this.accountBank = accountBank;
+        this.accountNumber = accountNumber;
+        this.role = role;
+    }
+
+    public void addressConfirm(String address) {
+
+        this.address = address;
+    }
 }

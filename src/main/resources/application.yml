@@ -7,7 +7,7 @@ spring:
         show-sql: true
         hibernate:
             format_sql: true
-    #            ddl-auto: create
+#            ddl-auto: create
 
     # DB 설정
     datasource:
@@ -20,6 +20,13 @@ spring:
     output:
         ansi:
             enabled: always
+
+jwt:
+    secret:
+        key: jwtjwtjwtjwtjwtjwtjwtjwtjwtjwtjwtjwtjwtjwtjwt
+    expiration:
+        access: 3600000
+        refresh: 1209600000
 
 #springdoc:
 #    packages-to-scan: com.jihwan.prince.controller

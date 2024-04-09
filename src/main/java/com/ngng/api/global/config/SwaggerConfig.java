@@ -1,4 +1,4 @@
-package com.ngng.api.config;
+package com.ngng.api.global.config;
 // Java
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

@@ -56,9 +56,9 @@ private final ChatService chatService;
                         .purchaseAt(product.getPurchaseAt())
                         .freeShipping(product.getFreeShipping())
                         .user(User.builder().userId(product.getUserId()).build())
-                        .status(Status.builder().id(product.getStatusId()).build())
-                        .category(Category.builder().id(product.getCategoryId()).build())
-                        .build()).getId();
+                        .status(Status.builder().statusId(product.getStatusId()).build())
+                        .category(Category.builder().categoryId(product.getCategoryId()).build())
+                        .build()).getProductId();
 
         // 2. 태그 등록
         product.getTags().forEach(tag -> productTagService.create(productId,tag.getName()));
@@ -79,7 +79,7 @@ private final ChatService chatService;
 
         return ReadProductResponseDTO
                 .builder()
-                        .id(product.getId())
+                        .id(product.getProductId())
                         .content(product.getContent())
                         .createdAt(product.getCreatedAt())
                         .discountable(product.getDiscountable())
@@ -88,7 +88,7 @@ private final ChatService chatService;
                         .images(product.getImages()
                                 .stream().map(image -> ReadProductImageResponseDTO
                                                 .builder()
-                                                .id(image.getId())
+                                                .id(image.getProductImageId())
                                                 .imageURL(image.getImageUrl())
                                                 .build())
                                 .collect(Collectors.toList()))
@@ -109,8 +109,8 @@ private final ChatService chatService;
                                 .collect(Collectors.toList())
                         )
                         .status(ReadProductStatusResponseDTO.builder()
-                            .id(product.getStatus().getId())
-                            .name(product.getStatus().getName())
+                            .id(product.getStatus().getStatusId())
+                            .name(product.getStatus().getStatusName())
                             .build()
                         )
                         .user(ReadProductUserResponseDTO.builder()
@@ -119,8 +119,8 @@ private final ChatService chatService;
                         .nickname(product.getUser().getNickname())
                         .build())
                         .category(ReadProductCategoryResponseDTO.builder()
-                                .id(product.getCategory().getId())
-                                .name(product.getCategory().getName())
+                                .id(product.getCategory().getCategoryId())
+                                .name(product.getCategory().getCategoryName())
                                 .build())
                         .chats(chats)
                 .build();
@@ -143,10 +143,10 @@ private final ChatService chatService;
         found.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         found.setFreeShipping(product.getFreeShipping());
         found.setRefreshedAt(product.getRefreshedAt());
-        found.setStatus(Status.builder().id(product.getStatusId()).build());
-        found.setCategory(Category.builder().id(product.getCategoryId()).build());
+        found.setStatus(Status.builder().statusId(product.getStatusId()).build());
+        found.setCategory(Category.builder().categoryId(product.getCategoryId()).build());
 
-        Long updatedProductId = productRepository.save(found).getId();
+        Long updatedProductId = productRepository.save(found).getProductId();
 
 
 
@@ -189,7 +189,7 @@ private final ChatService chatService;
         if(!originalThumbnail.getThumbnailUrl().equals(product.getThumbnailUrl())){
             // TODO : 썸네일 생성
             // TODO : 썸네일 S3 업로드
-            thumbnailService.update(originalThumbnail.getId(), product.getThumbnailUrl());
+            thumbnailService.update(originalThumbnail.getThumbnailId(), product.getThumbnailUrl());
         }
         log.info("썸네일 변경");
 
@@ -200,6 +200,6 @@ private final ChatService chatService;
         Product product = productRepository.findById(productId).orElseThrow();
         product.setVisible(false);
         product.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        return productRepository.save(product).getId();
+        return productRepository.save(product).getProductId();
     }
 }

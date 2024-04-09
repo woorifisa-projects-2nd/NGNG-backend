@@ -20,12 +20,12 @@ public class ProductTagService {
     public Long create(Long productId, String tag){
         return productTagRepository.save(ProductTag.builder()
                         .tag(tag)
-                        .product(Product.builder().id(productId).build())
-                .build()).getId();
+                        .product(Product.builder().productId(productId).build())
+                .build()).getProductTagId();
     }
 
     public List<ReadProductTagResponseDTO> readAllByProductId(Long productTagId){
-        return productTagRepository.findAllByProductId(productTagId)
+        return productTagRepository.findAllByProductProductId(productTagId)
                 .stream()
                 .map(productTag -> ReadProductTagResponseDTO.builder().tagName(productTag.getTag()).build())
                 .collect(Collectors.toList());
@@ -37,6 +37,6 @@ public class ProductTagService {
     }
 
     public void deleteByProductIdAndTag(Long productId, String tag){
-        productTagRepository.deleteByProductIdAndTag(productId, tag);
+        productTagRepository.deleteByProductProductIdAndTag(productId, tag);
     }
 }

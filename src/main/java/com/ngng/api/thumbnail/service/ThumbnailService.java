@@ -17,12 +17,12 @@ public class ThumbnailService {
 
         thumbnailRepository.save(Thumbnail.builder()
                         .thumbnailUrl(thumbnailUrl)
-                        .product(Product.builder().id(productId).build())
+                        .product(Product.builder().productId(productId).build())
                 .build());
     }
 
     public Thumbnail readByProductId(Long productId){
-        return thumbnailRepository.findByProductId(productId).orElse(null);
+        return thumbnailRepository.findByProductProductId(productId).orElse(null);
     }
 
     public void update(Long thumbnailId, String newUrl){

@@ -22,15 +22,15 @@ public class ProductImageService {
         productImageRepository.save(
                 ProductImage.builder()
                 .imageUrl(imageURL)
-                .product(Product.builder().id(productId).build())
+                .product(Product.builder().productId(productId).build())
                 .build());
     }
 
     public List<ReadProductImageResponseDTO> readAllByProductId(Long productId){
-        return productImageRepository.findAllByProductId(productId).stream().
+        return productImageRepository.findAllByProductProductId(productId).stream().
                 map(image -> ReadProductImageResponseDTO
                         .builder()
-                        .id(image.getId())
+                        .id(image.getProductImageId())
                         .imageURL(image.getImageUrl())
                         .build()
                 )
@@ -38,12 +38,12 @@ public class ProductImageService {
     }
 
     public ProductImage readByProductIdAndImageUrl( Long productId,String imageUrl){
-        return productImageRepository.findByProductIdAndImageUrl(productId,imageUrl);
+        return productImageRepository.findByProductProductIdAndImageUrl(productId,imageUrl);
     }
     public Long delete(Long productId, String imageUrl){
-        ProductImage found = productImageRepository.findByProductIdAndImageUrl(productId, imageUrl);
+        ProductImage found = productImageRepository.findByProductProductIdAndImageUrl(productId, imageUrl);
         found.setVisibility(false);
         found.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        return productImageRepository.save(found).getId();
+        return productImageRepository.save(found).getProductImageId();
     }
 }

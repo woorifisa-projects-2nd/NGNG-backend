@@ -13,8 +13,8 @@ public class CategoryDTO {
     private String name;
 
     public CategoryDTO(Category category){
-        this.id = category.getId();
-        this.name = category.getName();
+        this.id = category.getCategoryId();
+        this.name = category.getCategoryName();
     }
 
 }

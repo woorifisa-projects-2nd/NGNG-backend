@@ -3,7 +3,6 @@ package com.ngng.api.user.service;
 import com.ngng.api.role.entity.Role;
 import com.ngng.api.user.dto.*;
 import com.ngng.api.user.entity.User;
-import com.ngng.api.user.entity.UserRole;
 import com.ngng.api.user.repository.UserRepository;
 import com.ngng.api.user.repository.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +41,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public CreateUserResponseDTO save(CreateUserRequestDTO userCreateDTO) {
 
-        Optional<UserRole> userRole = userRoleRepository.findById(userCreateDTO.getRoleId());
-        UserRole role = userRole.orElseThrow();
+        Optional<Role> userRole = userRoleRepository.findById(userCreateDTO.getRoleId());
+        Role role = userRole.orElseThrow();
 
         User user = User.builder()
                 .name(userCreateDTO.getName())

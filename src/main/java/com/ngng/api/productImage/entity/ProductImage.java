@@ -22,18 +22,11 @@ import java.sql.Timestamp;
 public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_image_id")
-    private Long id;
-
-    @NotNull
-    @Column(name = "image_url")
+    private Long productImageId;
     private String imageUrl;
 
     @CreationTimestamp
-    @Column(name = "created_at")
     private Timestamp createdAt;
-
-    @Column(name = "updated_at")
     private Timestamp updatedAt;
 
     @ColumnDefault("true")

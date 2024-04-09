@@ -18,20 +18,16 @@ import java.sql.Timestamp;
 public class Thumbnail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "thumbnail_id")
-    private Long id;
+    private Long thumbnailId;
 
     @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "thumbnail_url")
     private String thumbnailUrl;
 
-    @Column(name="created_at")
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @Column(name = "updated_at")
     private Timestamp updatedAt;
 }

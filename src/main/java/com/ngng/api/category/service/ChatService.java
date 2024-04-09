@@ -17,9 +17,9 @@ public class ChatService {
 
     private final ChatRepository chatRepository;
     public List<ReadChatResponseDTO> readAllChatByProductId(Long productId){
-        return chatRepository.findAllChatByProductId(productId).stream().map(chat -> {
+        return chatRepository.findAllChatByProductProductId(productId).stream().map(chat -> {
             return ReadChatResponseDTO.builder()
-                    .id(chat.getId())
+                    .id(chat.getPublicChatId())
                     .message(chat.getMessage())
                     .userId(chat.getUser().getUserId())
                     .userName(chat.getUser().getName())

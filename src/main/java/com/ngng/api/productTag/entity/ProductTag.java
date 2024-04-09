@@ -21,18 +21,15 @@ public class ProductTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_tag_id")
-    private Long id;
+    private Long productTagId;
 
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "tag")
     private String tag;
 
     @CreationTimestamp
-    @Column(name = "created_at")
     private Timestamp createdAt;
 }

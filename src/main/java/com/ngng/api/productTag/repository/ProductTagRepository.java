@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProductTagRepository extends JpaRepository<ProductTag, Long> {
-    public List<ProductTag> findAllByProductId(Long id);
+    public List<ProductTag> findAllByProductProductId(Long id);
 
-    public Long deleteByProductIdAndTag(Long productId, String tag);
+    public Long deleteByProductProductIdAndTag(Long productId, String tag);
 }

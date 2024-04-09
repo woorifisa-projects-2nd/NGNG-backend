@@ -14,9 +14,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "role_id")
     private Long roleId;
 
-//    @Column(name = "role_type")
     private String roleType;
 }

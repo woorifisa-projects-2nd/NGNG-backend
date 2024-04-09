@@ -1,7 +1,6 @@
 package com.ngng.api.user.dto;
 
 import com.ngng.api.role.entity.Role;
-import com.ngng.api.user.entity.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

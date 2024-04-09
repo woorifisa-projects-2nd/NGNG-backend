@@ -21,8 +21,7 @@ import java.sql.Timestamp;
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chat_room_id")
-    private Long id;
+    private Long publicChatId;
 
     private String message;
 
@@ -38,10 +37,8 @@ public class Chat {
     private User user;
 
     @CreationTimestamp
-    @Column(name = "created_at")
     private Timestamp createdAt;
 
-    @Column(name = "updated_at")
     private Timestamp updatedAt;
 
 }

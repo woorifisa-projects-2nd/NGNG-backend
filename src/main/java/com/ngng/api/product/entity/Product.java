@@ -27,41 +27,32 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
-    private Long id;
+    private Long productId;
     private String title;
     private String content;
     private Long price;
 
     @ColumnDefault("true")
-    @Column(name = "is_escrow")
     private Boolean isEscrow;
 
     @ColumnDefault("false")
     private Boolean discountable;
 
-    @Column(name = "purchase_at")
     private String purchaseAt;
 
     @ColumnDefault("true")
-    @Column(name = "for_sale")
     private Boolean forSale;
 
     @ColumnDefault("true")
     private Boolean visible;
 
     @ColumnDefault("false")
-    @Column(name = "free_shipping")
     private Boolean freeShipping;
 
-    @Column(name = "refreshed_at")
     private Timestamp refreshedAt;
 
     @CreationTimestamp
-    @Column(name = "created_at")
     private Timestamp createdAt;
-
-    @Column(name = "updated_at")
     private Timestamp updatedAt;
 
     @ColumnDefault("true")

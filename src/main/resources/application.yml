@@ -12,7 +12,7 @@ spring:
     # DB 설정
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://0.tcp.jp.ngrok.io:10357/vmTest?serverTimezone=UTC&characterEncoding=UTF-8
+        url: jdbc:mysql://0.tcp.jp.ngrok.io:14247/vmTest?serverTimezone=UTC&characterEncoding=UTF-8
         username: root
         password: 12341234
 

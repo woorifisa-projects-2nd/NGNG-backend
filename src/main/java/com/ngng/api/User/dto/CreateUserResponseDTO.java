@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Builder
 @AllArgsConstructor
@@ -21,8 +21,8 @@ public class CreateUserResponseDTO {
     private String address;
     private String phoneNumber;
     private String channel;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
     private String accountBank;
     private String accountNumber;
     private UserRole roleType;

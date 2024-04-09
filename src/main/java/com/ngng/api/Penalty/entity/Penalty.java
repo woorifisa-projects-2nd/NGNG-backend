@@ -6,7 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Getter
 @ToString
@@ -21,8 +21,8 @@ public class Penalty {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long penaltyId;
     @CreationTimestamp
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private Timestamp startDate;
+    private Timestamp endDate;
     private Long userId;
     private Long reporterId;
     private String reason;
@@ -32,9 +32,9 @@ public class Penalty {
     private PenaltyLevel penaltyLevel;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private Timestamp createdAt;
 
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    private Timestamp updatedAt;
 
 }

@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Builder
 @AllArgsConstructor
@@ -21,7 +21,7 @@ public class ReadReportListResponseDTO {
     private User reporter;
     private User user;
     private int isReport;
-    private LocalDateTime createdAt;
+    private Timestamp createdAt;
     private Long productId;
     private Long privateChatId;
     private int visible;
@@ -35,7 +35,7 @@ public class ReadReportListResponseDTO {
         final User reporter = report.getReporter();
         final User user = report.getUser();
         final int isReport = report.getIsReport();
-        final LocalDateTime createdAt = report.getCreatedAt();
+        final Timestamp createdAt = report.getCreatedAt();
         final Long productId = report.getProductId();
         final Long privateChatId = report.getPrivateChatId();
         final int visible = report.getVisible();

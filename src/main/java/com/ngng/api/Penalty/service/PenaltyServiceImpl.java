@@ -12,8 +12,9 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,19 +51,22 @@ public class PenaltyServiceImpl implements PenaltyService {
                 new EntityNotFoundException("penaltyLevel not found")
         );
 
-        LocalDateTime banDate = LocalDateTime.now();
 
-        if(penaltyLevel.getPenaltyLevelId() == 1) {
-            banDate = banDate.plusDays(penaltyLevel.getPenaltyLevelDays());
-        } else if(penaltyLevel.getPenaltyLevelId() == 2) {
-            banDate = banDate.plusDays(penaltyLevel.getPenaltyLevelDays());
-        } else if(penaltyLevel.getPenaltyLevelId() == 3) {
-            banDate = banDate.plusYears(2037 - banDate.getYear());
-            // TIMESTAMP : 2038-01-19 03:14:07’ UTC까지의 범위
-        }
+        Timestamp banDate = new Timestamp(System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance();
+
+//        if(penaltyLevel.getPenaltyLevelId() == 1) {
+//            calendar.add(Calendar.DAY_OF_MONTH, Integer.parseInt(String.valueOf(penaltyLevel.getPenaltyLevelDays())));
+//        } else if(penaltyLevel.getPenaltyLevelId() == 2) {
+//            calendar.add(Calendar.DAY_OF_MONTH, Integer.parseInt(String.valueOf(penaltyLevel.getPenaltyLevelDays())));
+//        } else if(penaltyLevel.getPenaltyLevelId() == 3) {
+//            banDate = banDate.plusYears(2037 - banDate.getYear());
+//            calendar.add(Calendar.DAY_OF_MONTH, Integer.parseInt(String.valueOf(penaltyLevel.getPenaltyLevelDays())));
+//            // TIMESTAMP : 2038-01-19 03:14:07’ UTC까지의 범위
+//        }
 
         Penalty penalty = Penalty.builder()
-                .endDate(banDate)
+//                .endDate(banDate)
                 .userId(createPenaltyRequestDTO.getUserId())
                 .reporterId(createPenaltyRequestDTO.getReporterId())
                 .reason(createPenaltyRequestDTO.getReason())

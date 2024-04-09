@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Builder
 @AllArgsConstructor
@@ -20,8 +20,8 @@ public class CreateReportResponseDTO {
     private User reporter;
     private User user;
     private int isReport;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
     private Long productId;
     private Long privateChatId;
 

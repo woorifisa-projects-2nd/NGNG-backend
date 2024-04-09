@@ -22,7 +22,7 @@ import com.ngng.api.productTag.service.ProductTagService;
 import com.ngng.api.status.entity.Status;
 import com.ngng.api.thumbnail.entity.Thumbnail;
 import com.ngng.api.thumbnail.service.ThumbnailService;
-import com.ngng.api.user.entity.User;
+import com.ngng.api.User.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

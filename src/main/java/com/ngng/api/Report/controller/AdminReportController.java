@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class AdminReportController {
-    private final ReportService reportService;
+    private final ReportService reportService; 
 
     @GetMapping
     public ResponseEntity<List<ReadReportListResponseDTO>> readAll() {

@@ -5,7 +5,7 @@ import com.ngng.api.productImage.entity.ProductImage;
 import com.ngng.api.productTag.entity.ProductTag;
 import com.ngng.api.status.entity.Status;
 import com.ngng.api.thumbnail.entity.Thumbnail;
-import com.ngng.api.user.entity.User;
+import com.ngng.api.User.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;

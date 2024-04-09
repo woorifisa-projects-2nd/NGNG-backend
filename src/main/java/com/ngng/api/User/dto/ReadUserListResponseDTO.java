@@ -1,7 +1,7 @@
 package com.ngng.api.User.dto;
 
 import com.ngng.api.User.entity.User;
-import com.ngng.api.User.entity.UserRole;
+import com.ngng.api.role.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public class ReadUserListResponseDTO {
     private String channel;
     private String accountBank;
     private String accountNumber;
-    private UserRole roleType;
+    private Role roleType;
 
 //    List<UserListDTO> test = new ArrayList<>();
 
@@ -40,7 +40,7 @@ public class ReadUserListResponseDTO {
         final String channel = user.getChannel();
         final String accountBank = user.getAccountBank();
         final String accountNumber = user.getAccountNumber();
-        final UserRole roleType = user.getRoleType();
+        final Role roleType = user.getRole();
 
         return new ReadUserListResponseDTO(userId, name, nickname, email, password, address, phoneNumber, channel, accountBank, accountNumber, roleType);
 

@@ -5,20 +5,20 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class CreatePenaltyRequestDTO {
-//    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+//    private Timestamp startDate;
+    private Timestamp endDate;
     private Long userId;
     private Long reporterId;
     private String reason;
     private Long penaltyLevelId;
-//    private LocalDateTime createdAt;
-//    private LocalDateTime updatedAt;
+//    private Timestamp createdAt;
+//    private Timestamp updatedAt;
 
 }

@@ -2,12 +2,13 @@ package com.ngng.api.User.dto;
 
 import com.ngng.api.User.entity.User;
 import com.ngng.api.User.entity.UserRole;
+import com.ngng.api.role.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Builder
 @AllArgsConstructor
@@ -22,11 +23,11 @@ public class UpdateUserResponseDTO {
     private String address;
     private String phoneNumber;
     private String channel;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
     private String accountBank;
     private String accountNumber;
-    private UserRole roleType;
+    private Role roleType;
 
     // 정적 팩토리 메서드
     public static UpdateUserResponseDTO from(User user) {
@@ -39,11 +40,11 @@ public class UpdateUserResponseDTO {
         final String address = user.getAddress();
         final String phoneNumber = user.getPhoneNumber();
         final String channel = user.getChannel();
-        final LocalDateTime createdAt = user.getCreatedAt();
-        final LocalDateTime updatedAt = user.getUpdatedAt();
+        final Timestamp createdAt = user.getCreatedAt();
+        final Timestamp updatedAt = user.getUpdatedAt();
         final String accountBank = user.getAccountBank();
         final String accountNumber = user.getAccountNumber();
-        final UserRole roleType = user.getRoleType();
+        final Role roleType = user.getRole();
 
         return new UpdateUserResponseDTO(userId, name, nickname, email, password, address, phoneNumber, channel, createdAt, updatedAt, accountBank, accountNumber, roleType);
 

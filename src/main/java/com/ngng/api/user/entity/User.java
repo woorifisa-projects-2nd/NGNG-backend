@@ -1,13 +1,11 @@
-package com.ngng.api.user.entity;
+package com.ngng.api.User.entity;
 
 import com.ngng.api.role.entity.Role;
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 

@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Builder
 @AllArgsConstructor
@@ -15,26 +15,26 @@ import java.time.LocalDateTime;
 @Getter
 public class ReadPenaltyResponseDTO {
     private Long penaltyId;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private Timestamp startDate;
+    private Timestamp endDate;
     private Long userId;
     private Long reporterId;
     private String reason;
     private PenaltyLevel penaltyLevel;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
     public static ReadPenaltyResponseDTO from(Penalty penalty) {
 
         final Long penaltyId = penalty.getPenaltyId();
-        final LocalDateTime startDate = penalty.getStartDate();
-        final LocalDateTime endDate = penalty.getEndDate();
+        final Timestamp startDate = penalty.getStartDate();
+        final Timestamp endDate = penalty.getEndDate();
         final Long userId = penalty.getUserId();
         final Long reporterId = penalty.getReporterId();
         final String reason = penalty.getReason();
         final PenaltyLevel penaltyLevel = penalty.getPenaltyLevel();
-        final LocalDateTime createdAt = penalty.getCreatedAt();
-        final LocalDateTime updatedAt = penalty.getUpdatedAt();
+        final Timestamp createdAt = penalty.getCreatedAt();
+        final Timestamp updatedAt = penalty.getUpdatedAt();
 
         return new ReadPenaltyResponseDTO(penaltyId, startDate, endDate, userId, reporterId, reason, penaltyLevel, createdAt, updatedAt);
 

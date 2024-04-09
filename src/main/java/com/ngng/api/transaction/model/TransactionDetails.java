@@ -1,7 +1,7 @@
 package com.ngng.api.transaction.model;
 
 import com.ngng.api.product.model.Product;
-import com.example.demo.transaction.model.TransactionStatus;
+import com.ngng.api.demo.transaction.model.TransactionStatus;
 import com.ngng.api.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,7 +22,7 @@ public class TransactionDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Transaction_details_id")
-    private Long transactionDetailsId;
+    private Long id;
 
     @Column(name="address")
     private String address;

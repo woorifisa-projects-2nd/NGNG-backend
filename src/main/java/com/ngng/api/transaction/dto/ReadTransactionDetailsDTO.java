@@ -13,7 +13,7 @@ import lombok.*;
 @Builder
 public class ReadTransactionDetailsDTO {
 
-    private Long transactionDetailsId;
+    private Long id;
     private String address;
     private DetailsProductDTO product;
     private DetailsUserDTO consumer;
@@ -24,7 +24,7 @@ public class ReadTransactionDetailsDTO {
         if(details == null) return ReadTransactionDetailsDTO.builder().build();
 
         return ReadTransactionDetailsDTO.builder()
-                .transactionDetailsId(details.getTransactionDetailsId())
+                .id(details.getId())
                 .address(details.getAddress())
                 .status(details.getStatus())
                 .product(new DetailsProductDTO().from(details.getProduct()))

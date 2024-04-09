@@ -1,8 +1,9 @@
 package com.ngng.api.user.service;
 
+
+import com.ngng.api.role.entity.Role;
 import com.ngng.api.user.dto.*;
 import com.ngng.api.user.entity.User;
-import com.ngng.api.user.entity.UserRole;
 import com.ngng.api.user.repository.UserRepository;
 import com.ngng.api.user.repository.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,8 +42,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public CreateUserResponseDTO save(CreateUserRequestDTO userCreateDTO) {
 
-        Optional<UserRole> userRole = userRoleRepository.findById(userCreateDTO.getRoleId());
-        UserRole role = userRole.orElseThrow();
+        Optional<Role> userRole = userRoleRepository.findById(userCreateDTO.getRoleId());
+        Role role = userRole.orElseThrow();
 
         User user = User.builder()
                 .name(userCreateDTO.getName())
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService {
                 .channel(userCreateDTO.getChannel())
                 .accountBank(userCreateDTO.getAccountBank())
                 .accountNumber(userCreateDTO.getAccountNumber())
-                .roleType(UserRole.builder()
+                .role(Role.builder()
                         .roleId(userCreateDTO.getRoleId())
                         .roleType(role.getRoleType())
                         .build()
@@ -76,7 +77,7 @@ public class UserServiceImpl implements UserService {
                 .updatedAt(responseUser.getUpdatedAt())
                 .accountBank(responseUser.getAccountBank())
                 .accountNumber(responseUser.getAccountNumber())
-                .roleType(responseUser.getRoleType())
+                .roleType(responseUser.getRole())
                 .build();
 
     }
@@ -98,7 +99,7 @@ public class UserServiceImpl implements UserService {
                 .createdAt(found.get().getCreatedAt())
                 .accountBank(userUpdateDTO.getAccountBank())
                 .accountNumber(userUpdateDTO.getAccountNumber())
-                .roleType(userUpdateDTO.getRoleType())
+                .role(userUpdateDTO.getRoleType())
                 .build();
 
         User responseUser = userRepository.save(user);
@@ -118,7 +119,7 @@ public class UserServiceImpl implements UserService {
                 .updatedAt(responseUser.getUpdatedAt())
                 .accountBank(responseUser.getAccountBank())
                 .accountNumber(responseUser.getAccountNumber())
-                .roleType(responseUser.getRoleType())
+                .roleType(responseUser.getRole())
                 .build();
 
     }

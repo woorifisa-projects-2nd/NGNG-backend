@@ -55,7 +55,7 @@ private final ChatService chatService;
                         .discountable(product.getDiscountable())
                         .purchaseAt(product.getPurchaseAt())
                         .freeShipping(product.getFreeShipping())
-                        .user(User.builder().id(product.getUserId()).build())
+                        .user(User.builder().userId(product.getUserId()).build())
                         .status(Status.builder().id(product.getStatusId()).build())
                         .category(Category.builder().id(product.getCategoryId()).build())
                         .build()).getId();
@@ -114,7 +114,7 @@ private final ChatService chatService;
                             .build()
                         )
                         .user(ReadProductUserResponseDTO.builder()
-                        .id(product.getUser().getId())
+                        .id(product.getUser().getUserId())
                         .name(product.getUser().getName())
                         .nickname(product.getUser().getNickname())
                         .build())

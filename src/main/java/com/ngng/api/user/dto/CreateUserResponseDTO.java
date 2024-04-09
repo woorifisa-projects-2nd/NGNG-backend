@@ -1,6 +1,6 @@
 package com.ngng.api.user.dto;
 
-import com.ngng.api.user.entity.UserRole;
+import com.ngng.api.role.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,5 +25,5 @@ public class CreateUserResponseDTO {
     private Timestamp updatedAt;
     private String accountBank;
     private String accountNumber;
-    private UserRole roleType;
+    private Role roleType;
 }

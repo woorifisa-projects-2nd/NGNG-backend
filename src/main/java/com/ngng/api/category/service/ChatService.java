@@ -21,7 +21,7 @@ public class ChatService {
             return ReadChatResponseDTO.builder()
                     .id(chat.getId())
                     .message(chat.getMessage())
-                    .userId(chat.getUser().getId())
+                    .userId(chat.getUser().getUserId())
                     .userName(chat.getUser().getName())
                     .userNickName(chat.getUser().getNickname())
                     .createdAt(chat.getCreatedAt())

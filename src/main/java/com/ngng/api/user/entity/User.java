@@ -65,4 +65,8 @@ public class User {
 
         this.address = address;
     }
+
+    public User(Long userId) {
+        this.userId= userId;  // Assuming roleId is a String representation of a Long
+    }
 }

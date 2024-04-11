@@ -32,8 +32,8 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ColumnDefault("LOCAL")
-    private String channel;
+//    @ColumnDefault("LOCAL")
+//    private String channel;
 
     @ColumnDefault("true")
     private Boolean visible;
@@ -64,5 +64,9 @@ public class User {
     public void addressConfirm(String address) {
 
         this.address = address;
+    }
+
+    public User(Long userId) {
+        this.userId= userId;  // Assuming roleId is a String representation of a Long
     }
 }

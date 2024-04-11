@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class ReadUserMyPageResponseDTO {
+public class UserMyPageReadResponseDTO {
     private Long userId;
     private String name;
     private String phoneNumber;
@@ -27,8 +27,8 @@ public class ReadUserMyPageResponseDTO {
     private List<ReadProductResponseDTO> sellList;
     private List<ReadTransactionDetailsDTO> buyList;
 
-    public ReadUserMyPageResponseDTO from(User user){
-        return ReadUserMyPageResponseDTO.builder()
+    public UserMyPageReadResponseDTO from(User user){
+        return UserMyPageReadResponseDTO.builder()
                 .userId(user.getUserId())
                 .name(user.getName())
                 .phoneNumber(user.getPhoneNumber())
@@ -40,13 +40,13 @@ public class ReadUserMyPageResponseDTO {
                 .build();
     }
 
-    public ReadUserMyPageResponseDTO from(
+    public UserMyPageReadResponseDTO from(
             User user,
             PointHistory pointHistory,
             List<ReadProductResponseDTO> sellList,
             List<ReadTransactionDetailsDTO> buyList
     ){
-        return ReadUserMyPageResponseDTO.builder()
+        return UserMyPageReadResponseDTO.builder()
                 .userId(user.getUserId())
                 .name(user.getName())
                 .phoneNumber(user.getPhoneNumber())

@@ -32,8 +32,8 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ColumnDefault("LOCAL")
-    private String channel;
+//    @ColumnDefault("LOCAL")
+//    private String channel;
 
     @ColumnDefault("true")
     private Boolean visible;

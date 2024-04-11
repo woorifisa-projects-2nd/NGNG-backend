@@ -42,7 +42,7 @@ public class ProductService {
     private final ProductImageService productImageService;
     private final ProductTagService productTagService;
     private final ThumbnailService thumbnailService;
-private final ChatService chatService;
+    private final ChatService chatService;
 
     public Long create(CreateProductRequestDTO product){
         // 1. 상품 등록
@@ -125,6 +125,15 @@ private final ChatService chatService;
                         .chats(chats)
                 .build();
     }
+
+    public List<ReadProductResponseDTO> readSellProductsByUserId(Long sellerId){
+        List<Product> products = productRepository.readAllSellProductBySellerId(sellerId);
+
+        return products.stream()
+                .map(item -> new ReadProductResponseDTO().from(item))
+                .collect(Collectors.toList());
+    }
+
 
 
     public Long update(Long productId, UpdateProductRequestDTO product){

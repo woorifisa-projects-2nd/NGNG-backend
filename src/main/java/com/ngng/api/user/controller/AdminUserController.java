@@ -1,5 +1,7 @@
 package com.ngng.api.user.controller;
 
+import com.ngng.api.point.entity.PointHistory;
+import com.ngng.api.point.service.PointHistoryService;
 import com.ngng.api.user.dto.*;
 import com.ngng.api.user.entity.User;
 import com.ngng.api.user.service.UserService;
@@ -18,6 +20,7 @@ import java.util.List;
 @Slf4j
 public class AdminUserController {
     private final UserService userService;
+    private final PointHistoryService pointHistoryService;
 
     @GetMapping
     public ResponseEntity<List<ReadUserListResponseDTO>> readAll() {
@@ -28,9 +31,14 @@ public class AdminUserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<ReadUserResponseDTO> read(@PathVariable Long userId) {
-        ReadUserResponseDTO user = ReadUserResponseDTO.from(userService.findById(userId));
+        User user = userService.findById(userId);
+        PointHistory pointHistory = pointHistoryService.readCostByUser(user);
 
-        return ResponseEntity.ok().body(user);
+
+        ReadUserResponseDTO response = ReadUserResponseDTO.from(userService.findById(userId),pointHistory);
+
+
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping

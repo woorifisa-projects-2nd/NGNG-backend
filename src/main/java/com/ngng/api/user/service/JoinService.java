@@ -1,5 +1,6 @@
 package com.ngng.api.user.service;
 
+import com.ngng.api.point.service.PointHistoryService;
 import com.ngng.api.role.entity.Role;
 import com.ngng.api.user.dto.request.JoinRequest;
 import com.ngng.api.user.dto.response.JoinResponse;
@@ -18,6 +19,7 @@ public class JoinService {
     private final UserRepository userRepository;
     private final UserRoleRepository roleRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
+    private final PointHistoryService pointHistoryService;
 
     @Transactional
     public JoinResponse join(JoinRequest request) {
@@ -37,6 +39,8 @@ public class JoinService {
                 .phoneNumber(request.phoneNumber())
                 .role(role)
                 .build());
+
+        pointHistoryService.createInitByUser(user);
 
         return JoinResponse.success(user.getUserId());
     }

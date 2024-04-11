@@ -51,10 +51,10 @@ public class TransactionDetailsController {
         );
     }
 
-    @PutMapping
-    public ResponseEntity<TransactionDetails> createTransactionDetails(@RequestBody CreateTransactionDetailsRequestDTO request){
+    @PostMapping
+    public ResponseEntity<ReadTransactionDetailsDTO> createTransactionDetails(@RequestBody CreateTransactionDetailsRequestDTO request){
 
-        TransactionDetails response = transactionDetailsService.create(request);
+        ReadTransactionDetailsDTO response = transactionDetailsService.create(request);
 
         //      새로운 리소스의 위치를 클라이언트에게 전달하는 데 사용
 //      fromCurrentRequest = 현재 주소 ( /transaction )

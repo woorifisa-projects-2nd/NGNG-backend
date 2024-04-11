@@ -1,8 +1,8 @@
-package com.ngng.api.transaction.model;
+package com.ngng.api.transaction.entity;
 
-import com.ngng.api.product.model.Product;
-import com.ngng.api.demo.transaction.model.TransactionStatus;
-import com.ngng.api.user.model.User;
+
+import com.ngng.api.product.entity.Product;
+import com.ngng.api.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

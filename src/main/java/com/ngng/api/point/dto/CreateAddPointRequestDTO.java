@@ -14,7 +14,6 @@ public class CreateAddPointRequestDTO {
     @NotNull
     private Long addCost;
 
-
     private String type;
 
 

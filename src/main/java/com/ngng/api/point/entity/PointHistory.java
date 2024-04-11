@@ -1,10 +1,9 @@
-package com.ngng.api.point.model;
+package com.ngng.api.point.entity;
 
-import com.ngng.api.user.model.User;
+import com.ngng.api.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.CurrentTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;

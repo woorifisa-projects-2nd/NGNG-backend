@@ -1,9 +1,11 @@
 package com.ngng.api.transaction.dto;
 
-import com.ngng.api.product.model.*;
-import com.ngng.api.transaction.model.TransactionDetails;
-import com.ngng.api.transaction.model.TransactionStatus;
-import com.ngng.api.user.model.User;
+
+import com.ngng.api.product.entity.Product;
+import com.ngng.api.transaction.entity.TransactionDetails;
+import com.ngng.api.transaction.entity.TransactionStatus;
+
+import com.ngng.api.user.entity.User;
 import lombok.*;
 
 @AllArgsConstructor
@@ -61,8 +63,8 @@ public class ReadTransactionDetailsDTO {
                     .purchaseAt(product.getPurchaseAt())
                     .visible(product.getVisible())
                     .freeShipping(product.getFreeShipping())
-                    .status(product.getStatus().getName())
-                    .category(product.getCategory().getName())
+                    .status(product.getStatus().getStatusName())
+                    .category(product.getCategory().getCategoryName())
                     .build();
         }
 

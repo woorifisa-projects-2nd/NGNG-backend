@@ -1,6 +1,6 @@
 package com.ngng.api.transaction.controller;
 
-import com.ngng.api.transaction.model.TransactionDetails;
+import com.ngng.api.transaction.entity.TransactionDetails;
 import com.ngng.api.transaction.service.TransactionDetailsService;
 import com.ngng.api.transaction.dto.CreateTransactionDetailsRequestDTO;
 import com.ngng.api.transaction.dto.ReadTransactionDetailsDTO;
@@ -60,7 +60,7 @@ public class TransactionDetailsController {
 //      fromCurrentRequest = 현재 주소 ( /transaction )
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(response.getTransactionDetailsId())
+                .buildAndExpand(response.getId())
                 .toUri();
 
 

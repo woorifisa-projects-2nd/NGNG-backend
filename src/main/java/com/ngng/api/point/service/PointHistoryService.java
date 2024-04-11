@@ -1,13 +1,11 @@
 package com.ngng.api.point.service;
 
 import com.ngng.api.point.dto.CreateAddPointRequestDTO;
-import com.ngng.api.point.model.PointHistory;
+import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.repository.PointHistoryRepository;
-import com.ngng.api.user.model.User;
+import com.ngng.api.user.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

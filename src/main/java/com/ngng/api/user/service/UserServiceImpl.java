@@ -35,8 +35,12 @@ public class UserServiceImpl implements UserService {
     public User findById(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
 
+
+
         return userOptional.orElse(null);
 //        return userRepository.findById(ownerId).orElse(null); // orElseThrow를 통한 적절한 예외 처리 권장
+
+
     }
 
     @Override

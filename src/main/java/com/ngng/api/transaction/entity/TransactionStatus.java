@@ -1,9 +1,7 @@
-package com.ngng.api.transaction.model;
+package com.ngng.api.transaction.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor

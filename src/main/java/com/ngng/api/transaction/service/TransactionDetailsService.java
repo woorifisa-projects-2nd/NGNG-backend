@@ -1,12 +1,12 @@
 package com.ngng.api.transaction.service;
 
-import com.ngng.api.product.service.ProductService;
-import com.ngng.api.product.model.Product;
+import com.ngng.api.product.entity.Product;
+import com.ngng.api.product.repository.ProductRepository;
 import com.ngng.api.transaction.dto.CreateTransactionDetailsRequestDTO;
 import com.ngng.api.transaction.dto.ReadTransactionDetailsDTO;
 import com.ngng.api.transaction.dto.UpdateTransactionDetailsRequestDTO;
-import com.ngng.api.transaction.model.TransactionDetails;
-import com.ngng.api.transaction.model.TransactionStatus;
+import com.ngng.api.transaction.entity.TransactionDetails;
+import com.ngng.api.transaction.entity.TransactionStatus;
 import com.ngng.api.transaction.repository.TransactionDetailsRepository;
 import com.ngng.api.transaction.repository.TransactionStatusRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,8 @@ public class TransactionDetailsService extends Exception {
 
     private final TransactionDetailsRepository transactionDetailsRepository;
     private final TransactionStatusRepository transactionStatusRepository;
-    private final ProductService productService;
+//    private final ProductService productService;
+    private final ProductRepository productRepository;
 
 //    @Transactional(readOnly = true)
     public ReadTransactionDetailsDTO readTransactionDetailsById(Long TransactionId) {
@@ -64,7 +65,8 @@ public class TransactionDetailsService extends Exception {
     }
 
     public TransactionDetails create(CreateTransactionDetailsRequestDTO request){
-        Product product = productService.getProductById(request.getProduct().getProductId());
+        Product product = productRepository.findById(request.getProduct().getProductId()).orElse(null);
+
 
         if(product == null){
             throw  new ResponseStatusException(HttpStatus.NOT_FOUND,"상품을 찾을수 없습니다.");

@@ -1,8 +1,6 @@
 package com.ngng.api.transaction.repository;
 
-import com.ngng.api.transaction.model.TransactionDetails;
-import jakarta.persistence.NamedEntityGraph;
-import org.springframework.data.jpa.repository.EntityGraph;
+import com.ngng.api.transaction.entity.TransactionDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

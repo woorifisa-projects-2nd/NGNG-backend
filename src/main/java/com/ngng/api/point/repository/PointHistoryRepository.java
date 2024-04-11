@@ -1,7 +1,6 @@
 package com.ngng.api.point.repository;
 
-import com.ngng.api.point.model.PointHistory;
-import com.ngng.api.transaction.model.TransactionDetails;
+import com.ngng.api.point.entity.PointHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

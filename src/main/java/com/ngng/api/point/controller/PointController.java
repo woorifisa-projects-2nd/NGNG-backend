@@ -1,9 +1,9 @@
 package com.ngng.api.point.controller;
 
 import com.ngng.api.point.dto.CreateAddPointRequestDTO;
-import com.ngng.api.point.model.PointHistory;
+import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.service.PointHistoryService;
-import com.ngng.api.user.model.User;
+import com.ngng.api.user.entity.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

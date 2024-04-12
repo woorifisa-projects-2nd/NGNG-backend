@@ -30,7 +30,7 @@ public class ProductController {
     @GetMapping(path = "/{productId}")
     @Parameter(name = "id", description = "상품 id")
     @Operation(summary = "상품 상세페이지 조회", description = "id값으로 특정 상품을 찾습니다.")
-    public ResponseEntity<ReadProductResponseDTO> read(@PathVariable Long productId){
+    public ResponseEntity<ReadProductResponseDTO> read(@PathVariable("productId") Long productId){
         ReadProductResponseDTO found = productService.read(productId);
         if(found == null){
             return ResponseEntity.notFound().build();

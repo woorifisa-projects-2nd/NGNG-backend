@@ -126,7 +126,6 @@ public class ProductService {
                 .build();
     }
 
-
     public List<ReadAllProductsDTO> readAll(){
         List<Product> products = productRepository.findAll();
         if(products.isEmpty()){
@@ -166,12 +165,14 @@ public class ProductService {
 
         })).toList();
     }
-    public List<ReadProductResponseDTO> readSellProductsByUserId(Long sellerId){
+    public List<Product> readSellProductsByUserId(Long sellerId){
+
         List<Product> products = productRepository.readAllSellProductBySellerId(sellerId);
 
-        return products.stream()
-                .map(item -> new ReadProductResponseDTO().from(item))
-                .collect(Collectors.toList());
+//        return products.stream()
+//                .map(item -> new ReadProductMypageResponseDTO().from(item))
+//                .collect(Collectors.toList());
+        return products;
     }
 
 

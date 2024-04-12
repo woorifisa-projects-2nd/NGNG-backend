@@ -30,7 +30,7 @@ public class ProductImage {
     private Timestamp updatedAt;
 
     @ColumnDefault("true")
-    private Boolean visibility;
+    private Boolean visible;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

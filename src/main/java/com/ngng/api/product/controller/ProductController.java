@@ -2,6 +2,7 @@ package com.ngng.api.product.controller;
 
 import com.ngng.api.product.dto.request.CreateProductRequestDTO;
 import com.ngng.api.product.dto.request.UpdateProductRequestDTO;
+import com.ngng.api.product.dto.response.ReadAllProductsDTO;
 import com.ngng.api.product.dto.response.ReadProductResponseDTO;
 import com.ngng.api.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +11,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/products")
 @RestController
@@ -33,6 +36,17 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }else{
            return ResponseEntity.ok(productService.read(productId));
+        }
+    }
+
+    @GetMapping("")
+    @Operation(summary = "상품 전체 조회", description = "전체 상품을 조회합니다.")
+    public ResponseEntity<List<ReadAllProductsDTO>> readAll(){
+        List<ReadAllProductsDTO> found = productService.readAll();
+        if(found == null){
+            return ResponseEntity.notFound().build();
+        }else{
+            return ResponseEntity.ok(found);
         }
     }
 

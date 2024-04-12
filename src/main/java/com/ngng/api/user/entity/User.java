@@ -39,11 +39,12 @@ public class User {
     @ColumnDefault("true")
     private Boolean visible;
 
-    @CreationTimestamp
     @Column(name = "created_at")
+    @CreationTimestamp
     private Timestamp createdAt;
 
     @Column(name = "updated_at")
+    @UpdateTimestamp
     private Timestamp updatedAt;
 
     @Column(name = "account_bank")

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class ThumbnailService {
     private final ThumbnailRepository thumbnailRepository;
 
-    public void create(String thumbnailUrl, Long productId){
+    public void create( Long productId , String thumbnailUrl){
 
         thumbnailRepository.save(Thumbnail.builder()
                         .thumbnailUrl(thumbnailUrl)

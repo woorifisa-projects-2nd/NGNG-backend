@@ -35,7 +35,7 @@ public class PointHistoryService {
 
     public PointHistory readCostByUser(User user){
 
-        return pointHistoryRepository.findLastByUserId(user.getUserId());
+        return pointHistoryRepository.findLastByUserId(user.getUserId()).orElse(null);
 
     }
 

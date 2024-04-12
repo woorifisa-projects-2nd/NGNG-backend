@@ -11,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +19,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.regex.Pattern;
 
+@Slf4j
 @RequiredArgsConstructor
 public class TokenFilter extends OncePerRequestFilter {
 
@@ -42,19 +45,21 @@ public class TokenFilter extends OncePerRequestFilter {
 
             if (tokenUtils.checkAccessToken(token)) {
 
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                log.info("access token deny");
 
-                return;
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             } else {
+
+                log.info("access token permit");
 
                 CustomUserDetails customUserDetails = createCustomUserDetails(token);
                 Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 filterChain.doFilter(request, response);
-
-                return;
             }
+
+            return;
         }
 
         if (tokenType.equals("refresh") && !tokenUtils.checkRefreshToken(token)) {
@@ -89,17 +94,9 @@ public class TokenFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         String method = request.getMethod();
 
-        if (uri.startsWith("/product") && method.equals("GET")) {
+        Pattern uriPattern = Pattern.compile("/(login|logout|search|join|find)(/.*)?");
 
-            return true;
-        }
-
-        if (uri.startsWith("/login") || uri.startsWith("/logout") || uri.startsWith("/search") || uri.startsWith("/join") || uri.startsWith("/find")) {
-
-            return true;
-        }
-
-        return false;
+        return (uri.startsWith("/product") && method.equals("GET")) || uriPattern.matcher(uri).matches();
     }
 
     public CustomUserDetails createCustomUserDetails(String token) throws JsonProcessingException {

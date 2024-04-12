@@ -10,7 +10,7 @@ import java.util.List;
 public interface PenaltyService {
     List<ReadPenaltyListResponseDTO> findAll();
 
-    ReadPenaltyResponseDTO findById(Long penaltyId);
+    ReadPenaltyResponseDTO findById(Long reportId);
 
     CreatePenaltyResponseDTO save(CreatePenaltyRequestDTO createPenaltyRequestDTO);
 

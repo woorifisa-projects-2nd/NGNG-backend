@@ -26,10 +26,15 @@ public class Penalty {
     private Long userId;
     private Long reporterId;
     private String reason;
+    private Long reportId;
 
     @ManyToOne
     @JoinColumn(name = "penalty_level_id")
     private PenaltyLevel penaltyLevel;
+
+//    @OneToOne
+//    @JoinColumn(name = "report_id")
+//    private Report report;
 
     @CreationTimestamp
     private Timestamp createdAt;

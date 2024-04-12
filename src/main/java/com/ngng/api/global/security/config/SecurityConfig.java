@@ -103,7 +103,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/product").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/product/**").hasAnyRole("USER", "ADMIN")
 
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자페이지
+//                        .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자페이지
+                        .requestMatchers("/admin/**").permitAll()
 
                         .requestMatchers("/user/**", "/confirm", "/logout").authenticated() // 마이페이지 등은 로그인한 유저 모두가 사용 가능 + 로그인도
 

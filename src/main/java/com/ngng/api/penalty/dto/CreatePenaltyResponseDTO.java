@@ -19,6 +19,7 @@ public class CreatePenaltyResponseDTO {
     private Long reporterId;
     private String reason;
     private PenaltyLevel penaltyLevel;
+    private Long reportId;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 

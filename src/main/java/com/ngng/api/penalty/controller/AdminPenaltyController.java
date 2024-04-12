@@ -5,6 +5,7 @@ import com.ngng.api.penalty.dto.CreatePenaltyResponseDTO;
 import com.ngng.api.penalty.dto.ReadPenaltyListResponseDTO;
 import com.ngng.api.penalty.dto.ReadPenaltyResponseDTO;
 import com.ngng.api.penalty.service.PenaltyService;
+import com.ngng.api.penalty.service.PenaltyTran;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,8 @@ import java.util.List;
 public class AdminPenaltyController {
     private final PenaltyService penaltyService;
 
+    private final PenaltyTran penaltyTran;
+
 
     @GetMapping
     public ResponseEntity<List<ReadPenaltyListResponseDTO>> readAll() {
@@ -28,9 +31,9 @@ public class AdminPenaltyController {
         return ResponseEntity.ok(reports);
     }
 
-    @GetMapping("/{penaltyId}")
-    public ResponseEntity<ReadPenaltyResponseDTO> read(@PathVariable Long penaltyId) {
-        ReadPenaltyResponseDTO readPenaltyResponseDTO = penaltyService.findById(penaltyId);
+    @GetMapping("/{reportId}")
+    public ResponseEntity<ReadPenaltyResponseDTO> read(@PathVariable Long reportId) {
+        ReadPenaltyResponseDTO readPenaltyResponseDTO = penaltyService.findById(reportId);
 
         return ResponseEntity.ok().body(readPenaltyResponseDTO);
     }
@@ -39,7 +42,7 @@ public class AdminPenaltyController {
     public ResponseEntity<CreatePenaltyResponseDTO> create(@RequestBody CreatePenaltyRequestDTO createPenaltyRequestDTO) {
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(penaltyService.save(createPenaltyRequestDTO));
+                .body(penaltyTran.penaltySaveAndReportUpdate(createPenaltyRequestDTO));
     }
 
 }

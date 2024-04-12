@@ -95,6 +95,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public ReadReportResponseDTO update(Long reportId, int isReport) {
+        System.out.println("reportId = " + reportId);
+        System.out.println("isReport = " + isReport);
 
         Report report = reportRepository.findById(reportId).orElseThrow(() ->
                 new EntityNotFoundException("report not found")

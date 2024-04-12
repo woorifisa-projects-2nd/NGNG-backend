@@ -17,26 +17,28 @@ public class ReadPenaltyResponseDTO {
     private Long penaltyId;
     private Timestamp startDate;
     private Timestamp endDate;
-    private Long userId;
-    private Long reporterId;
+//    private Long userId;
+//    private Long reporterId;
     private String reason;
     private PenaltyLevel penaltyLevel;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private Long reportId;
+//    private Timestamp createdAt;
+//    private Timestamp updatedAt;
 
     public static ReadPenaltyResponseDTO from(Penalty penalty) {
 
         final Long penaltyId = penalty.getPenaltyId();
         final Timestamp startDate = penalty.getStartDate();
         final Timestamp endDate = penalty.getEndDate();
-        final Long userId = penalty.getUserId();
-        final Long reporterId = penalty.getReporterId();
+//        final Long userId = penalty.getUserId();
+//        final Long reporterId = penalty.getReporterId();
         final String reason = penalty.getReason();
         final PenaltyLevel penaltyLevel = penalty.getPenaltyLevel();
-        final Timestamp createdAt = penalty.getCreatedAt();
-        final Timestamp updatedAt = penalty.getUpdatedAt();
+        final Long reportId = penalty.getReportId();
+//        final Timestamp createdAt = penalty.getCreatedAt();
+//        final Timestamp updatedAt = penalty.getUpdatedAt();
 
-        return new ReadPenaltyResponseDTO(penaltyId, startDate, endDate, userId, reporterId, reason, penaltyLevel, createdAt, updatedAt);
+        return new ReadPenaltyResponseDTO(penaltyId, startDate, endDate, reason, penaltyLevel, reportId);
 
     }
 }

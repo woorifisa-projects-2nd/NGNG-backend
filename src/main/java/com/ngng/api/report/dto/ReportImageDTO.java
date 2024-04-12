@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 public class ReportImageDTO {
     private Long reportImageId;
     private String imageUrl;
+    private String contentType;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 

@@ -18,6 +18,7 @@ public class CreatePenaltyRequestDTO {
     private Long reporterId;
     private String reason;
     private Long penaltyLevelId;
+    private Long reportId;
 //    private Timestamp createdAt;
 //    private Timestamp updatedAt;
 

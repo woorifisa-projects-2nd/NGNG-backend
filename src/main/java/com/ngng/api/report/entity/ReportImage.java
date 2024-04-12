@@ -23,7 +23,7 @@ public class ReportImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportImageId;
     private String imageUrl;
-//    private Long reportId;
+    private String contentType;
 
     // 신고 이미지 리스트 추가
     @ManyToOne
@@ -41,6 +41,7 @@ public class ReportImage {
         return ReportImageDTO.builder()
                 .reportImageId(this.reportImageId)
                 .imageUrl(this.imageUrl)
+                .contentType(this.contentType)
                 .createdAt(this.createdAt)
                 .updatedAt(this.updatedAt)
                 .build();

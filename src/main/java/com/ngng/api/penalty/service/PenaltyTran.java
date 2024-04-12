@@ -2,50 +2,33 @@ package com.ngng.api.penalty.service;
 
 import com.ngng.api.penalty.dto.CreatePenaltyRequestDTO;
 import com.ngng.api.penalty.dto.CreatePenaltyResponseDTO;
-import com.ngng.api.penalty.dto.ReadPenaltyListResponseDTO;
-import com.ngng.api.penalty.dto.ReadPenaltyResponseDTO;
 import com.ngng.api.penalty.entity.Penalty;
 import com.ngng.api.penalty.entity.PenaltyLevel;
 import com.ngng.api.penalty.repository.PenaltyLevelRepository;
 import com.ngng.api.penalty.repository.PenaltyRepository;
+import com.ngng.api.report.entity.Report;
+import com.ngng.api.report.repository.ReportRepository;
+import com.ngng.api.report.service.ReportService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class PenaltyServiceImpl implements PenaltyService {
+public class PenaltyTran {
+
     private final PenaltyRepository penaltyRepository;
     private final PenaltyLevelRepository penaltyLevelRepository;
+    private final ReportRepository reportRepository;
+    private final ReportService reportService;
 
-    @Override
-    public List<ReadPenaltyListResponseDTO> findAll() {
-        List<Penalty> penalties = new ArrayList<>();
-        penaltyRepository.findAll().forEach(penalties::add);
-
-        return penalties.stream()
-                .map(ReadPenaltyListResponseDTO::from)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public ReadPenaltyResponseDTO findById(Long reportId) {
-        Penalty penalty = penaltyRepository.findByReportId(reportId).orElseThrow(() ->
-                new EntityNotFoundException("penalty not found")
-        );
-
-        return ReadPenaltyResponseDTO.from(penalty);
-    }
-
-    @Override
-    public CreatePenaltyResponseDTO save(CreatePenaltyRequestDTO createPenaltyRequestDTO) {
+    @Transactional
+    public CreatePenaltyResponseDTO penaltySaveAndReportUpdate(CreatePenaltyRequestDTO createPenaltyRequestDTO) {
 
         Long penaltyLevelId = createPenaltyRequestDTO.getPenaltyLevelId();
         PenaltyLevel penaltyLevel = penaltyLevelRepository.findById(penaltyLevelId).orElseThrow(() ->
@@ -84,6 +67,10 @@ public class PenaltyServiceImpl implements PenaltyService {
 
         Penalty responsepenalty = penaltyRepository.save(penalty);
 
+//        System.exit(0);
+
+        updateIsReport(responsepenalty.getReportId(), 1);
+
         return CreatePenaltyResponseDTO.builder()
                 .startDate(responsepenalty.getStartDate())
                 .endDate(responsepenalty.getEndDate())
@@ -95,6 +82,20 @@ public class PenaltyServiceImpl implements PenaltyService {
                 .createdAt(responsepenalty.getCreatedAt())
                 .updatedAt(responsepenalty.getUpdatedAt())
                 .build();
+
+    }
+
+    public void updateIsReport(Long reportId, int isReport) {
+        System.out.println("reportId = " + reportId);
+        System.out.println("isReport = " + isReport);
+
+        Report report = reportRepository.findById(reportId).orElseThrow(() ->
+                new EntityNotFoundException("report not found")
+        );
+
+        report.setIsReport(isReport);
+
+        reportRepository.save(report);
 
     }
 }

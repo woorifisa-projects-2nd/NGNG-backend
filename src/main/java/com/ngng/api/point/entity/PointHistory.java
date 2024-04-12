@@ -42,7 +42,7 @@ public class PointHistory {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "create_at")
+    @Column(name = "created_at")
     @CreationTimestamp
     private Timestamp createdAt;
 

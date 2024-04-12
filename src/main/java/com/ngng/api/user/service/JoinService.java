@@ -29,7 +29,7 @@ public class JoinService {
             return JoinResponse.fail();
         }
 
-        Role role = roleRepository.findByRoleType("ROLE_UNCONFIRMED_USER");
+        Role role = roleRepository.findByRoleType("USER");
 
         User user = userRepository.save(User.builder()
                 .name(request.name())

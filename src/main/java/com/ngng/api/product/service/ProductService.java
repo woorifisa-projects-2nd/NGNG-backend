@@ -60,12 +60,13 @@ public class ProductService {
         // 2. 태그 등록
         product.getTags().forEach(tag -> productTagService.create(productId,tag.getName()));
 
-        // 3. 이미지 등록
-        product.getImages().forEach(image -> productImageService.create(productId, image.getImageURL()));
+// 3. 이미지 등록
+//        product.getImages().forEach(image -> productImageService.create(productId, image.getImageURL()));
 
         // 4. 썸네일 등록
-        log.info("Thumbnail url : "+ product.getThumbnailUrl());
-        thumbnailService.create(product.getThumbnailUrl(), productId);
+//        log.info("Thumbnail url : "+ product.getThumbnailUrl());
+//        thumbnailService.create(product.getThumbnailUrl(), productId);
+
         return productId;
     }
 

@@ -105,7 +105,7 @@ public class SecurityConfig {
 
                         .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자페이지
 
-                        .requestMatchers("/user/**", "/confirm", "/logout").authenticated() // 마이페이지 등은 로그인한 유저 모두가 사용 가능 + 로그인도
+                        .requestMatchers("/user/**", "/confirm", "/logout").permitAll() // 마이페이지 등은 로그인한 유저 모두가 사용 가능 + 로그인도
 
                         .anyRequest().permitAll() // 존재하지 않은 요청은 404 NotFound
                 );

@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 
@@ -32,8 +33,8 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ColumnDefault("LOCAL")
-    private String channel;
+//    @ColumnDefault("LOCAL")
+//    private String channel;
 
     @ColumnDefault("true")
     private Boolean visible;
@@ -54,6 +55,7 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
+
     public void accountConfirm(String accountBank, String accountNumber, Role role) {
 
         this.accountBank = accountBank;
@@ -64,5 +66,9 @@ public class User {
     public void addressConfirm(String address) {
 
         this.address = address;
+    }
+
+    public User(Long userId) {
+        this.userId= userId;  // Assuming roleId is a String representation of a Long
     }
 }

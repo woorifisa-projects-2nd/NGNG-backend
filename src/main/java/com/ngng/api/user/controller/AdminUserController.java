@@ -4,6 +4,7 @@ import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.service.PointHistoryService;
 import com.ngng.api.user.dto.*;
 import com.ngng.api.user.entity.User;
+import com.ngng.api.user.service.JoinService;
 import com.ngng.api.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,35 +22,40 @@ import java.util.List;
 public class AdminUserController {
     private final UserService userService;
     private final PointHistoryService pointHistoryService;
+    private final JoinService joinService;
 
     @GetMapping
-    public ResponseEntity<List<ReadUserListResponseDTO>> readAll() {
-        List<ReadUserListResponseDTO> users = userService.findAll();
+    public ResponseEntity<List<UserReadResponseDTO>> readAll() {
+        List<UserReadResponseDTO> users = userService.findAll();
 
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<ReadUserResponseDTO> read(@PathVariable Long userId) {
+    public ResponseEntity<UserReadResponseDTO> read(@PathVariable Long userId) {
         User user = userService.findById(userId);
         PointHistory pointHistory = pointHistoryService.readCostByUser(user);
 
 
-        ReadUserResponseDTO response = ReadUserResponseDTO.from(userService.findById(userId),pointHistory);
+        UserReadResponseDTO response = new UserReadResponseDTO().from(userService.findById(userId),pointHistory);
 
 
         return ResponseEntity.ok().body(response);
     }
 
-    @PostMapping
-    public ResponseEntity<CreateUserResponseDTO> create(@RequestBody CreateUserRequestDTO userCreateDTO) {
+//    @PostMapping
+//    public ResponseEntity<CreateUserResponseDTO> create(@RequestBody CreateUserRequestDTO userCreateDTO) {
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(userService.save(userCreateDTO));
-    }
+//        추후 JoionServer에서 로그인 구현 할애 할거 같음
+
+//        return ResponseEntity.status(HttpStatus.CREATED)
+//                .body(userService.save(userCreateDTO));
+//    return null;
+
+//    }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UpdateUserResponseDTO> update(@PathVariable Long userId, @RequestBody UpdateUserRequestDTO userUpdateDTO) {
+    public ResponseEntity<UserReadResponseDTO> update(@PathVariable Long userId, @RequestBody UserUpdateRequestDTO userUpdateDTO) {
         User found = userService.findById(userId);
 
         if(found == null) {
@@ -58,6 +64,7 @@ public class AdminUserController {
             return ResponseEntity.ok().body(userService.update(userId, userUpdateDTO));
         }
     }
+
 
     // 사용자 삭제(visible 여부)
 //    @PatchMapping("/{userId}")

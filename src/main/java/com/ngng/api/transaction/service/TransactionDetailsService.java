@@ -9,6 +9,7 @@ import com.ngng.api.transaction.entity.TransactionDetails;
 import com.ngng.api.transaction.entity.TransactionStatus;
 import com.ngng.api.transaction.repository.TransactionDetailsRepository;
 import com.ngng.api.transaction.repository.TransactionStatusRepository;
+import com.ngng.api.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -64,13 +65,15 @@ public class TransactionDetailsService extends Exception {
                 .collect(Collectors.toList());
     }
 
-    public TransactionDetails create(CreateTransactionDetailsRequestDTO request){
-        Product product = productRepository.findById(request.getProduct().getProductId()).orElse(null);
+    public ReadTransactionDetailsDTO create(CreateTransactionDetailsRequestDTO request){
+        Product product = productRepository.findById(request.getProductId()).orElse(null);
 
 
         if(product == null){
             throw  new ResponseStatusException(HttpStatus.NOT_FOUND,"상품을 찾을수 없습니다.");
         }
+
+
 
         TransactionDetails transactionDetails = TransactionDetails.builder()
                 .product(product)
@@ -80,7 +83,10 @@ public class TransactionDetailsService extends Exception {
                 .status(new TransactionStatus(1L))
                 .build();
 
-        return transactionDetailsRepository.save(transactionDetails);
+        TransactionDetails ds = transactionDetailsRepository.save(transactionDetails);
+
+
+        return new ReadTransactionDetailsDTO().from(ds);
     }
 
     @Transactional()

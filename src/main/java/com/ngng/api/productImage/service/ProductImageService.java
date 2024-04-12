@@ -42,7 +42,7 @@ public class ProductImageService {
     }
     public Long delete(Long productId, String imageUrl){
         ProductImage found = productImageRepository.findByProductProductIdAndImageUrl(productId, imageUrl);
-        found.setVisibility(false);
+        found.setVisible(false);
         found.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         return productImageRepository.save(found).getProductImageId();
     }

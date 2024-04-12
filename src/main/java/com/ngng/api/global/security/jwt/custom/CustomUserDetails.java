@@ -14,13 +14,13 @@ import java.util.Collection;
 public class CustomUserDetails implements UserDetails {
 
     private final User user;
+    private final String ROLE_PREFIX = "ROLE_";
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         Collection<GrantedAuthority> collection = new ArrayList<>();
-
-        collection.add((GrantedAuthority) () -> user.getRole().getRoleType());
+        collection.add((GrantedAuthority) () -> ROLE_PREFIX + user.getRole().getRoleType());
 
         return collection;
     }

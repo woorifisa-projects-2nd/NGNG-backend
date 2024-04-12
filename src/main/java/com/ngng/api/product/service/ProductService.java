@@ -5,10 +5,7 @@ import com.ngng.api.category.service.ChatService;
 import com.ngng.api.chat.ReadChatResponseDTO.ReadChatResponseDTO;
 import com.ngng.api.product.dto.request.CreateProductRequestDTO;
 import com.ngng.api.product.dto.request.UpdateProductRequestDTO;
-import com.ngng.api.product.dto.response.ReadProductCategoryResponseDTO;
-import com.ngng.api.product.dto.response.ReadProductResponseDTO;
-import com.ngng.api.product.dto.response.ReadProductStatusResponseDTO;
-import com.ngng.api.product.dto.response.ReadProductUserResponseDTO;
+import com.ngng.api.product.dto.response.*;
 import com.ngng.api.product.entity.Product;
 import com.ngng.api.product.repository.ProductRepository;
 import com.ngng.api.productImage.dto.request.UpdateImageRequestDTO;
@@ -74,7 +71,10 @@ public class ProductService {
 
 
     public ReadProductResponseDTO read(Long productId){
-        Product product = productRepository.findById(productId).orElseThrow();
+        Product product = productRepository.findById(productId).orElse(null);
+        if(product == null ){
+            return null;
+        }
         List<ReadChatResponseDTO> chats = chatService.readAllChatByProductId(productId);
 
         return ReadProductResponseDTO
@@ -100,7 +100,7 @@ public class ProductService {
                         .refreshedAt(product.getRefreshedAt())
                         .isEscrow(product.getIsEscrow())
                         .purchaseAt(product.getPurchaseAt())
-                         .available(product.getAvailable())
+                    .available(product.getAvailable())
                         .tags(product.getTags()
                                 .stream().map(tag -> ReadProductTagResponseDTO
                                 .builder()
@@ -126,12 +126,53 @@ public class ProductService {
                 .build();
     }
 
-    public List<ReadProductResponseDTO> readSellProductsByUserId(Long sellerId){
+    public List<ReadAllProductsDTO> readAll(){
+        List<Product> products = productRepository.findAll();
+        if(products.isEmpty()){
+            return null;
+        }
+        return products.stream().map((product -> {
+            return ReadAllProductsDTO
+                    .builder()
+                    .id(product.getProductId())
+                    .content(product.getContent())
+                    .createdAt(product.getCreatedAt())
+                    .discountable(product.getDiscountable())
+                    .forSale(product.getForSale())
+                    .freeShipping(product.getFreeShipping())
+                    .title(product.getTitle())
+                    .isEscrow(product.getIsEscrow())
+                    .price(product.getPrice())
+                    .visible(product.getVisible())
+                    .updatedAt(product.getUpdatedAt())
+                    .refreshedAt(product.getRefreshedAt())
+                    .isEscrow(product.getIsEscrow())
+                    .purchaseAt(product.getPurchaseAt())
+                    .available(product.getAvailable())
+                    .user(ReadProductUserResponseDTO.builder()
+                            .id(product.getUser().getUserId())
+                            .name(product.getUser().getName())
+                            .nickname(product.getUser().getNickname())
+                            .build())
+                    .category(ReadProductCategoryResponseDTO.builder()
+                            .id(product.getCategory().getCategoryId())
+                            .name(product.getCategory().getCategoryName())
+                            .build())
+                    .status(ReadProductStatusResponseDTO.builder()
+                            .id(product.getStatus().getStatusId())
+                            .name(product.getStatus().getStatusName())
+                            .build()).build();
+
+        })).toList();
+    }
+    public List<Product> readSellProductsByUserId(Long sellerId){
+
         List<Product> products = productRepository.readAllSellProductBySellerId(sellerId);
 
-        return products.stream()
-                .map(item -> new ReadProductResponseDTO().from(item))
-                .collect(Collectors.toList());
+//        return products.stream()
+//                .map(item -> new ReadProductMypageResponseDTO().from(item))
+//                .collect(Collectors.toList());
+        return products;
     }
 
 

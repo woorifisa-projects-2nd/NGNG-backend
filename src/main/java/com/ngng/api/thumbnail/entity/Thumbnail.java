@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "thumbnail")
+@Table(name = "product_thumbnail")
 public class Thumbnail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,20 +1,17 @@
 package com.ngng.api.user.dto;
 
 import com.ngng.api.point.entity.PointHistory;
-import com.ngng.api.product.dto.response.ReadProductResponseDTO;
 import com.ngng.api.role.entity.Role;
-import com.ngng.api.transaction.dto.ReadTransactionDetailsDTO;
 import com.ngng.api.user.entity.User;
 import lombok.*;
-
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class ReadUserMyPageResponseDTO {
+public class UserReadResponseDTO {
+
     private Long userId;
     private String name;
     private String phoneNumber;
@@ -24,11 +21,9 @@ public class ReadUserMyPageResponseDTO {
     private String address;
     private Role role;
     private Long point;
-    private List<ReadProductResponseDTO> sellList;
-    private List<ReadTransactionDetailsDTO> buyList;
 
-    public ReadUserMyPageResponseDTO from(User user){
-        return ReadUserMyPageResponseDTO.builder()
+    public UserReadResponseDTO from(User user){
+        return UserReadResponseDTO.builder()
                 .userId(user.getUserId())
                 .name(user.getName())
                 .phoneNumber(user.getPhoneNumber())
@@ -36,17 +31,12 @@ public class ReadUserMyPageResponseDTO {
                 .accountBank(user.getAccountBank())
                 .accountNumber(user.getAccountNumber())
                 .address(user.getAddress())
-                .role(from_role(user.getRole()))
+                .role(user.getRole())
                 .build();
     }
 
-    public ReadUserMyPageResponseDTO from(
-            User user,
-            PointHistory pointHistory,
-            List<ReadProductResponseDTO> sellList,
-            List<ReadTransactionDetailsDTO> buyList
-    ){
-        return ReadUserMyPageResponseDTO.builder()
+    public UserReadResponseDTO from(User user, PointHistory pointHistory){
+        return UserReadResponseDTO.builder()
                 .userId(user.getUserId())
                 .name(user.getName())
                 .phoneNumber(user.getPhoneNumber())
@@ -54,17 +44,9 @@ public class ReadUserMyPageResponseDTO {
                 .accountBank(user.getAccountBank())
                 .accountNumber(user.getAccountNumber())
                 .address(user.getAddress())
-                .role(from_role(user.getRole()))
+                .role(user.getRole())
                 .point(pointHistory.getCost())
-                .sellList(sellList)
-                .buyList(buyList)
                 .build();
     }
 
-    public Role from_role(Role role){
-        Role newRole = new Role();
-        newRole.setRoleId(role.getRoleId());
-        newRole.setRoleType(role.getRoleType());
-        return newRole;
-    }
 }

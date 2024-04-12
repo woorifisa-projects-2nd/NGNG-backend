@@ -2,6 +2,7 @@ package com.ngng.api.user.service;
 
 import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.service.PointHistoryService;
+import com.ngng.api.product.dto.response.ReadProductMypageResponseDTO;
 import com.ngng.api.product.dto.response.ReadProductResponseDTO;
 import com.ngng.api.product.service.ProductService;
 import com.ngng.api.transaction.dto.ReadTransactionDetailsDTO;
@@ -63,7 +64,9 @@ public class UserService {
         User user =  this.findById(userId);
         PointHistory point = pointHistoryService.readCostByUser(user);
 
-        List<ReadProductResponseDTO> sellList = productService.readSellProductsByUserId(user.getUserId());
+        List<ReadProductMypageResponseDTO> sellList = productService.readSellProductsByUserId(user.getUserId()).stream()
+                .map(item -> new ReadProductMypageResponseDTO().from(item))
+                .collect(Collectors.toList());
 
         List<ReadTransactionDetailsDTO> buyList = transactionDetailsService.readAllByConsumerId(user.getUserId());
 

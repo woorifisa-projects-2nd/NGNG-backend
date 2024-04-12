@@ -1,6 +1,7 @@
 package com.ngng.api.user.dto;
 
 import com.ngng.api.point.entity.PointHistory;
+import com.ngng.api.product.dto.response.ReadProductMypageResponseDTO;
 import com.ngng.api.product.dto.response.ReadProductResponseDTO;
 import com.ngng.api.role.entity.Role;
 import com.ngng.api.transaction.dto.ReadTransactionDetailsDTO;
@@ -24,7 +25,7 @@ public class UserMyPageReadResponseDTO {
     private String address;
     private Role role;
     private Long point;
-    private List<ReadProductResponseDTO> sellList;
+    private List<ReadProductMypageResponseDTO> sellList;
     private List<ReadTransactionDetailsDTO> buyList;
 
     public UserMyPageReadResponseDTO from(User user){
@@ -43,7 +44,7 @@ public class UserMyPageReadResponseDTO {
     public UserMyPageReadResponseDTO from(
             User user,
             PointHistory pointHistory,
-            List<ReadProductResponseDTO> sellList,
+            List<ReadProductMypageResponseDTO> sellList,
             List<ReadTransactionDetailsDTO> buyList
     ){
         return UserMyPageReadResponseDTO.builder()

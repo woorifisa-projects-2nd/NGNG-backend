@@ -5,6 +5,7 @@ import com.ngng.api.productImage.entity.ProductImage;
 import com.ngng.api.productTag.entity.ProductTag;
 import com.ngng.api.status.entity.Status;
 import com.ngng.api.thumbnail.entity.Thumbnail;
+import com.ngng.api.transaction.entity.TransactionDetails;
 import com.ngng.api.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -80,4 +81,11 @@ public class Product {
     @OneToMany
     @JoinColumn(name = "product_id")
     private List<ProductImage> images;
+
+    @OneToOne(mappedBy = "product")
+    private TransactionDetails transactionDetails;
+
+    public Product(Long id){
+        this.productId = id;
+    }
 }

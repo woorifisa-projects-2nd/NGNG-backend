@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 
@@ -53,6 +54,7 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
 
     public void accountConfirm(String accountBank, String accountNumber, Role role) {
 

@@ -17,5 +17,4 @@ COPY --from=builder /usr/src/app/build/libs/*.jar .
 
 # ENTRYPOINT ["java","-jar","-Dspring.profiles.active=dev","/app/app.jar"]
 
-CMD java -jar -Dspring.profiles.active=dev /app/${TARGET}.jar
-
+CMD java -jar ./${TARGET}.jar --spring.config.location=file:///app/application-prod.yml

@@ -5,10 +5,7 @@ import com.ngng.api.category.service.ChatService;
 import com.ngng.api.chat.ReadChatResponseDTO.ReadChatResponseDTO;
 import com.ngng.api.product.dto.request.CreateProductRequestDTO;
 import com.ngng.api.product.dto.request.UpdateProductRequestDTO;
-import com.ngng.api.product.dto.response.ReadProductCategoryResponseDTO;
-import com.ngng.api.product.dto.response.ReadProductResponseDTO;
-import com.ngng.api.product.dto.response.ReadProductStatusResponseDTO;
-import com.ngng.api.product.dto.response.ReadProductUserResponseDTO;
+import com.ngng.api.product.dto.response.*;
 import com.ngng.api.product.entity.Product;
 import com.ngng.api.product.repository.ProductRepository;
 import com.ngng.api.productImage.dto.request.UpdateImageRequestDTO;
@@ -126,12 +123,13 @@ public class ProductService {
                 .build();
     }
 
-    public List<ReadProductResponseDTO> readSellProductsByUserId(Long sellerId){
+    public List<Product> readSellProductsByUserId(Long sellerId){
         List<Product> products = productRepository.readAllSellProductBySellerId(sellerId);
 
-        return products.stream()
-                .map(item -> new ReadProductResponseDTO().from(item))
-                .collect(Collectors.toList());
+//        return products.stream()
+//                .map(item -> new ReadProductMypageResponseDTO().from(item))
+//                .collect(Collectors.toList());
+        return products;
     }
 
 

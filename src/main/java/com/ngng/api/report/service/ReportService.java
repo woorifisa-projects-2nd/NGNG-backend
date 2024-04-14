@@ -1,12 +1,13 @@
 package com.ngng.api.report.service;
 
 import com.ngng.api.report.dto.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface ReportService {
 
-    List<ReadReportListResponseDTO> findAll();
+    Page<ReadReportListResponseDTO> findAll(int page);
 
     ReadReportResponseDTO findById(Long userId);
 

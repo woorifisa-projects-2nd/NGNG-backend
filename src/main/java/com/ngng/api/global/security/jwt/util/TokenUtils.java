@@ -22,9 +22,9 @@ public class TokenUtils {
     private final TokenRepository tokenRepository;
 
     @Value("${jwt.expiration.access}")
-    private Long accessTokenExpirationMs;
+    private int accessTokenExpirationMs;
     @Value("${jwt.expiration.refresh}")
-    private Long refreshTokenExpirationMs;
+    private int refreshTokenExpirationMs;
 
     public TokenUtils(@Value("${jwt.secret.key}")
                       String secretKey,

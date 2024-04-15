@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -50,14 +51,26 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         CustomUserDetails userDetails = (CustomUserDetails) authResult.getPrincipal();
         User user = userDetails.getUser();
 
-        ObjectMapper mapper = new ObjectMapper();
-
         Map<String, String> tokens = tokenUtils.createToken(userDetails);
-        LoginResponse loginResponse = LoginResponse.of(user, tokens);
-        String stringUser = mapper.writeValueAsString(loginResponse);
+        String accessToken = tokens.get("accessToken");
+        String refreshToken = tokens.get("refreshToken");
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+
+
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+                .path("/")
+                .httpOnly(true)
+                .secure(true)
+                .build();
+
+        response.setHeader("Set-Cookie", cookie.toString());
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        LoginResponse loginResponse = LoginResponse.of(user, accessToken);
+        String stringUser = mapper.writeValueAsString(loginResponse);
 
         PrintWriter writer = response.getWriter();
 

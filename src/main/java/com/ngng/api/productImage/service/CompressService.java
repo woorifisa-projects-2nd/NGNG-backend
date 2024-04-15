@@ -28,7 +28,7 @@ public class CompressService {
         // 백의 자리 숫자 추출
         int hundredsDigit = (originHeight / 100) % 10;
 
-        int newHeight = (hundredsDigit == 0 ? 1: hundredsDigit) * 100;
+        int newHeight = (hundredsDigit > 8 ? 9: hundredsDigit + 1) * 100;
 
 //        이미지 비율
         double  aspectRatio = (double) originWidth / originHeight;

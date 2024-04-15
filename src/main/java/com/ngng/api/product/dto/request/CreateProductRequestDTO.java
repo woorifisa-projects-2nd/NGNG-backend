@@ -24,6 +24,6 @@ public class CreateProductRequestDTO {
     Long statusId;
     Long categoryId;
     List<CreateProductTagRequestDTO> tags;
-    List<CreateImageRequestDTO> images;
-    String thumbnailUrl;
+//    List<CreateImageRequestDTO> images;
+//    String thumbnailUrl;
 }

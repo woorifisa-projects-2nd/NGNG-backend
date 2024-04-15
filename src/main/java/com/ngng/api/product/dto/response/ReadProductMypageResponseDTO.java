@@ -3,6 +3,8 @@ package com.ngng.api.product.dto.response;
 import com.ngng.api.product.entity.Product;
 import com.ngng.api.productImage.dto.response.ReadProductImageResponseDTO;
 import com.ngng.api.productTag.dto.response.ReadProductTagResponseDTO;
+import com.ngng.api.thumbnail.dto.ThumbnailDTO;
+import com.ngng.api.thumbnail.entity.Thumbnail;
 import com.ngng.api.transaction.dto.ReadTransactionDetailsDTO;
 import com.ngng.api.transaction.entity.TransactionDetails;
 import lombok.*;
@@ -36,6 +38,7 @@ public class ReadProductMypageResponseDTO {
     private ReadProductCategoryResponseDTO category;
     private List<ReadProductTagResponseDTO> tags;
     private List<ReadProductImageResponseDTO> images;
+    private ThumbnailDTO thumbnail;
     private ReadTransactionDetailsDTO transactionDetails;
 
 
@@ -49,6 +52,11 @@ public class ReadProductMypageResponseDTO {
                 .discountable(product.getDiscountable())
                 .forSale(product.getForSale())
                 .freeShipping(product.getFreeShipping())
+                .thumbnail(ThumbnailDTO.
+                        builder()
+                        .id(product.getThumbnail().getThumbnailId())
+                        .thumbnailURL(product.getThumbnail().getThumbnailUrl())
+                        .build())
                 .images(product.getImages()
                         .stream().map(image -> ReadProductImageResponseDTO
                                 .builder()

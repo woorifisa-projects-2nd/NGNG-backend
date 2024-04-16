@@ -3,6 +3,7 @@ package com.ngng.api.global.security.jwt.filter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngng.api.global.security.dto.response.LoginResponse;
+import com.ngng.api.global.security.dto.response.ReissuanceAccessTokenResponse;
 import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
 import com.ngng.api.global.security.jwt.util.TokenUtils;
 import com.ngng.api.role.entity.Role;
@@ -48,6 +49,8 @@ public class TokenFilter extends OncePerRequestFilter {
 
         if (tokenUtils.isExpired(accessToken)) {
 
+            log.info("expired accessToken");
+
             String refreshToken = Arrays.stream(
                             request.getCookies())
                     .filter(cookie -> cookie.getName().equals("refreshToken"))
@@ -55,105 +58,40 @@ public class TokenFilter extends OncePerRequestFilter {
                     .toString();
 
             if (refreshToken == null ||
-                    !refreshToken.startsWith("Bearer ") ||
-                    tokenUtils.validateToken(refreshToken) ||
                     !tokenUtils.getType(refreshToken).equals("refresh") ||
-                    tokenUtils.isExpired(refreshToken)) {
+                    tokenUtils.checkRefreshToken(refreshToken)) {
 
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
                 return;
             }
 
-            /*
-            * refreshToken이 검증되면 accessToken을 다시 만들어서 response에 담아줘야하는데,
-            * filter에서 처리하고 이후에 계속 유지될 수 있게하는 방법 찾아봐야함.
-            * */
-            
-//            CustomUserDetails userDetails = createCustomUserDetails(refreshToken);
-//            User user = userDetails.getUser();
-//
-//            String recreateAccessToken = tokenUtils.createAccessToken(userDetails);
-//
-//            response.setContentType("application/json");
-//            response.setCharacterEncoding("UTF-8");
-//
-//            ObjectMapper mapper = new ObjectMapper();
-//
-//            LoginResponse loginResponse = LoginResponse.of(user, recreateAccessToken);
-//            String stringUser = mapper.writeValueAsString(loginResponse);
-//
-//            PrintWriter writer = response.getWriter();
-//
-//            writer.write(stringUser);
-//            writer.flush();
-//
-//            response.setStatus(HttpServletResponse.SC_OK);
+            CustomUserDetails userDetails = createCustomUserDetails(refreshToken);
+
+            String reissuedAccessToken = tokenUtils.createAccessToken(userDetails);
+            ReissuanceAccessTokenResponse tokenResponse = ReissuanceAccessTokenResponse.of(reissuedAccessToken);
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            ObjectMapper mapper = new ObjectMapper();
+            String stringResponse = mapper.writeValueAsString(tokenResponse);
+
+            PrintWriter writer = response.getWriter();
+
+            writer.write(stringResponse);
+            writer.flush();
+
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+            return;
         }
 
+        CustomUserDetails customUserDetails = createCustomUserDetails(accessToken);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
 
-//        String tokenType = tokenUtils.getType(token);
-//
-//        if (tokenType.equals("access")) {
-//
-//            if (tokenUtils.checkAccessToken(token)) {
-//
-//                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//            } else {
-//
-//                log.info("access token permit");
-//
-//                CustomUserDetails customUserDetails = createCustomUserDetails(token);
-//                Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-//
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-//                filterChain.doFilter(request, response);
-//            }
-//
-//            return;
-//        }
-//
-//        if (tokenType.equals("refresh") && !tokenUtils.checkRefreshToken(token)) {
-//
-//            if (tokenUtils.checkRefreshToken(token)) {
-//
-//                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//            } else {
-//
-//                CustomUserDetails userDetails = createCustomUserDetails(token);
-//                User user = userDetails.getUser();
-//
-//                Map<String, String> tokens = tokenUtils.createToken(userDetails);
-//                String accessToken = tokens.get("accessToken");
-//                String refreshToken = tokens.get("refreshToken");
-//
-//                response.setContentType("application/json");
-//                response.setCharacterEncoding("UTF-8");
-//
-//
-//                ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
-//                        .path("/")
-//                        .httpOnly(true)
-//                        .secure(true)
-//                        .build();
-//
-//                response.setHeader("Set-Cookie", cookie.toString());
-//
-//                ObjectMapper mapper = new ObjectMapper();
-//
-//                LoginResponse loginResponse = LoginResponse.of(user, accessToken);
-//                String stringUser = mapper.writeValueAsString(loginResponse);
-//
-//                PrintWriter writer = response.getWriter();
-//
-//                writer.write(stringUser);
-//                writer.flush();
-//
-//                response.setStatus(HttpServletResponse.SC_OK);
-//            }
-//
-//            return;
-//        }
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        filterChain.doFilter(request, response);
     }
 
     @Override

@@ -58,17 +58,12 @@ public class TokenUtils {
         try {
 
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-
-            return true;
         } catch (Exception e) {
 
             return false;
         }
-    }
 
-    public boolean checkAccessToken(String token) {
-
-        return validateToken(token);
+        return true;
     }
 
     public boolean checkRefreshToken(String token) {
@@ -80,9 +75,10 @@ public class TokenUtils {
 
     public String createAccessToken(CustomUserDetails userDetails) {
 
+        String PREFIX_TOKEN = "Bearer ";
         Date now = new Date();
 
-        return Jwts.builder()
+        return PREFIX_TOKEN + Jwts.builder()
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + accessTokenExpirationMs))
                 .setSubject(userDetails.getUsername())
@@ -96,6 +92,7 @@ public class TokenUtils {
 
         Date now = new Date();
 
+        // refreshToken은 cookie로 저장되고 사용되기 때문에 Bearer 접두사를 붙힐 필요가 없음(확인 필요)
         String refreshToken = Jwts.builder()
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + refreshTokenExpirationMs))

@@ -21,6 +21,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -33,77 +34,126 @@ public class TokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String token = request.getHeader("Authorization");
+        String accessToken = request.getHeader("Authorization");
 
-        if (token == null || !token.startsWith("Bearer ")) {
+        if (accessToken == null ||
+                !accessToken.startsWith("Bearer ") ||
+                tokenUtils.validateToken(accessToken) ||
+                !tokenUtils.getType(accessToken).equals("access")) {
 
-            filterChain.doFilter(request, response);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
             return;
         }
 
-        String tokenType = tokenUtils.getType(token);
+        if (tokenUtils.isExpired(accessToken)) {
 
-        if (tokenType.equals("access")) {
+            String refreshToken = Arrays.stream(
+                            request.getCookies())
+                    .filter(cookie -> cookie.getName().equals("refreshToken"))
+                    .findFirst()
+                    .toString();
 
-            if (tokenUtils.checkAccessToken(token)) {
+            if (refreshToken == null ||
+                    !refreshToken.startsWith("Bearer ") ||
+                    tokenUtils.validateToken(refreshToken) ||
+                    !tokenUtils.getType(refreshToken).equals("refresh") ||
+                    tokenUtils.isExpired(refreshToken)) {
 
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            } else {
 
-                log.info("access token permit");
-
-                CustomUserDetails customUserDetails = createCustomUserDetails(token);
-                Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                filterChain.doFilter(request, response);
+                return;
             }
 
-            return;
+            /*
+            * refreshToken이 검증되면 accessToken을 다시 만들어서 response에 담아줘야하는데,
+            * filter에서 처리하고 이후에 계속 유지될 수 있게하는 방법 찾아봐야함.
+            * */
+            
+//            CustomUserDetails userDetails = createCustomUserDetails(refreshToken);
+//            User user = userDetails.getUser();
+//
+//            String recreateAccessToken = tokenUtils.createAccessToken(userDetails);
+//
+//            response.setContentType("application/json");
+//            response.setCharacterEncoding("UTF-8");
+//
+//            ObjectMapper mapper = new ObjectMapper();
+//
+//            LoginResponse loginResponse = LoginResponse.of(user, recreateAccessToken);
+//            String stringUser = mapper.writeValueAsString(loginResponse);
+//
+//            PrintWriter writer = response.getWriter();
+//
+//            writer.write(stringUser);
+//            writer.flush();
+//
+//            response.setStatus(HttpServletResponse.SC_OK);
         }
 
-        if (tokenType.equals("refresh") && !tokenUtils.checkRefreshToken(token)) {
 
-            if (tokenUtils.checkRefreshToken(token)) {
-
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            } else {
-
-                CustomUserDetails userDetails = createCustomUserDetails(token);
-                User user = userDetails.getUser();
-
-                Map<String, String> tokens = tokenUtils.createToken(userDetails);
-                String accessToken = tokens.get("accessToken");
-                String refreshToken = tokens.get("refreshToken");
-
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-
-
-                ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
-                        .path("/")
-                        .httpOnly(true)
-                        .secure(true)
-                        .build();
-
-                response.setHeader("Set-Cookie", cookie.toString());
-
-                ObjectMapper mapper = new ObjectMapper();
-
-                LoginResponse loginResponse = LoginResponse.of(user, accessToken);
-                String stringUser = mapper.writeValueAsString(loginResponse);
-
-                PrintWriter writer = response.getWriter();
-
-                writer.write(stringUser);
-                writer.flush();
-
-                response.setStatus(HttpServletResponse.SC_OK);
-            }
-
-            return;
-        }
+//        String tokenType = tokenUtils.getType(token);
+//
+//        if (tokenType.equals("access")) {
+//
+//            if (tokenUtils.checkAccessToken(token)) {
+//
+//                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//            } else {
+//
+//                log.info("access token permit");
+//
+//                CustomUserDetails customUserDetails = createCustomUserDetails(token);
+//                Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+//
+//                SecurityContextHolder.getContext().setAuthentication(authentication);
+//                filterChain.doFilter(request, response);
+//            }
+//
+//            return;
+//        }
+//
+//        if (tokenType.equals("refresh") && !tokenUtils.checkRefreshToken(token)) {
+//
+//            if (tokenUtils.checkRefreshToken(token)) {
+//
+//                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//            } else {
+//
+//                CustomUserDetails userDetails = createCustomUserDetails(token);
+//                User user = userDetails.getUser();
+//
+//                Map<String, String> tokens = tokenUtils.createToken(userDetails);
+//                String accessToken = tokens.get("accessToken");
+//                String refreshToken = tokens.get("refreshToken");
+//
+//                response.setContentType("application/json");
+//                response.setCharacterEncoding("UTF-8");
+//
+//
+//                ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+//                        .path("/")
+//                        .httpOnly(true)
+//                        .secure(true)
+//                        .build();
+//
+//                response.setHeader("Set-Cookie", cookie.toString());
+//
+//                ObjectMapper mapper = new ObjectMapper();
+//
+//                LoginResponse loginResponse = LoginResponse.of(user, accessToken);
+//                String stringUser = mapper.writeValueAsString(loginResponse);
+//
+//                PrintWriter writer = response.getWriter();
+//
+//                writer.write(stringUser);
+//                writer.flush();
+//
+//                response.setStatus(HttpServletResponse.SC_OK);
+//            }
+//
+//            return;
+//        }
     }
 
     @Override

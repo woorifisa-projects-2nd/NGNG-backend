@@ -50,7 +50,7 @@ public class TokenUtils {
 
     public boolean isExpired(String token) {
 
-        return !tokenParser(token).getExpiration().before(new Date());
+        return tokenParser(token).getExpiration().before(new Date());
     }
 
     public boolean validateToken(String token) {
@@ -59,7 +59,7 @@ public class TokenUtils {
 
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
 
-            return isExpired(token);
+            return true;
         } catch (Exception e) {
 
             return false;
@@ -78,12 +78,11 @@ public class TokenUtils {
         return isExists && validateToken(token);
     }
 
-    public Map<String, String> createToken(CustomUserDetails userDetails) {
+    public String createAccessToken(CustomUserDetails userDetails) {
 
         Date now = new Date();
 
-        // accessToken과 refreshToken을 함께 발급 (accessToekn이 만료 되면 refreshToken도 발급받도록)
-        String accessToken = "Bearer " + Jwts.builder()
+        return Jwts.builder()
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + accessTokenExpirationMs))
                 .setSubject(userDetails.getUsername())
@@ -91,8 +90,13 @@ public class TokenUtils {
                 .claim("type", "access")
                 .signWith(key)
                 .compact();
+    }
 
-        String refreshToken = "Bearer " + Jwts.builder()
+    public String createRefreshToken(CustomUserDetails userDetails) {
+
+        Date now = new Date();
+
+        String refreshToken = Jwts.builder()
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + refreshTokenExpirationMs))
                 .setSubject(userDetails.getUsername())
@@ -103,18 +107,11 @@ public class TokenUtils {
 
         Token token = Token.builder()
                 .tokenName(refreshToken)
-                .user(userDetails.getUser())
                 .build();
 
         tokenRepository.save(token);
 
-        // map에 담아 header에 추가
-        Map<String, String> tokens = new HashMap<>();
-
-        tokens.put("accessToken", accessToken);
-        tokens.put("refreshToken", refreshToken);
-
-        return tokens;
+        return refreshToken;
     }
 
     public Claims tokenParser(String token) {

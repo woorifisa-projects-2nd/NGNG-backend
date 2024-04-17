@@ -12,7 +12,7 @@ public interface ReportService {
 
     CreateReportResponseDTO save(CreateReportRequestDTO createReportRequestDTO);
 
-    ReadReportResponseDTO update(Long reportId, int isReport);
+    ReadReportResponseDTO update(Long reportId, Boolean isReport);
 
     DeleteReportResponseDTO delete(Long reportId);
 

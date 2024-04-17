@@ -19,7 +19,7 @@ public class CreateReportResponseDTO {
     private ReportType reportType;
     private User reporter;
     private User user;
-    private int isReport;
+    private Boolean isReport;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Long productId;

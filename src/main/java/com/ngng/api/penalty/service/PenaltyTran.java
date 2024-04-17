@@ -69,7 +69,7 @@ public class PenaltyTran {
 
 //        System.exit(0);
 
-        updateIsReport(responsepenalty.getReportId(), 1);
+        updateIsReport(responsepenalty.getReportId(), true);
 
         return CreatePenaltyResponseDTO.builder()
                 .startDate(responsepenalty.getStartDate())
@@ -85,7 +85,7 @@ public class PenaltyTran {
 
     }
 
-    public void updateIsReport(Long reportId, int isReport) {
+    public void updateIsReport(Long reportId, Boolean isReport) {
         System.out.println("reportId = " + reportId);
         System.out.println("isReport = " + isReport);
 

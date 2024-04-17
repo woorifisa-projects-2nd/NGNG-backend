@@ -20,7 +20,7 @@ public class ReadReportListResponseDTO {
     private ReportType reportType;
     private User reporter;
     private User user;
-    private int isReport;
+    private Boolean isReport;
     private Timestamp createdAt;
     private Long productId;
     private Long privateChatId;
@@ -34,7 +34,7 @@ public class ReadReportListResponseDTO {
         final ReportType reportType = report.getReportType();
         final User reporter = report.getReporter();
         final User user = report.getUser();
-        final int isReport = report.getIsReport();
+        final Boolean isReport = report.getIsReport();
         final Timestamp createdAt = report.getCreatedAt();
         final Long productId = report.getProductId();
         final Long privateChatId = report.getPrivateChatId();

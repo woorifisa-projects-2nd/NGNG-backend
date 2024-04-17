@@ -1,7 +1,7 @@
 package com.ngng.api.product.entity;
 
 import com.ngng.api.product.dto.request.CreateProductRequestDTO;
-import com.ngng.api.productImage.entity.ProductImage;
+import com.ngng.api.product.dto.request.UpdateProductRequestDTO;
 import com.ngng.api.report.entity.Report;
 import com.ngng.api.status.entity.Status;
 import com.ngng.api.thumbnail.entity.Thumbnail;
@@ -87,7 +87,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<ProductImage> productImages;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<PublicChat> publicChats;
 
     @OneToOne(mappedBy = "product")
@@ -117,5 +117,28 @@ public class Product {
                         .product(this)
                         .tagName(tag.getTagName())
                         .build()).toList();
+    }
+
+    public Product from (UpdateProductRequestDTO request){
+
+        this.setTitle(request.getTitle());
+        this.setContent(request.getContent());
+        this.setPrice(request.getPrice());
+        this.setIsEscrow(request.getIsEscrow());
+        this.setDiscountable(request.getDiscountable());
+        this.setPurchaseAt(request.getPurchaseAt());
+        this.setForSale(request.getForSale());
+        this.setVisible(request.getVisible());
+        this.setRefreshedAt(request.getRefreshedAt());
+        this.setFreeShipping(request.getFreeShipping());
+        this.setStatus(Status.builder().statusId(request.getStatusId()).build());
+        this.setCategory(Category.builder().categoryId(request.getCategoryId()).build());
+        this.setTags(request.getTags().stream()
+                .map(target -> Tag.builder()
+                        .product(this)
+                        .tagName(target.getTagName())
+                        .build())
+                .toList());
+        return this;
     }
 }

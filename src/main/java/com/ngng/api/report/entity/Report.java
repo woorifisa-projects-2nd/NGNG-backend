@@ -32,7 +32,7 @@ public class Report {
     @Column(name = "user_id")
     private Long userId;
 
-    private int isReport;
+    private Boolean isReport;
 
     @CreationTimestamp
     private Timestamp createdAt;

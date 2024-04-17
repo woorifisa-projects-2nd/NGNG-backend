@@ -47,7 +47,7 @@ public class AdminReportController {
         if(report == null) {
             return ResponseEntity.badRequest().build();
         } else{
-            return ResponseEntity.ok().body(reportService.update(reportId, 1));
+            return ResponseEntity.ok().body(reportService.update(reportId, true));
         }
     }
 

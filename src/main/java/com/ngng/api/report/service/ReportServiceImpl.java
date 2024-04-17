@@ -93,8 +93,9 @@ public class ReportServiceImpl implements ReportService {
                 .build();
     }
 
+
     @Override
-    public ReadReportResponseDTO update(Long reportId, int isReport) {
+    public ReadReportResponseDTO update(Long reportId, Boolean isReport) {
         System.out.println("reportId = " + reportId);
         System.out.println("isReport = " + isReport);
 

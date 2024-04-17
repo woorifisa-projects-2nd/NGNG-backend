@@ -5,13 +5,13 @@ import org.springframework.data.domain.Page;
 
 public interface ReportService {
 
-    Page<ReadReportListResponseDTO> findAll(int page, boolean unprocessedOnly);
+    Page<ReadReportListResponseDTO> findAll(int page, Boolean unprocessedOnly);
 
     ReadReportResponseDTO findById(Long userId);
 
     CreateReportResponseDTO save(CreateReportRequestDTO createReportRequestDTO);
 
-    ReadReportResponseDTO update(Long reportId, int isReport);
+    ReadReportResponseDTO update(Long reportId, Boolean isReport);
 
     DeleteReportResponseDTO delete(Long reportId);
 

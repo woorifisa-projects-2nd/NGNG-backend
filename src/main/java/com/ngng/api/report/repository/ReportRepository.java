@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReportRepository extends JpaRepository<Report, Long> {
     Page<Report> findAll(Pageable pageable);
-    Page<Report> findByIsReport(int isReport, Pageable pageable);
+    Page<Report> findByIsReport(Boolean isReport, Pageable pageable);
 }

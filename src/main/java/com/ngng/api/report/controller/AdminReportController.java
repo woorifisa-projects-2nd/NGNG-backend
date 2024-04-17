@@ -18,7 +18,8 @@ public class AdminReportController {
     private final ReportService reportService;
 
     @GetMapping
-    public ResponseEntity<Page<ReadReportListResponseDTO>> readAll(@RequestParam(value="page", defaultValue="0") int page, @RequestParam boolean unprocessedOnly) {
+    public ResponseEntity<Page<ReadReportListResponseDTO>> readAll(@RequestParam(value="page", defaultValue="0") int page, @RequestParam Boolean unprocessedOnly) {
+        System.out.println("unprocessedOnly = " + unprocessedOnly);
         Page<ReadReportListResponseDTO> reports = reportService.findAll(page, unprocessedOnly);
 
         return ResponseEntity.ok(reports);
@@ -46,7 +47,7 @@ public class AdminReportController {
         if(report == null) {
             return ResponseEntity.badRequest().build();
         } else{
-            return ResponseEntity.ok().body(reportService.update(reportId, 1));
+            return ResponseEntity.ok().body(reportService.update(reportId, true));
         }
     }
 

@@ -30,7 +30,7 @@ public class ReportServiceImpl implements ReportService {
 
 
     @Override
-    public Page<ReadReportListResponseDTO> findAll(int page, boolean unprocessedOnly) {
+    public Page<ReadReportListResponseDTO> findAll(int page, Boolean unprocessedOnly) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("reportId"));
         Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
@@ -38,7 +38,7 @@ public class ReportServiceImpl implements ReportService {
         // 미처리 신고 분기
         Page<Report> reports;
         if(unprocessedOnly) {
-            reports = reportRepository.findByIsReport(0, pageable);
+            reports = reportRepository.findByIsReport(null, pageable);
         } else {
             reports = reportRepository.findAll(pageable);
         }
@@ -116,7 +116,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public ReadReportResponseDTO update(Long reportId, int isReport) {
+    public ReadReportResponseDTO update(Long reportId, Boolean isReport) {
         System.out.println("reportId = " + reportId);
         System.out.println("isReport = " + isReport);
 
@@ -151,7 +151,7 @@ public class ReportServiceImpl implements ReportService {
                 new EntityNotFoundException("report not found")
         );
 
-        report.setVisible(1);
+        report.setVisible(true);
 
         Report responseReport = reportRepository.save(report);
 

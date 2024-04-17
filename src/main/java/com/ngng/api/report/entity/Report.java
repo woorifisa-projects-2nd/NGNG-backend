@@ -32,7 +32,7 @@ public class Report {
     @Column(name = "user_id")
     private Long userId;
 
-    private int isReport;
+    private Boolean isReport;
 
     @CreationTimestamp
     private Timestamp createdAt;
@@ -43,7 +43,7 @@ public class Report {
     @Column(name = "product_id")
     private Long productId;
     private Long privateChatId;
-    private int visible;
+    private Boolean visible;
 
     @ManyToOne
     @JoinColumn(name = "report_type_id")

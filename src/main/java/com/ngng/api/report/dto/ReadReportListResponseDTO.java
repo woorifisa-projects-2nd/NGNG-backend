@@ -1,6 +1,5 @@
 package com.ngng.api.report.dto;
 
-import com.ngng.api.report.entity.Report;
 import com.ngng.api.report.entity.ReportType;
 import com.ngng.api.user.entity.User;
 import lombok.AllArgsConstructor;
@@ -20,10 +19,10 @@ public class ReadReportListResponseDTO {
     private ReportType reportType;
     private User reporter;
     private User user;
-    private int isReport;
+    private Boolean isReport;
     private Timestamp createdAt;
     private Long productId;
     private Long privateChatId;
-    private int visible;
+    private Boolean visible;
 
 }

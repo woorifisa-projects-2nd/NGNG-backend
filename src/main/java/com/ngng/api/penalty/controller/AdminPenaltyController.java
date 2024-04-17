@@ -23,7 +23,6 @@ public class AdminPenaltyController {
 
     private final PenaltyTran penaltyTran;
 
-
     @GetMapping
     public ResponseEntity<List<ReadPenaltyListResponseDTO>> readAll() {
         List<ReadPenaltyListResponseDTO> reports = penaltyService.findAll();

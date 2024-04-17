@@ -4,7 +4,8 @@ import com.ngng.api.global.security.handler.CustomLogoutHandler;
 import com.ngng.api.global.security.handler.CustomLogoutSuccessHandler;
 import com.ngng.api.global.security.jwt.filter.LoginFilter;
 import com.ngng.api.global.security.jwt.filter.TokenFilter;
-import com.ngng.api.global.security.jwt.util.TokenUtils;
+import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
+import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +29,8 @@ import java.util.Collections;
 public class SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
-    private final TokenUtils tokenUtils;
+    private final JwtTokenVerifier tokenVerifier;
+    private final JwtTokenProvider tokenProvider;
     private final CustomLogoutHandler logoutHandler;
     private final CustomLogoutSuccessHandler logoutSuccessHandler;
 
@@ -57,6 +59,7 @@ public class SecurityConfig {
                     return configuration;
                 })))
 
+                // logout url과 logout을 처리할 handler 지정
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
@@ -75,8 +78,8 @@ public class SecurityConfig {
                 * security filter에도 적용되어 2번 동작하기 때문에 bean주입을 하지않고 new를 통해 생성
                 * jwt를 통한 인증/인가 필터 설정
                 * */
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), tokenUtils), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new TokenFilter(tokenUtils), LoginFilter.class)
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), tokenVerifier, tokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new TokenFilter(tokenVerifier, tokenProvider), LoginFilter.class)
 
                 /*
                 * 요청별 권한 설정
@@ -113,6 +116,7 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
+    // password를 암호화하는 방식 지정, BCrypt 방식 적용
     @Bean
     public PasswordEncoder bCryptPasswordEncoder() {
 

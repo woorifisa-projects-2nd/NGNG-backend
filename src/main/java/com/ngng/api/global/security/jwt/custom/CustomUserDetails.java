@@ -20,6 +20,7 @@ public class CustomUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         Collection<GrantedAuthority> collection = new ArrayList<>();
+        // spring security에서 authority를 처리할 때 ROLE_ 접두사가 있어야 하기 때문에 role 앞에 붙혀서 추가
         collection.add((GrantedAuthority) () -> ROLE_PREFIX + user.getRole().getRoleType());
 
         return collection;

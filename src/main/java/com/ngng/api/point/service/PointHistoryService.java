@@ -16,6 +16,7 @@ public class PointHistoryService {
     private final PointHistoryRepository pointHistoryRepository;
 
 
+
     public PointHistory createInitByUser(User user){
 
         PointHistory pointHistory = PointHistory.builder()
@@ -34,15 +35,14 @@ public class PointHistoryService {
 
 
     public PointHistory readCostByUser(User user){
-
         return pointHistoryRepository.findLastByUserId(user.getUserId()).orElse(null);
-
     }
 
     public List<PointHistory> readPointHistories(User user) {
         return pointHistoryRepository.findAllByUserId(user.getUserId());
     }
 
+//    포인트 내역 저장하는 함수 나중에 함수 이름 변경
     public PointHistory updateCostByUserAndRequest(User user, CreateAddPointRequestDTO request){
         PointHistory lastHistory = readCostByUser(user);
 

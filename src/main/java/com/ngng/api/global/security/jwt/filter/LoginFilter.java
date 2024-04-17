@@ -3,7 +3,8 @@ package com.ngng.api.global.security.jwt.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngng.api.global.security.dto.response.LoginResponse;
 import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
-import com.ngng.api.global.security.jwt.util.TokenUtils;
+import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
+import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
 import com.ngng.api.user.entity.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,18 +22,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
-    private final TokenUtils tokenUtils;
+    private final JwtTokenVerifier tokenVerifier;
+    private final JwtTokenProvider tokenProvider;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
 
+        // request에서 email과 password를 받아 security 내부적으로 사용되는 token 생성
         String email = obtainEmail(request);
         String password = obtainPassword(request);
 
@@ -46,16 +48,15 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         return request.getParameter("email");
     }
 
+    // 로그인에 성공할 시 동작되는 메서드
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
 
         CustomUserDetails userDetails = (CustomUserDetails) authResult.getPrincipal();
         User user = userDetails.getUser();
 
-        System.out.println(user.toString());
-
-        String accessToken = tokenUtils.createAccessToken(userDetails);
-        String refreshToken = tokenUtils.createRefreshToken(userDetails);
+        String accessToken = tokenProvider.createAccessToken(userDetails);
+        String refreshToken = tokenProvider.createRefreshToken(userDetails);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -70,7 +71,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-
+        // servlet에서 response를 보낼 때 객체 그대로를 보낼 수 없어 ObjectMapper를 통해 객체를 String형으로 변환
         ObjectMapper mapper = new ObjectMapper();
 
         LoginResponse loginResponse = LoginResponse.of(user, accessToken);
@@ -85,6 +86,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
+    // 로그인에 실패할 시 동작되는 메서드
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
 

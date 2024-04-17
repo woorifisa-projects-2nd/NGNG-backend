@@ -39,6 +39,8 @@ public class Report {
 
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    @Column(name = "product_id")
     private Long productId;
     private Long privateChatId;
     private int visible;

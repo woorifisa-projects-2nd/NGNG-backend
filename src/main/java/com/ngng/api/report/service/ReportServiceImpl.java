@@ -84,7 +84,7 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public CreateReportResponseDTO save(CreateReportRequestDTO createReportRequestDTO) {
         Optional<ReportType> reportType = reportTypeRepository.findById(createReportRequestDTO.getReportTypeId());
-        ReportType responseReportType = reportType.orElseThrow();
+        ReportType responseReportType = reportType.orElseThrow(); // TODO 여기 예외처리하기
 
         Report report = Report.builder()
                 .reportContents(createReportRequestDTO.getReportContents())

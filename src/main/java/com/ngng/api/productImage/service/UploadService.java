@@ -16,7 +16,12 @@ public class UploadService {
     private final AwsS3Service awsS3Service;
 
 
+    public String uploadFile(MultipartFile file) throws IOException {
+        //   이미지 주소
+        return awsS3Service.saveFile(file);
 
+
+    }
     public String uploadImageFile(MultipartFile file) throws IOException {
 
         BufferedImage image = ImageIO.read(file.getInputStream());

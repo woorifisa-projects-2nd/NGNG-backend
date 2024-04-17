@@ -61,7 +61,7 @@ public class AdminUserController {
         if(found == null) {
             return ResponseEntity.badRequest().build();
         } else{
-            return ResponseEntity.ok().body(userService.update(userId, userUpdateDTO));
+            return ResponseEntity.ok().body(userService.update(userUpdateDTO));
         }
     }
 

@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -50,18 +52,31 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         CustomUserDetails userDetails = (CustomUserDetails) authResult.getPrincipal();
         User user = userDetails.getUser();
 
-        ObjectMapper mapper = new ObjectMapper();
-
-        Map<String, String> tokens = tokenUtils.createToken(userDetails);
-        LoginResponse loginResponse = LoginResponse.of(user, tokens);
-        String stringUser = mapper.writeValueAsString(loginResponse);
+        String accessToken = tokenUtils.createAccessToken(userDetails);
+        String refreshToken = tokenUtils.createRefreshToken(userDetails);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
+        // refreshToken은 header에 set-cookie를 통해 전달
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+                .path("/")
+                .domain("localhost")
+                .httpOnly(true)
+                .secure(true)
+                .build();
+
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        LoginResponse loginResponse = LoginResponse.of(user, accessToken);
+        String stringResponse = mapper.writeValueAsString(loginResponse);
+
+        // accessToken은 body에 담아서 전달
         PrintWriter writer = response.getWriter();
 
-        writer.write(stringUser);
+        writer.write(stringResponse);
         writer.flush();
 
         response.setStatus(HttpServletResponse.SC_OK);

@@ -24,7 +24,7 @@ public class ProductController {
     @Operation(summary = "상품 추가", description = "전달받은 값으로 상품을 생성합니다.")
     @PostMapping()
     public ResponseEntity<Long> create(@RequestBody CreateProductRequestDTO product){
-        return ResponseEntity.ok().body(productService.create(product));
+        return ResponseEntity.ok().body(productService.create(product)); // TODO 201 created
     }
 
     @GetMapping(path = "/{productId}")
@@ -40,7 +40,7 @@ public class ProductController {
     }
 
     @GetMapping("")
-    @Operation(summary = "상품 전체 조회", description = "전체 상품을 조회합니다.")
+    @Operation(summary = "상품 전체 조회", description = "..")
     public ResponseEntity<List<ReadAllProductsDTO>> readAll(){
         List<ReadAllProductsDTO> found = productService.readAll();
         if(found == null){
@@ -61,6 +61,6 @@ public class ProductController {
     @Parameter(name = "id", description = "상품 id")
     @Operation(summary = "상품 삭제", description = "id값으로 해당 상품을 찾아 보이지 않게 숨깁니다.")
     public ResponseEntity<Long> updateVisibility(@PathVariable Long productId){
-        return  ResponseEntity.ok(productService.delete(productId));
+        return  ResponseEntity.ok(productService.delete(productId)); // TODO : no content 코드 찾아보기
     }
 }

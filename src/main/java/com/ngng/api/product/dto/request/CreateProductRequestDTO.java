@@ -1,7 +1,5 @@
 package com.ngng.api.product.dto.request;
 
-import com.ngng.api.productImage.dto.request.CreateImageRequestDTO;
-import com.ngng.api.productTag.dto.request.CreateProductTagRequestDTO;
 import lombok.*;
 
 import java.util.List;
@@ -23,7 +21,5 @@ public class CreateProductRequestDTO {
     Long userId;
     Long statusId;
     Long categoryId;
-    List<CreateProductTagRequestDTO> tags;
-    List<CreateImageRequestDTO> images;
-    String thumbnailUrl;
+    List<TagRequestDTO> tags;
 }

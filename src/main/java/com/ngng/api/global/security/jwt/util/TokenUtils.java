@@ -22,9 +22,9 @@ public class TokenUtils {
     private final TokenRepository tokenRepository;
 
     @Value("${jwt.expiration.access}")
-    private Long accessTokenExpirationMs;
+    private int accessTokenExpirationMs;
     @Value("${jwt.expiration.refresh}")
-    private Long refreshTokenExpirationMs;
+    private int refreshTokenExpirationMs;
 
     public TokenUtils(@Value("${jwt.secret.key}")
                       String secretKey,
@@ -50,7 +50,7 @@ public class TokenUtils {
 
     public boolean isExpired(String token) {
 
-        return !tokenParser(token).getExpiration().before(new Date());
+        return tokenParser(token).getExpiration().before(new Date());
     }
 
     public boolean validateToken(String token) {
@@ -58,17 +58,12 @@ public class TokenUtils {
         try {
 
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-
-            return isExpired(token);
         } catch (Exception e) {
 
             return false;
         }
-    }
 
-    public boolean checkAccessToken(String token) {
-
-        return validateToken(token);
+        return true;
     }
 
     public boolean checkRefreshToken(String token) {
@@ -78,12 +73,12 @@ public class TokenUtils {
         return isExists && validateToken(token);
     }
 
-    public Map<String, String> createToken(CustomUserDetails userDetails) {
+    public String createAccessToken(CustomUserDetails userDetails) {
 
+        String PREFIX_TOKEN = "Bearer ";
         Date now = new Date();
 
-        // accessToken과 refreshToken을 함께 발급 (accessToekn이 만료 되면 refreshToken도 발급받도록)
-        String accessToken = "Bearer " + Jwts.builder()
+        return PREFIX_TOKEN + Jwts.builder()
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + accessTokenExpirationMs))
                 .setSubject(userDetails.getUsername())
@@ -91,8 +86,14 @@ public class TokenUtils {
                 .claim("type", "access")
                 .signWith(key)
                 .compact();
+    }
 
-        String refreshToken = "Bearer " + Jwts.builder()
+    public String createRefreshToken(CustomUserDetails userDetails) {
+
+        Date now = new Date();
+
+        // refreshToken은 cookie로 저장되고 사용되기 때문에 Bearer 접두사를 붙힐 필요가 없음(확인 필요)
+        String refreshToken = Jwts.builder()
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + refreshTokenExpirationMs))
                 .setSubject(userDetails.getUsername())
@@ -103,18 +104,11 @@ public class TokenUtils {
 
         Token token = Token.builder()
                 .tokenName(refreshToken)
-                .user(userDetails.getUser())
                 .build();
 
         tokenRepository.save(token);
 
-        // map에 담아 header에 추가
-        Map<String, String> tokens = new HashMap<>();
-
-        tokens.put("accessToken", accessToken);
-        tokens.put("refreshToken", refreshToken);
-
-        return tokens;
+        return refreshToken;
     }
 
     public Claims tokenParser(String token) {

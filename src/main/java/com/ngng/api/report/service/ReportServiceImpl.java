@@ -30,12 +30,18 @@ public class ReportServiceImpl implements ReportService {
 
 
     @Override
-    public Page<ReadReportListResponseDTO> findAll(int page) {
+    public Page<ReadReportListResponseDTO> findAll(int page, boolean unprocessedOnly) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("reportId"));
         Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
 
-        Page<Report> reports = reportRepository.findAll(pageable);
+        // 미처리 신고 분기
+        Page<Report> reports;
+        if(unprocessedOnly) {
+            reports = reportRepository.findByIsReport(0, pageable);
+        } else {
+            reports = reportRepository.findAll(pageable);
+        }
 
         return reports.map(report -> ReadReportListResponseDTO.builder()
                         .reportId(report.getReportId())
@@ -49,28 +55,6 @@ public class ReportServiceImpl implements ReportService {
                         .privateChatId(report.getPrivateChatId())
                         .visible(report.getVisible())
                         .build());
-    }
-
-    @Override
-    public Page<ReadReportListResponseDTO> findAllUnprocessed(int page) {
-        List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("reportId"));
-        Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
-
-        Page<Report> reports = reportRepository.findByIsReport(0, pageable);
-
-        return reports.map(report -> ReadReportListResponseDTO.builder()
-                .reportId(report.getReportId())
-                .reportContents(report.getReportContents())
-                .reportType(report.getReportType())
-                .reporter(report.getReporter())
-                .user(report.getUser())
-                .isReport(report.getIsReport())
-                .createdAt(report.getCreatedAt())
-                .productId(report.getProductId())
-                .privateChatId(report.getPrivateChatId())
-                .visible(report.getVisible())
-                .build());
     }
 
     @Override

@@ -5,9 +5,7 @@ import org.springframework.data.domain.Page;
 
 public interface ReportService {
 
-    Page<ReadReportListResponseDTO> findAll(int page);
-
-    Page<ReadReportListResponseDTO> findAllUnprocessed(int page);
+    Page<ReadReportListResponseDTO> findAll(int page, boolean unprocessedOnly);
 
     ReadReportResponseDTO findById(Long userId);
 

@@ -199,8 +199,6 @@ public class ProductService {
 
         Long updatedProductId = productRepository.save(found).getProductId();
 
-
-
         List<ProductTag> originalTags = found.getTags();  // 기존의 태그
         List<UpdateProductTagRequestDTO> newTags = product.getTags();  // 새로운 태그
 

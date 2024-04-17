@@ -48,11 +48,11 @@ public class Report {
     private ReportType reportType;
 
     @OneToOne
-    @JoinColumn(name = "reporter_id", insertable = false, updatable = false)
+    @JoinColumn(name = "reporter_id", insertable = false, updatable = false, nullable = false)
     private User reporter;
 
     @OneToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false, nullable = false)
     private User user;
 
     // 신고 이미지 리스트 추가

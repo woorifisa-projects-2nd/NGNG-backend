@@ -33,7 +33,8 @@ public class TransactionDetailsService extends Exception {
        TransactionDetails transactionDetails = transactionDetailsRepository.findById(TransactionId).orElse(null);
 
        if(transactionDetails == null){
-           throw new ResponseStatusException(HttpStatus.NOT_FOUND,"거래 내역을 찾을수 업습니다.");
+           // TODO exception 처리 수정
+//           throw new ResponseStatusException(HttpStatus.NOT_FOUND,"거래 내역을 찾을수 업습니다.");
        }
 
        return new ReadTransactionDetailsDTO().from(transactionDetails);

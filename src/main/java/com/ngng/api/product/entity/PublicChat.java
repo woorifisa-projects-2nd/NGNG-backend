@@ -1,35 +1,43 @@
-package com.ngng.api.productTag.entity;
+package com.ngng.api.product.entity;
 
-import com.ngng.api.product.entity.Product;
+import com.ngng.api.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
-import org.springframework.data.annotation.CreatedBy;
 
 import java.sql.Timestamp;
 
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
+@Builder
+@AllArgsConstructor
 @DynamicInsert
-@Table(name = "product_tag")
-public class ProductTag {
-
+@Table(name = "public_chat")
+public class PublicChat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productTagId;
+    private Long publicChatId;
 
+    private String message;
+
+    @ColumnDefault("true")
+    private Boolean visible;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    private String tag;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    private Timestamp updatedAt;
+
 }

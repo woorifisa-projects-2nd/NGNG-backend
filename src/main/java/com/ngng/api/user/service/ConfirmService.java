@@ -33,7 +33,8 @@ public class ConfirmService {
         }
 
         // user entity에 accountNumber, accountBank 저장, role 변경
-        Role role = roleRepository.findByRoleType("ROLE_USER");
+        Role role = roleRepository.findByRoleType("USER");
+        // TODO 토큰 재발급 추가
         user.accountConfirm(request.accountBank(), request.accountNumber(), role);
 
         return AccountConfirmResponse.success();

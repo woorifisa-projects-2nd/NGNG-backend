@@ -98,14 +98,4 @@ public class UserService {
         }
         return null;
     }
-
-
-
-    //    나중에 조인에서 구현하세요.
-    public User save(User user) {
-        User newUser = userRepository.save(user);
-        pointHistoryService.createInitByUser(newUser);
-
-        return newUser;
-    }
 }

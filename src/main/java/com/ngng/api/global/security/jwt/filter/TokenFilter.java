@@ -51,8 +51,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
             log.info("expired accessToken");
 
-            String refreshToken = Arrays.stream(
-                            request.getCookies())
+            String refreshToken = Arrays.stream(request.getCookies())
                     .filter(cookie -> cookie.getName().equals("refreshToken"))
                     .findFirst()
                     .toString();
@@ -100,9 +99,9 @@ public class TokenFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         String method = request.getMethod();
 
-        Pattern uriPattern = Pattern.compile("/(login|logout|search|join|find)(/.*)?");
+        Pattern uriPattern = Pattern.compile("/(login|logout|search|join|find|products)(/.*)?");
 
-        return (uri.startsWith("/product") && method.equals("GET")) || uriPattern.matcher(uri).matches();
+        return (uri.startsWith("/products") && method.equals("GET")) || uriPattern.matcher(uri).matches();
     }
 
     public CustomUserDetails createCustomUserDetails(String token) throws JsonProcessingException {

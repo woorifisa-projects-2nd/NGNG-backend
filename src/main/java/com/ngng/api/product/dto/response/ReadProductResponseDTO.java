@@ -1,9 +1,7 @@
 package com.ngng.api.product.dto.response;
 
-import com.ngng.api.chat.ReadChatResponseDTO.ReadChatResponseDTO;
 import com.ngng.api.product.entity.Product;
 import com.ngng.api.productImage.dto.response.ReadProductImageResponseDTO;
-import com.ngng.api.productTag.dto.response.ReadProductTagResponseDTO;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -33,7 +31,7 @@ public class ReadProductResponseDTO {
     ReadProductUserResponseDTO user;
     ReadProductStatusResponseDTO status;
     ReadProductCategoryResponseDTO category;
-    List<ReadProductTagResponseDTO> tags;
+    List<TagResponseDTO> tags;
     List<ReadProductImageResponseDTO> images;
     List<ReadChatResponseDTO> chats;
 
@@ -47,7 +45,7 @@ public class ReadProductResponseDTO {
                 .discountable(product.getDiscountable())
                 .forSale(product.getForSale())
                 .freeShipping(product.getFreeShipping())
-                .images(product.getImages()
+                .images(product.getProductImages()
                         .stream().map(image -> ReadProductImageResponseDTO
                                 .builder()
                                 .id(image.getProductImageId())
@@ -64,9 +62,9 @@ public class ReadProductResponseDTO {
                 .purchaseAt(product.getPurchaseAt())
                 .available(product.getAvailable())
                 .tags(product.getTags()
-                        .stream().map(tag -> ReadProductTagResponseDTO
+                        .stream().map(tag -> TagResponseDTO
                                 .builder()
-                                .tagName(tag.getTag())
+                                .tagName(tag.getTagName())
                                 .build())
                         .collect(Collectors.toList())
                 )

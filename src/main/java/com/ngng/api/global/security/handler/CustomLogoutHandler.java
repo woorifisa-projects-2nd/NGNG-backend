@@ -17,7 +17,7 @@ public class CustomLogoutHandler implements LogoutHandler {
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-
+        // TODO : Cookie로 수정
         String refreshToken = request.getHeader("Authorization");
         Token token = tokenRepository.findTokenByTokenName(refreshToken);
 

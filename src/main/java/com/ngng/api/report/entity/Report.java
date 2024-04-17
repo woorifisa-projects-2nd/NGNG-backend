@@ -39,6 +39,8 @@ public class Report {
 
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    @Column(name = "product_id")
     private Long productId;
     private Long privateChatId;
     private int visible;
@@ -48,7 +50,7 @@ public class Report {
     private ReportType reportType;
 
     @OneToOne
-    @JoinColumn(name = "reporter_id", insertable = false, updatable = false)
+    @JoinColumn(name = "reporter_id", insertable = false, updatable = false) // TODO 공부하기
     private User reporter;
 
     @OneToOne

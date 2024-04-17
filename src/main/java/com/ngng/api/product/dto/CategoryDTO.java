@@ -1,6 +1,6 @@
 package com.ngng.api.product.dto;
 
-import com.ngng.api.category.entity.Category;
+import com.ngng.api.product.entity.Category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;

@@ -52,8 +52,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         CustomUserDetails userDetails = (CustomUserDetails) authResult.getPrincipal();
         User user = userDetails.getUser();
 
-        System.out.println(user.toString());
-
         String accessToken = tokenUtils.createAccessToken(userDetails);
         String refreshToken = tokenUtils.createRefreshToken(userDetails);
 
@@ -69,7 +67,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                 .build();
 
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-
 
         ObjectMapper mapper = new ObjectMapper();
 

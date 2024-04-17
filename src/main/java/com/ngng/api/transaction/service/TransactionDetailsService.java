@@ -10,12 +10,16 @@ import com.ngng.api.transaction.entity.TransactionStatus;
 import com.ngng.api.transaction.repository.TransactionDetailsRepository;
 import com.ngng.api.transaction.repository.TransactionStatusRepository;
 import com.ngng.api.user.entity.User;
+import com.ngng.api.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.naming.AuthenticationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +31,7 @@ public class TransactionDetailsService extends Exception {
     private final TransactionStatusRepository transactionStatusRepository;
 //    private final ProductService productService;
     private final ProductRepository productRepository;
+    private final AuthService authService;
 
 //    @Transactional(readOnly = true)
     public ReadTransactionDetailsDTO readTransactionDetailsById(Long TransactionId) {
@@ -44,6 +49,15 @@ public class TransactionDetailsService extends Exception {
                 .collect(Collectors.toList());
     }
 
+    public List<ReadTransactionDetailsDTO> readAllByConsumer(){
+        User user = authService.readAuthUser();
+        List<TransactionDetails> transactionDetails = transactionDetailsRepository.findALlByConsumerId(user.getUserId());
+
+        return  transactionDetails.stream()
+                .map(item -> new ReadTransactionDetailsDTO().from(item))
+                .collect(Collectors.toList());
+    }
+
     public List<ReadTransactionDetailsDTO> readAllBySellerId(Long id){
         List<TransactionDetails> transactionDetails = transactionDetailsRepository.findAllBySellerId(id);
 
@@ -51,10 +65,19 @@ public class TransactionDetailsService extends Exception {
                 .map(item -> new ReadTransactionDetailsDTO().from(item))
                 .collect(Collectors.toList());
     }
+    public List<ReadTransactionDetailsDTO> readAllBySeller(){
+        User user = authService.readAuthUser();
+        List<TransactionDetails> transactionDetails = transactionDetailsRepository.findAllBySellerId(user.getUserId());
+
+        return  transactionDetails.stream()
+                .map(item -> new ReadTransactionDetailsDTO().from(item))
+                .collect(Collectors.toList());
+    }
 
 
-    public List<ReadTransactionDetailsDTO> readAllBySellerIdAndStatusId(Long id,Long status){
-        List<TransactionDetails> transactionDetails = transactionDetailsRepository.findAllBySellerIdFilterStatus(id,status);
+    public List<ReadTransactionDetailsDTO> readAllBySellerIdAndStatusId(Long status){
+        User user = authService.readAuthUser();
+        List<TransactionDetails> transactionDetails = transactionDetailsRepository.findAllBySellerIdFilterStatus(user.getUserId(),status);
 
         return  transactionDetails.stream()
                 .map(item -> new ReadTransactionDetailsDTO().from(item))
@@ -92,6 +115,13 @@ public class TransactionDetailsService extends Exception {
 
 
             transactionDetails = transactionDetailsRepository.findById(transId).orElseThrow();
+
+            User user = authService.readAuthUser();
+
+            if(
+                transactionDetails.getProduct().getUser().getUserId() != user.getUserId()
+            ) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"소유권이 없는 유저 입니다.");
+
 //            TransactionStatus status = transactionStatusRepository.findById(request.getStatus().getId()).orElseThrow();
             TransactionStatus status = transactionStatusRepository.findById(request.getStatusId()).orElseThrow();
 
@@ -100,9 +130,11 @@ public class TransactionDetailsService extends Exception {
             transactionDetails.setStatus(status);
 
 
-        } catch (Exception e) {
+        } catch (ResponseStatusException e) {
             System.out.println(e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"잘못된 쿼리 요청 입니다.");
+
+            throw new ResponseStatusException(e.getStatusCode(),e.getMessage());
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"잘못된 쿼리 요청 입니다.");
         }
 
 

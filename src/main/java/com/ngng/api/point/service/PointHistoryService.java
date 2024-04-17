@@ -4,6 +4,8 @@ import com.ngng.api.point.dto.CreateAddPointRequestDTO;
 import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.repository.PointHistoryRepository;
 import com.ngng.api.user.entity.User;
+import com.ngng.api.user.service.AuthService;
+import com.ngng.api.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +16,10 @@ import java.util.List;
 public class PointHistoryService {
 
     private final PointHistoryRepository pointHistoryRepository;
-
+    private final AuthService authService;
 
 
     public PointHistory createInitByUser(User user){
-
         PointHistory pointHistory = PointHistory.builder()
                 .beforeCost(0L)
                 .addCost(0L)
@@ -36,14 +37,20 @@ public class PointHistoryService {
 
     public PointHistory readCostByUser(User user){
         return pointHistoryRepository.findLastByUserId(user.getUserId()).orElse(null);
+
+    }
+    public PointHistory readCost(){
+        User user = this.authService.readAuthUser();
+        return pointHistoryRepository.findLastByUserId(user.getUserId()).orElse(null);
     }
 
-    public List<PointHistory> readPointHistories(User user) {
+    public List<PointHistory> readPointHistories() {
+        User user = this.authService.readAuthUser();
         return pointHistoryRepository.findAllByUserId(user.getUserId());
     }
 
-//    포인트 내역 저장하는 함수 나중에 함수 이름 변경
-    public PointHistory updateCostByUserAndRequest(User user, CreateAddPointRequestDTO request){
+    public PointHistory updateCostByUserAndRequest(CreateAddPointRequestDTO request){
+        User user = this.authService.readAuthUser();
         PointHistory lastHistory = readCostByUser(user);
 
         PointHistory pointHistory = PointHistory.builder()

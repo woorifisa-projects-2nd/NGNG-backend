@@ -1,11 +1,8 @@
 package com.ngng.api.point.controller;
 
-import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
 import com.ngng.api.point.dto.CreateAddPointRequestDTO;
 import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.service.PointHistoryService;
-import com.ngng.api.user.entity.User;
-import com.ngng.api.user.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,29 +15,21 @@ import java.util.List;
 @RequestMapping("/points")
 public class PointController {
     private final PointHistoryService pointHistoryService;
-    private final JwtTokenVerifier jwtTokenVerifier;
-    private final UserRepository userRepository;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PointHistory> readPoint(@RequestHeader("Authorization") String token){
-        User user = userRepository.findUserByEmail(jwtTokenVerifier.getEmail(token)).orElse(null);
 
-        return ResponseEntity.ok().body(pointHistoryService.readCostByUser(user));
+    @GetMapping("")
+    public ResponseEntity<PointHistory> readPoint(){
+        return ResponseEntity.ok().body(pointHistoryService.readCost());
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<PointHistory>> readAllPointHistory(@RequestHeader("Authorization") String token){
-
-        User user = userRepository.findUserByEmail(jwtTokenVerifier.getEmail(token)).orElse(null);
-
-        return ResponseEntity.ok().body(pointHistoryService.readPointHistories(user));
+    public ResponseEntity<List<PointHistory>> readAllPointHistory(){
+        return ResponseEntity.ok().body(pointHistoryService.readPointHistories());
     }
 
 
     @PostMapping("")
-    public ResponseEntity<PointHistory> addPoint(@RequestHeader("Authorization") String token,@RequestBody @Valid final CreateAddPointRequestDTO dto){
-        User user = userRepository.findUserByEmail(jwtTokenVerifier.getEmail(token)).orElse(null);
-
-        return ResponseEntity.ok().body(pointHistoryService.updateCostByUserAndRequest(user,dto));
+    public ResponseEntity<PointHistory> addPoint(@RequestBody @Valid final CreateAddPointRequestDTO dto){
+        return ResponseEntity.ok().body(pointHistoryService.updateCostByUserAndRequest(dto));
     }
 }

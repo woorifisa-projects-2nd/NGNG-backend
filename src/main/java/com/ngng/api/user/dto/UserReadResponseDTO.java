@@ -14,6 +14,7 @@ public class UserReadResponseDTO {
 
     private Long userId;
     private String name;
+    private String nickName;
     private String phoneNumber;
     private String email;
     private String accountBank;
@@ -26,6 +27,7 @@ public class UserReadResponseDTO {
         return UserReadResponseDTO.builder()
                 .userId(user.getUserId())
                 .name(user.getName())
+                .nickName(user.getNickname())
                 .phoneNumber(user.getPhoneNumber())
                 .email(user.getEmail())
                 .accountBank(user.getAccountBank())
@@ -39,6 +41,7 @@ public class UserReadResponseDTO {
         return UserReadResponseDTO.builder()
                 .userId(user.getUserId())
                 .name(user.getName())
+                .nickName(user.getNickname())
                 .phoneNumber(user.getPhoneNumber())
                 .email(user.getEmail())
                 .accountBank(user.getAccountBank())

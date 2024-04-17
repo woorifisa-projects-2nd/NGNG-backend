@@ -33,7 +33,7 @@ public class ConfirmService {
         }
 
         // user entity에 accountNumber, accountBank 저장, role 변경
-        Role role = roleRepository.findByRoleType("ROLE_USER");
+        Role role = roleRepository.findByRoleType("USER");
         user.accountConfirm(request.accountBank(), request.accountNumber(), role);
 
         return AccountConfirmResponse.success();

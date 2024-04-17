@@ -32,10 +32,6 @@ public class TransactionDetailsService extends Exception {
     public ReadTransactionDetailsDTO readTransactionDetailsById(Long TransactionId) {
        TransactionDetails transactionDetails = transactionDetailsRepository.findById(TransactionId).orElse(null);
 
-       if(transactionDetails == null){
-           throw new ResponseStatusException(HttpStatus.NOT_FOUND,"거래 내역을 찾을수 업습니다.");
-       }
-
        return new ReadTransactionDetailsDTO().from(transactionDetails);
 
     }
@@ -67,11 +63,6 @@ public class TransactionDetailsService extends Exception {
 
     public ReadTransactionDetailsDTO create(CreateTransactionDetailsRequestDTO request){
         Product product = productRepository.findById(request.getProductId()).orElse(null);
-
-
-        if(product == null){
-            throw  new ResponseStatusException(HttpStatus.NOT_FOUND,"상품을 찾을수 없습니다.");
-        }
 
 
 
@@ -118,7 +109,5 @@ public class TransactionDetailsService extends Exception {
 //        transactionDetailsRepository.save(transactionDetails);
 
         return new ReadTransactionDetailsDTO().from(transactionDetails);
-
-
     }
 }

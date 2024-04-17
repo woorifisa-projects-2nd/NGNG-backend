@@ -58,11 +58,12 @@ public class TransactionDetailsController {
 
         //      새로운 리소스의 위치를 클라이언트에게 전달하는 데 사용
 //      fromCurrentRequest = 현재 주소 ( /transaction )
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(response.getId())
-                .toUri();
+//        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+//                .path("/{id}")
+//                .buildAndExpand(response.getId())
+//                .toUri();
 
+        URI location = URI.create("/transaction/" + response.getId());
 
         return ResponseEntity.created(location).body(response);
     }

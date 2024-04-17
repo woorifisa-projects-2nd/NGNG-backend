@@ -110,17 +110,7 @@ public class UserService {
         return new UserReadResponseDTO().from(user);
 
     }
-
-
-
-    //    나중에 조인에서 구현하세요.
-    public User save(User user) {
-        User newUser = userRepository.save(user);
-        pointHistoryService.createInitByUser(newUser);
-
-        return newUser;
-    }
-
+    
     public User readAuthUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();

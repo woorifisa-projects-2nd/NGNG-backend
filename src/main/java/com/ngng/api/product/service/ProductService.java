@@ -1,18 +1,14 @@
 package com.ngng.api.product.service;
 
 import com.ngng.api.product.dto.request.TagRequestDTO;
-import com.ngng.api.product.entity.Category;
 import com.ngng.api.product.dto.request.CreateProductRequestDTO;
 import com.ngng.api.product.dto.request.UpdateProductRequestDTO;
 import com.ngng.api.product.dto.response.*;
 import com.ngng.api.product.entity.Product;
+import com.ngng.api.product.entity.Tag;
 import com.ngng.api.product.repository.ProductRepository;
 import com.ngng.api.product.dto.response.ReadProductImageResponseDTO;
-import com.ngng.api.product.entity.ProductImage;
 import com.ngng.api.product.dto.response.TagResponseDTO;
-import com.ngng.api.product.entity.Tag;
-import com.ngng.api.status.entity.Status;
-import com.ngng.api.thumbnail.entity.Thumbnail;
 import com.ngng.api.thumbnail.service.ThumbnailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +25,7 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final ProductImageService productImageService;
     private final TagService tagService;
-    private final ThumbnailService thumbnailService;
 
     public Long create(CreateProductRequestDTO request){
         return productRepository.save(new Product(request)).getProductId();
@@ -87,7 +81,16 @@ public class ProductService {
                                 .id(product.getCategory().getCategoryId())
                                 .name(product.getCategory().getCategoryName())
                                 .build())
-                        //.chats(product.getPublicChats())
+                        .chats(product.getPublicChats().stream()
+                                .map(chat ->
+                                    ReadChatResponseDTO.builder()
+                                            .id(chat.getPublicChatId())
+                                            .message(chat.getMessage())
+                                            .userId(chat.getUser().getUserId())
+                                            .userNickName(chat.getUser().getNickname())
+                                            .createdAt(chat.getCreatedAt())
+                                        .build()
+                                ).toList())
                 .build();
     }
 
@@ -154,6 +157,7 @@ public class ProductService {
                 tagService.deleteAllByProductIdAndTagName(productId, originalTags);
             }
         });
+
         found.getTags().clear();
         found.from(request);
 

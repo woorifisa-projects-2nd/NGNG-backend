@@ -5,11 +5,10 @@ import com.ngng.api.report.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/admin/reports")
@@ -19,8 +18,9 @@ public class AdminReportController {
     private final ReportService reportService;
 
     @GetMapping
-    public ResponseEntity<List<ReadReportListResponseDTO>> readAll() {
-        List<ReadReportListResponseDTO> reports = reportService.findAll();
+    public ResponseEntity<Page<ReadReportListResponseDTO>> readAll(@RequestParam(value="page", defaultValue="0") int page, @RequestParam Boolean unprocessedOnly) {
+        System.out.println("unprocessedOnly = " + unprocessedOnly);
+        Page<ReadReportListResponseDTO> reports = reportService.findAll(page, unprocessedOnly);
 
         return ResponseEntity.ok(reports);
     }
@@ -65,5 +65,4 @@ public class AdminReportController {
     public String loginFailed() {
         return "Bad Request";
     }
-
 }

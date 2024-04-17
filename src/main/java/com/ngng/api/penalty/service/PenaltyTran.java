@@ -86,8 +86,6 @@ public class PenaltyTran {
     }
 
     public void updateIsReport(Long reportId, Boolean isReport) {
-        System.out.println("reportId = " + reportId);
-        System.out.println("isReport = " + isReport);
 
         Report report = reportRepository.findById(reportId).orElseThrow(() ->
                 new EntityNotFoundException("report not found")

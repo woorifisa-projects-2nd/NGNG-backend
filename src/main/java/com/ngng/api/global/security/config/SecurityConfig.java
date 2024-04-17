@@ -79,7 +79,7 @@ public class SecurityConfig {
                 * jwt를 통한 인증/인가 필터 설정
                 * */
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), tokenVerifier, tokenProvider), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new TokenFilter(tokenVerifier, tokenProvider), LoginFilter.class)
+                .addFilterBefore(new TokenFilter(tokenProvider, tokenVerifier), LoginFilter.class)
 
                 /*
                 * 요청별 권한 설정

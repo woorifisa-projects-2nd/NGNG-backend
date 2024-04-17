@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/admin/reports")
 @RequiredArgsConstructor
@@ -22,6 +20,13 @@ public class AdminReportController {
     @GetMapping
     public ResponseEntity<Page<ReadReportListResponseDTO>> readAll(@RequestParam(value="page", defaultValue="0") int page) {
         Page<ReadReportListResponseDTO> reports = reportService.findAll(page);
+
+        return ResponseEntity.ok(reports);
+    }
+
+    @GetMapping("/unprocessed")
+    public ResponseEntity<Page<ReadReportListResponseDTO>> readAllUnprocessed(@RequestParam(value="page", defaultValue="0") int page) {
+        Page<ReadReportListResponseDTO> reports = reportService.findAllUnprocessed(page);
 
         return ResponseEntity.ok(reports);
     }

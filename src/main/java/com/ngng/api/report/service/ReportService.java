@@ -3,11 +3,11 @@ package com.ngng.api.report.service;
 import com.ngng.api.report.dto.*;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 public interface ReportService {
 
     Page<ReadReportListResponseDTO> findAll(int page);
+
+    Page<ReadReportListResponseDTO> findAllUnprocessed(int page);
 
     ReadReportResponseDTO findById(Long userId);
 

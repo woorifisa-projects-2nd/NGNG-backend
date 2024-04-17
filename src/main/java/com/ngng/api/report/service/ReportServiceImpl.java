@@ -35,9 +35,6 @@ public class ReportServiceImpl implements ReportService {
         sorts.add(Sort.Order.desc("reportId"));
         Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
 
-//        List<Report> reports = new ArrayList<>();
-//        reportRepository.findAll(pageable).forEach(reports::add);
-
         Page<Report> reports = reportRepository.findAll(pageable);
 
         return reports.map(report -> ReadReportListResponseDTO.builder()
@@ -52,28 +49,28 @@ public class ReportServiceImpl implements ReportService {
                         .privateChatId(report.getPrivateChatId())
                         .visible(report.getVisible())
                         .build());
+    }
 
+    @Override
+    public Page<ReadReportListResponseDTO> findAllUnprocessed(int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("reportId"));
+        Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
 
+        Page<Report> reports = reportRepository.findByIsReport(0, pageable);
 
-//        return reportRepository.findAll(pageable);
-
-//        List<Report> reports = new ArrayList<>();
-//        reportRepository.findAll().forEach(reports::add);
-
-//        return reports.stream()
-//                .map(report -> ReadReportListResponseDTO.builder()
-//                        .reportId(report.getReportId())
-//                        .reportContents(report.getReportContents())
-//                        .reportType(report.getReportType())
-//                        .reporter(report.getReporter())
-//                        .user(report.getUser())
-//                        .isReport(report.getIsReport())
-//                        .createdAt(report.getCreatedAt())
-//                        .productId(report.getProductId())
-//                        .privateChatId(report.getPrivateChatId())
-//                        .visible(report.getVisible())
-//                        .build())
-//                .collect(Collectors.toList());
+        return reports.map(report -> ReadReportListResponseDTO.builder()
+                .reportId(report.getReportId())
+                .reportContents(report.getReportContents())
+                .reportType(report.getReportType())
+                .reporter(report.getReporter())
+                .user(report.getUser())
+                .isReport(report.getIsReport())
+                .createdAt(report.getCreatedAt())
+                .productId(report.getProductId())
+                .privateChatId(report.getPrivateChatId())
+                .visible(report.getVisible())
+                .build());
     }
 
     @Override

@@ -56,6 +56,7 @@ public class TransactionDetailsController {
 
         ReadTransactionDetailsDTO response = transactionDetailsService.create(request);
 
+        // TODO 더 짧게 줄이는 법 알아보기 , created로 리턴하기 위해 필요한 값
         //      새로운 리소스의 위치를 클라이언트에게 전달하는 데 사용
 //      fromCurrentRequest = 현재 주소 ( /transaction )
 //        URI location = ServletUriComponentsBuilder.fromCurrentRequest()

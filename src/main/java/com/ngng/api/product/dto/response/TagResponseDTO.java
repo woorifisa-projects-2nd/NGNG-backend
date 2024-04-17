@@ -1,4 +1,4 @@
-package com.ngng.api.productTag.dto.response;
+package com.ngng.api.product.dto.response;
 
 import lombok.*;
 
@@ -7,6 +7,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReadProductTagResponseDTO {
+public class TagResponseDTO {
     String tagName;
 }

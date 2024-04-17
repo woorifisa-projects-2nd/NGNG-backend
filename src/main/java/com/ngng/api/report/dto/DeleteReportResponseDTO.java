@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Getter
 public class DeleteReportResponseDTO {
     private Long reportId;
-    private int visible;
+    private Boolean visible;
 }

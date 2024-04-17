@@ -96,7 +96,8 @@ public class SecurityConfig {
 
                         // 채팅, 상품 등록, 수정, 삭제는 계좌인증을 완료한 유저 혹은 관리자만 가능
                         .requestMatchers("/chat/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/products/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/products/**").permitAll()
+                        //hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/products/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/products/**").hasAnyRole("USER", "ADMIN")
 
@@ -112,14 +113,12 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-
         return configuration.getAuthenticationManager();
     }
 
     // password를 암호화하는 방식 지정, BCrypt 방식 적용
     @Bean
     public PasswordEncoder bCryptPasswordEncoder() {
-
         return new BCryptPasswordEncoder();
     }
 }

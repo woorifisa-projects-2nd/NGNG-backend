@@ -27,6 +27,7 @@ public class ProductImage {
 
     @CreationTimestamp
     private Timestamp createdAt;
+    @UpdateTimestamp
     private Timestamp updatedAt;
 
     @ColumnDefault("true")

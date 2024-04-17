@@ -32,27 +32,29 @@ public class Report {
     @Column(name = "user_id")
     private Long userId;
 
-    private int isReport;
+    private Boolean isReport;
 
     @CreationTimestamp
     private Timestamp createdAt;
 
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    @Column(name = "product_id")
     private Long productId;
     private Long privateChatId;
-    private int visible;
+    private Boolean visible;
 
     @ManyToOne
     @JoinColumn(name = "report_type_id")
     private ReportType reportType;
 
     @OneToOne
-    @JoinColumn(name = "reporter_id", insertable = false, updatable = false)
+    @JoinColumn(name = "reporter_id", insertable = false, updatable = false, nullable = false)
     private User reporter;
 
     @OneToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false, nullable = false)
     private User user;
 
     // 신고 이미지 리스트 추가

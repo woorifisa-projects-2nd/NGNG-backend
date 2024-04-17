@@ -1,5 +1,6 @@
 package com.ngng.api.user.controller;
 
+import com.ngng.api.user.dto.request.EmailAuthRequest;
 import com.ngng.api.user.dto.request.PhoneNumberAuthRequest;
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
@@ -21,7 +22,7 @@ public class JoinAuthController {
 
     private final String nurigoDomain = "https://api.coolsms.co.kr";
 
-    @Value("${message.from}")
+    // TODO: yml파일에 적용
     private String from = "01041296078";
 
     public JoinAuthController(@Value("${message.key.api}")
@@ -48,5 +49,11 @@ public class JoinAuthController {
         SingleMessageSentResponse response = messageService.sendOne(new SingleMessageSendingRequest(message));
 
         return ResponseEntity.ok().body(response);
+    }
+
+    @PostMapping("/email")
+    public ResponseEntity<?> sendEmail(@RequestBody EmailAuthRequest request) {
+        // TODO: 이메일 전송 구현
+        return null;
     }
 }

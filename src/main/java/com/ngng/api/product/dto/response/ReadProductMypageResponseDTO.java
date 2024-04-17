@@ -1,7 +1,6 @@
 package com.ngng.api.product.dto.response;
 
 import com.ngng.api.product.entity.Product;
-import com.ngng.api.productImage.dto.response.ReadProductImageResponseDTO;
 import com.ngng.api.thumbnail.dto.ThumbnailDTO;
 import com.ngng.api.transaction.dto.ReadTransactionDetailsDTO;
 import lombok.*;

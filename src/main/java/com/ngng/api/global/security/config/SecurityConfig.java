@@ -98,8 +98,10 @@ public class SecurityConfig {
                         .requestMatchers("/chat/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/products/**").permitAll()
                         //hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/products/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/products/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/products/**").permitAll()
+                        //.hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/products/**").permitAll()
+                        //.hasAnyRole("USER", "ADMIN")
 
                         .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자페이지
 

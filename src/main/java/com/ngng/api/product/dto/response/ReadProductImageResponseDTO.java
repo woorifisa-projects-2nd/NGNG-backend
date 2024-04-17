@@ -1,4 +1,4 @@
-package com.ngng.api.productImage.dto.request;
+package com.ngng.api.product.dto.response;
 
 import lombok.*;
 
@@ -7,6 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateImageRequestDTO {
+public class ReadProductImageResponseDTO {
+    Long id;
     String imageURL;
 }

@@ -1,4 +1,4 @@
-package com.ngng.api.productImage.service;
+package com.ngng.api.product.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

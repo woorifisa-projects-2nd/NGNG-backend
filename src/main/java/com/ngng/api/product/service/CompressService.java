@@ -1,13 +1,12 @@
-package com.ngng.api.productImage.service;
+package com.ngng.api.product.service;
 
 
-import com.ngng.api.productImage.utils.CustomMultipartFile;
+import com.ngng.api.product.utils.CustomMultipartFile;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;

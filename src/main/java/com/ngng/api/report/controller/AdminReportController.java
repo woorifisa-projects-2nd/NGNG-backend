@@ -71,5 +71,4 @@ public class AdminReportController {
     public String loginFailed() {
         return "Bad Request";
     }
-
 }

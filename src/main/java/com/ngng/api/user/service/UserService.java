@@ -1,5 +1,6 @@
 package com.ngng.api.user.service;
 
+import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
 import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.service.PointHistoryService;
 import com.ngng.api.product.dto.response.ReadProductMypageResponseDTO;
@@ -13,7 +14,10 @@ import com.ngng.api.user.dto.UserUpdateRequestDTO;
 import com.ngng.api.user.entity.User;
 import com.ngng.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -60,8 +64,24 @@ public class UserService {
 
     }
 
-    public UserMyPageReadResponseDTO readUserMyPage(Long userId){
-        User user =  this.findById(userId);
+    public User findByEmail(String email) {
+        return userRepository.findUserByEmail(email).orElse(null);
+
+    }
+
+    public UserReadResponseDTO readUser() {
+        User user =  this.readAuthUser();
+        PointHistory pointHistory = pointHistoryService.readCostByUser(user);
+
+        return new UserReadResponseDTO().from(user,pointHistory);
+    }
+
+
+
+
+    public UserMyPageReadResponseDTO readUserMyPage(){
+
+        User user =  this.readAuthUser();
         PointHistory point = pointHistoryService.readCostByUser(user);
 
         List<ReadProductMypageResponseDTO> sellList = productService.readSellProductsByUserId(user.getUserId()).stream()
@@ -75,28 +95,20 @@ public class UserService {
 
     }
 
-    public UserReadResponseDTO update(Long id, UserUpdateRequestDTO user){
-        Optional<User> userOptional = userRepository.findById(id);
+    @Transactional
+    public UserReadResponseDTO update( UserUpdateRequestDTO userDto){
 
-        if(userOptional.isPresent()){
-            User existingUser = userOptional.get();
+        User user = this.readAuthUser();
 
-            // 반복문을 사용하여 null 값이 아닌 필드만 변경
-            for (Field field : User.class.getDeclaredFields()) {
-                field.setAccessible(true);
-                try {
-                    Object value = field.get(user);
-                    if (value != null) {
-                        field.set(existingUser, value);
-                    }
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-            userRepository.save(existingUser);
-            return new UserReadResponseDTO().from(existingUser);
-        }
-        return null;
+        if(user == null) return UserReadResponseDTO.builder().build();
+
+
+        if(userDto.getNickname() != null) user.setNickname(userDto.getNickname());
+        if(userDto.getAddress() != null) user.setAddress(userDto.getAddress());
+
+
+        return new UserReadResponseDTO().from(user);
+
     }
 
 
@@ -107,5 +119,14 @@ public class UserService {
         pointHistoryService.createInitByUser(newUser);
 
         return newUser;
+    }
+
+    public User readAuthUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
+
+        String email = details.getUser().getEmail();
+
+        return this.userRepository.findUserByEmail(email).orElse(null);
     }
 }

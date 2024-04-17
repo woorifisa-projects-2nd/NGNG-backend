@@ -110,7 +110,7 @@ public class UserService {
         return new UserReadResponseDTO().from(user);
 
     }
-    
+
     public User readAuthUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();

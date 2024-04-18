@@ -44,7 +44,7 @@ public class PenaltyServiceImpl implements PenaltyService {
         return ReadPenaltyResponseDTO.from(penalty);
     }
 
-    @Override
+    @Override // TODO
     public CreatePenaltyResponseDTO save(CreatePenaltyRequestDTO createPenaltyRequestDTO) {
 
         Long penaltyLevelId = createPenaltyRequestDTO.getPenaltyLevelId();

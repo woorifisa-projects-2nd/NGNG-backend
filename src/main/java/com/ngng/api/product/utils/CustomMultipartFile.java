@@ -1,4 +1,4 @@
-package com.ngng.api.productImage.utils;
+package com.ngng.api.product.utils;
 
 import org.springframework.web.multipart.MultipartFile;
 

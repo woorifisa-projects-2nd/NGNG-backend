@@ -65,12 +65,11 @@ public class TransactionDetailsService extends Exception {
         Product product = productRepository.findById(request.getProductId()).orElse(null);
 
 
-
+        assert product != null;
         TransactionDetails transactionDetails = TransactionDetails.builder()
                 .product(product)
-                .consumer(request.getConsumer())
+                .consumer(User.builder().userId(request.getBuyerId()).build())
                 .seller(product.getUser())
-                .address(request.getAddress())
                 .status(new TransactionStatus(1L))
                 .build();
 

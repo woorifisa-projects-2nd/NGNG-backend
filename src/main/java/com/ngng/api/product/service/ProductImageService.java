@@ -1,10 +1,10 @@
-package com.ngng.api.productImage.service;
+package com.ngng.api.product.service;
 
-import com.ngng.api.productImage.dto.response.ReadProductImageResponseDTO;
-import com.ngng.api.productImage.entity.ProductImage;
+import com.ngng.api.product.dto.response.ReadProductImageResponseDTO;
+import com.ngng.api.product.entity.ProductImage;
 import com.ngng.api.product.entity.Product;
 
-import com.ngng.api.productImage.repository.ProductImageRepository;
+import com.ngng.api.product.repository.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

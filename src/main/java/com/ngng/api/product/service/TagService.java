@@ -36,7 +36,11 @@ public class TagService {
         tagRepository.deleteById(productTagId);
     }
 
-    public void deleteByProductIdAndTag(Long productId, String tag){
-        tagRepository.deleteByProductProductIdAndTagName(productId, tag);
+    public void deleteByProductIdAndTagName(Long productId, String tagName){
+        tagRepository.deleteByProductProductIdAndTagName(productId, tagName);
+    }
+
+    public void deleteAllByProductIdAndTagName(Long productId, List<String> tags){
+        tagRepository.deleteAllByProductIdAndTagName(productId, tags);
     }
 }

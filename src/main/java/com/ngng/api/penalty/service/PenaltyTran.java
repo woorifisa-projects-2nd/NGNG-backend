@@ -35,7 +35,6 @@ public class PenaltyTran {
                 new EntityNotFoundException("penaltyLevel not found")
         );
 
-
         Timestamp banDate = new Timestamp(System.currentTimeMillis());
         Calendar calendar = Calendar.getInstance();
 

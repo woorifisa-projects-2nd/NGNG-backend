@@ -1,7 +1,7 @@
-package com.ngng.api.productImage.service;
+package com.ngng.api.product.service;
 
 
-import com.ngng.api.productImage.utils.CustomMultipartFile;
+import com.ngng.api.product.utils.CustomMultipartFile;
 import lombok.SneakyThrows;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;

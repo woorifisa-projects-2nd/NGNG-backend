@@ -1,4 +1,4 @@
-package com.ngng.api.productImage.entity;
+package com.ngng.api.product.entity;
 
 import com.ngng.api.product.entity.Product;
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package com.ngng.api.productImage.dto.response;
+package com.ngng.api.product.dto.response;
 
 import lombok.*;
 

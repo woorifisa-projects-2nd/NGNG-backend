@@ -1,6 +1,6 @@
-package com.ngng.api.productImage.repository;
+package com.ngng.api.product.repository;
 
-import com.ngng.api.productImage.entity.ProductImage;
+import com.ngng.api.product.entity.ProductImage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

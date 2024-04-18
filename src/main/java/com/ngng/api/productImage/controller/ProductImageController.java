@@ -1,10 +1,10 @@
 package com.ngng.api.productImage.controller;
 
+import com.ngng.api.product.service.AwsS3Service;
+import com.ngng.api.product.service.CompressService;
+import com.ngng.api.product.service.ProductImageService;
+import com.ngng.api.product.service.UploadService;
 import com.ngng.api.productImage.dto.request.DeleteImageRequestDTO;
-import com.ngng.api.productImage.service.AwsS3Service;
-import com.ngng.api.productImage.service.CompressService;
-import com.ngng.api.productImage.service.ProductImageService;
-import com.ngng.api.productImage.service.UploadService;
 import com.ngng.api.thumbnail.service.ThumbnailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

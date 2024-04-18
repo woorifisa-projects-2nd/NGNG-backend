@@ -1,7 +1,6 @@
 package com.ngng.api.product.dto.response;
 
 import com.ngng.api.product.entity.Product;
-import com.ngng.api.productImage.dto.response.ReadProductImageResponseDTO;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -34,6 +33,7 @@ public class ReadProductResponseDTO {
     List<TagResponseDTO> tags;
     List<ReadProductImageResponseDTO> images;
     List<ReadChatResponseDTO> chats;
+    List<ReadReportResponseDTO> reports;
 
 
     public ReadProductResponseDTO from(Product product){
@@ -84,6 +84,18 @@ public class ReadProductResponseDTO {
                         .name(product.getCategory().getCategoryName())
                         .build())
                 .chats(chats)
+                .reports(product.getReports().stream()
+                        .map(report -> ReadReportResponseDTO.builder()
+                                .reportId(report.getReportId())
+                                .reportContents(report.getReportContents())
+                                .reportType(report.getReportType().getReportTypeId())
+                                .reporterId(report.getReporterId())
+                                .userId(report.getUserId())
+                                .isReport(report.getIsReport())
+                                .createdAt(report.getCreatedAt())
+                                .updatedAt(report.getUpdatedAt())
+                                .build())
+                        .toList())
                 .build();
 
     }

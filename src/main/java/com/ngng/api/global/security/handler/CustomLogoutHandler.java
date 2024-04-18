@@ -2,6 +2,7 @@ package com.ngng.api.global.security.handler;
 
 import com.ngng.api.global.security.jwt.entity.Token;
 import com.ngng.api.global.security.jwt.repository.TokenRepository;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class CustomLogoutHandler implements LogoutHandler {
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         // TODO : Cookie로 수정
         String refreshToken = request.getHeader("Authorization");
-        Token token = tokenRepository.findTokenByTokenName(refreshToken);
+        Token token = tokenRepository.findTokenByTokenName(refreshToken).orElseThrow(() -> new JwtException("invalid token"));
 
         if (token == null) {
 

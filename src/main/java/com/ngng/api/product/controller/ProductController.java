@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +28,7 @@ import java.util.List;
 
 @RequestMapping("/products")
 @RestController
+@Slf4j
 @RequiredArgsConstructor
 @Tag(name = "Product API")
 public class ProductController {
@@ -40,7 +42,8 @@ public class ProductController {
     @Operation(summary = "상품 추가", description = "전달받은 값으로 상품을 생성합니다.")
     @PostMapping()
     public ResponseEntity<Long> create(@RequestBody CreateProductRequestDTO product){
-        return ResponseEntity.created(URI.create("/products/"+productService.create(product))).build();
+        Long productId = productService.create(product);
+        return ResponseEntity.created(URI.create("/products/"+productId)).body(productId);
     }
 
     @GetMapping(path = "/{productId}")
@@ -58,16 +61,7 @@ public class ProductController {
     @PostMapping("/upload")
     @Parameter(name = "files", description = "이미지 파일 배열")
     @Operation(summary = "상품 이미지 업로드", description = "s3에 상품 썸네일과 이미지들을 등록합니다.")
-    public String fileUpload(@RequestParam("files") MultipartFile[] files , @RequestParam("productId") String productId ){
-
-        // 만약 이미지가 이미 등록되어있는 상품이라면
-        // 지우고(visible = false) 다시 업로드하기
-        List<ReadProductImageResponseDTO> originalImages = productImageService.readAllByProductId(Long.parseLong(productId));
-        if(originalImages != null){
-            originalImages.forEach(image -> {
-                productImageService.delete(Long.parseLong(productId), image.getImageURL());
-            });
-        }
+    public Long fileUpload(@RequestParam("files") MultipartFile[] files , @RequestParam("productId") String productId ){
 
         for (int i=0; i < files.length; i++ ){
             MultipartFile file = files[i];
@@ -117,7 +111,7 @@ public class ProductController {
 
         }
 
-        return "hihi";
+        return Long.parseLong(productId);
     }
 
     @GetMapping("")

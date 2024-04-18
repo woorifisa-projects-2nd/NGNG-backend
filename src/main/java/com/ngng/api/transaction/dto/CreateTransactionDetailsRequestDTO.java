@@ -13,8 +13,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateTransactionDetailsRequestDTO {
     private Long productId;
-    private User consumer;
-    private String address;
-
-
+    private Long buyerId;
 }

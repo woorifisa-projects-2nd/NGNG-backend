@@ -3,18 +3,16 @@ package com.ngng.api.productImage.service;
 
 import com.ngng.api.productImage.utils.CustomMultipartFile;
 import lombok.SneakyThrows;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-
-import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.geometry.Positions;
 
 @Service
 public class CompressService {
@@ -66,15 +64,18 @@ public class CompressService {
 
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+        String fileName = originFile.getOriginalFilename();
+        String[] tokens = fileName.split("\\."); // "." 문자를 기준으로 문자열을 분리합니다.
+        String extension = tokens[tokens.length - 1];
 
         try {
-            ImageIO.write(image, "jpeg", out);
+            if(extension.equals("png")) ImageIO.write(image, "png", out);
+            else ImageIO.write(image, "jpeg", out);
 
         } catch (IOException e) {
 
             return null;
         }
-
         byte[] bytes = out.toByteArray();
 
 

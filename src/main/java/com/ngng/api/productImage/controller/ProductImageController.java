@@ -1,19 +1,16 @@
 package com.ngng.api.productImage.controller;
 
+import com.ngng.api.productImage.dto.request.DeleteImageRequestDTO;
 import com.ngng.api.productImage.service.AwsS3Service;
 import com.ngng.api.productImage.service.CompressService;
 import com.ngng.api.productImage.service.ProductImageService;
 import com.ngng.api.productImage.service.UploadService;
 import com.ngng.api.thumbnail.service.ThumbnailService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 @RestController
@@ -83,5 +80,12 @@ public class ProductImageController {
         }
 
         return "hihi";
+    }
+
+    @DeleteMapping("deleteImage/{productId}")
+    public ResponseEntity<Long> deleteImage(@PathVariable("productId") Long productId, @RequestBody DeleteImageRequestDTO deleteImageRequestDTO) {
+        System.out.println("productImageId = " + productId);
+        System.out.println("deleteImageRequestDTO = " + deleteImageRequestDTO.getImageURL());
+        return ResponseEntity.ok(productImageService.delete(productId, deleteImageRequestDTO.getImageURL()));
     }
 }

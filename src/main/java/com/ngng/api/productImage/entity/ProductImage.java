@@ -3,7 +3,6 @@ package com.ngng.api.productImage.entity;
 import com.ngng.api.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;

@@ -8,5 +8,5 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class UpdateProductTagRequestDTO {
-    String name;
+    String tagName;
 }

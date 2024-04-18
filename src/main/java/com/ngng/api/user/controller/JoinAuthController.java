@@ -2,6 +2,12 @@ package com.ngng.api.user.controller;
 
 import com.ngng.api.user.dto.request.EmailAuthRequest;
 import com.ngng.api.user.dto.request.PhoneNumberAuthRequest;
+import com.ngng.api.user.dto.response.EmailAuthResponse;
+import com.ngng.api.user.dto.response.PhoneNumberAuthResponse;
+import com.ngng.api.user.service.EmailAuthService;
+import com.ngng.api.user.service.PhoneNumberAuthService;
+import jakarta.mail.MessagingException;
+import lombok.RequiredArgsConstructor;
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
@@ -14,46 +20,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/join")
+@RequiredArgsConstructor
+@RequestMapping("/join/auth")
 @RestController
 public class JoinAuthController {
 
-    final DefaultMessageService messageService;
-
-    private final String nurigoDomain = "https://api.coolsms.co.kr";
-
-    // TODO: yml파일에 적용
-    private String from = "01041296078";
-
-    public JoinAuthController(@Value("${message.key.api}")
-                              String apiKey,
-                              @Value("${message.key.secret}")
-                              String secretKey) {
-
-        this.messageService = NurigoApp.INSTANCE.initialize(apiKey, secretKey, nurigoDomain);
-    }
+    private final EmailAuthService emailAuthService;
+    private final PhoneNumberAuthService phoneNumberAuthService;
 
     @PostMapping("/phonenumber")
-    public ResponseEntity<SingleMessageSentResponse> sendMessage(@RequestBody PhoneNumberAuthRequest request) {
+    public ResponseEntity<?> sendMessage(@RequestBody PhoneNumberAuthRequest request) {
 
-        Message message = new Message();
+        PhoneNumberAuthResponse response = phoneNumberAuthService.sendMessage(request);
 
-        message.setFrom(from);
-        message.setTo(request.phoneNumber());
+        if (!response.isSuccess()) {
 
-        int randomNum = (int) (Math.random() * 999999) + 1;
-        String formattedRandomNum = String.format("%06d", randomNum);
-
-        message.setText("니꺼내꺼 인증번호 : " + formattedRandomNum);
-
-        SingleMessageSentResponse response = messageService.sendOne(new SingleMessageSendingRequest(message));
+            return ResponseEntity.badRequest().build();
+        }
 
         return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("/email")
-    public ResponseEntity<?> sendEmail(@RequestBody EmailAuthRequest request) {
-        // TODO: 이메일 전송 구현
-        return null;
+    public ResponseEntity<?> sendEmail(@RequestBody EmailAuthRequest request) throws MessagingException {
+
+        EmailAuthResponse response = emailAuthService.sendMail(request);
+
+        if (!response.isSuccess()) {
+
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok().body(response);
     }
 }

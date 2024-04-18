@@ -3,7 +3,6 @@ package com.ngng.api.global.security.jwt.util;
 import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
 import com.ngng.api.global.security.jwt.entity.Token;
 import com.ngng.api.global.security.jwt.repository.TokenRepository;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -12,66 +11,25 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
-public class TokenUtils {
+public class JwtTokenProvider {
 
-    private final Key key;
     private final TokenRepository tokenRepository;
+    private final Key key;
 
-    @Value("${jwt.expiration.access}")
-    private int accessTokenExpirationMs;
-    @Value("${jwt.expiration.refresh}")
-    private int refreshTokenExpirationMs;
-
-    public TokenUtils(@Value("${jwt.secret.key}")
-                      String secretKey,
-                      TokenRepository tokenRepository) {
+    public JwtTokenProvider(@Value("${jwt.secret.key}")
+                            String secretKey,
+                            TokenRepository tokenRepository) {
 
         this.key = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
         this.tokenRepository = tokenRepository;
     }
 
-    public String getEmail(String token) {
-
-        return tokenParser(token).getSubject();
-    }
-
-    public String getRole(String token) {
-
-        return tokenParser(token).get("role", String.class);
-    }
-    public String getType(String token) {
-
-        return tokenParser(token).get("type", String.class);
-    }
-
-    public boolean isExpired(String token) {
-
-        return tokenParser(token).getExpiration().before(new Date());
-    }
-
-    public boolean validateToken(String token) {
-
-        try {
-
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-        } catch (Exception e) {
-
-            return false;
-        }
-
-        return true;
-    }
-
-    public boolean checkRefreshToken(String token) {
-
-        boolean isExists = !tokenRepository.existsByTokenName(token);
-
-        return isExists && validateToken(token);
-    }
+    @Value("${jwt.expiration.access}")
+    private int accessTokenExpirationMs;
+    @Value("${jwt.expiration.refresh}")
+    private int refreshTokenExpirationMs;
 
     public String createAccessToken(CustomUserDetails userDetails) {
 
@@ -92,7 +50,7 @@ public class TokenUtils {
 
         Date now = new Date();
 
-        // refreshToken은 cookie로 저장되고 사용되기 때문에 Bearer 접두사를 붙힐 필요가 없음(확인 필요)
+        // refreshToken은 cookie로 저장되고 사용되기 때문에 Bearer 접두사를 붙힐 필요가 없음
         String refreshToken = Jwts.builder()
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + refreshTokenExpirationMs))
@@ -106,15 +64,9 @@ public class TokenUtils {
                 .tokenName(refreshToken)
                 .build();
 
+        // refreshToken은 로그인 할 때 발급되기 때문에 repository에 저장하고 이를 확인하여 현재 로그인중임을 확인
         tokenRepository.save(token);
 
         return refreshToken;
-    }
-
-    public Claims tokenParser(String token) {
-
-        token = token.replaceAll("Bearer ", "");
-
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 }

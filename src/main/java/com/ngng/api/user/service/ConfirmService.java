@@ -1,6 +1,6 @@
 package com.ngng.api.user.service;
 
-import com.ngng.api.global.security.jwt.util.TokenUtils;
+import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
 import com.ngng.api.role.entity.Role;
 import com.ngng.api.user.dto.request.AccountConfirmRequest;
 import com.ngng.api.user.dto.request.AddressConfirmRequest;
@@ -20,7 +20,7 @@ public class ConfirmService {
 
     private final UserRepository userRepository;
     private final UserRoleRepository roleRepository;
-    private final TokenUtils tokenUtils;
+    private final JwtTokenVerifier jwtTokenVerifier;
 
     @Transactional
     public AccountConfirmResponse accountConfirm(AccountConfirmRequest request) {

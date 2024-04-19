@@ -71,6 +71,7 @@ public class TransactionDetailsService extends Exception {
                 .consumer(User.builder().userId(request.getBuyerId()).build())
                 .seller(product.getUser())
                 .status(new TransactionStatus(1L))
+                .price(request.getPrice())
                 .build();
 
         TransactionDetails ds = transactionDetailsRepository.save(transactionDetails);
@@ -92,7 +93,7 @@ public class TransactionDetailsService extends Exception {
 
             transactionDetails = transactionDetailsRepository.findById(transId).orElseThrow();
 //            TransactionStatus status = transactionStatusRepository.findById(request.getStatus().getId()).orElseThrow();
-            TransactionStatus status = transactionStatusRepository.findById(request.getStatus().getId()).orElseThrow();
+            TransactionStatus status = transactionStatusRepository.findById(request.getStatusId()).orElseThrow();
 
 
 //            transactionDetails.setUpdatedAt(null);

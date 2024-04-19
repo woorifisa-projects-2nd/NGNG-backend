@@ -63,9 +63,6 @@ public class Product {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    @ColumnDefault("true")
-    private Boolean available;
-
     @ManyToOne
     @JoinColumn(name="user_id", nullable = false)
     private User user;
@@ -129,7 +126,6 @@ public class Product {
         this.setPurchaseAt(request.getPurchaseAt());
         this.setForSale(request.getForSale());
         this.setVisible(request.getVisible());
-        this.setRefreshedAt(request.getRefreshedAt());
         this.setFreeShipping(request.getFreeShipping());
         this.setStatus(Status.builder().statusId(request.getStatusId()).build());
         this.setCategory(Category.builder().categoryId(request.getCategoryId()).build());

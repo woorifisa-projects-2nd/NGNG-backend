@@ -5,6 +5,7 @@ import com.ngng.api.user.dto.response.DropOutResponse;
 import com.ngng.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -12,6 +13,7 @@ public class DropOutService {
 
     private final UserRepository userRepository;
 
+    @Transactional
     public DropOutResponse dropOut(DropOutRequest request) {
 
         boolean isExistingUser = userRepository.existsById(request.id());

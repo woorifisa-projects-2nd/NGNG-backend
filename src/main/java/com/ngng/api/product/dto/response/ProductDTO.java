@@ -7,8 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReadProductUserResponseDTO {
-    Long id;
-    String name;
-    String nickname;
+public class ProductDTO {
+    Long productId;
+
 }

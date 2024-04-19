@@ -21,6 +21,7 @@ public class ReadTransactionDetailsDTO {
     private DetailsUserDTO consumer;
     private DetailsUserDTO seller;
     private TransactionStatus status;
+    private Long price;
 
     public ReadTransactionDetailsDTO from(TransactionDetails details){
         if(details == null) return ReadTransactionDetailsDTO.builder().build();

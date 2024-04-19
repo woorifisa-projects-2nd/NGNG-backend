@@ -1,5 +1,6 @@
 package com.ngng.api.product.dto.request;
 
+import com.ngng.api.product.entity.Product;
 import lombok.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -19,9 +20,25 @@ public class UpdateProductRequestDTO {
     String purchaseAt;
     Boolean forSale;
     Boolean visible;
-    Timestamp refreshedAt;
     Boolean freeShipping;
     Long statusId;
     Long categoryId;
     List<TagRequestDTO> tags;
+
+    public UpdateProductRequestDTO(Product product){
+        this.title = product.getTitle();
+        this.content =product.getContent();
+        this.price = product.getPrice();
+        this.isEscrow = product.getIsEscrow();
+        this.discountable = product.getDiscountable();
+        this.purchaseAt = product.getPurchaseAt();
+        this.forSale = product.getForSale();
+        this.visible = product.getVisible();
+        this.freeShipping = product.getFreeShipping();
+        this.statusId = product.getStatus().getStatusId();
+        this.categoryId = product.getCategory().getCategoryId();
+        this.tags = product.getTags().stream().map(tag->
+            TagRequestDTO.builder().tagName(tag.getTagName()).build()
+        ).toList();
+    }
 }

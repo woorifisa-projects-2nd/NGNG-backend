@@ -51,6 +51,8 @@ public class TransactionDetails {
     @JoinColumn(name = "status_id")
     private TransactionStatus status;
 
+    private Long price;
+
 
 
 

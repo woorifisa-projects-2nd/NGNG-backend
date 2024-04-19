@@ -1,4 +1,5 @@
 package com.ngng.api.user.dto.request;
 
-public record EmailAuthRequest(String email) {
+public record EmailAuthRequest(String name,
+                               String email) {
 }

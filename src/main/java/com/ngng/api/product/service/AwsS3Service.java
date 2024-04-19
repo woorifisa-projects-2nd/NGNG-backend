@@ -1,5 +1,6 @@
 package com.ngng.api.product.service;
 
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,9 @@ public class AwsS3Service {
 
         amazonS3.putObject(bucket, fileName, multipartFile.getInputStream(), metadata);
         return amazonS3.getUrl(bucket, fileName).toString();
+    }
+
+    public void delete(String imageUrl) {
+        amazonS3.deleteObject(new DeleteObjectRequest(bucket,imageUrl));
     }
 }

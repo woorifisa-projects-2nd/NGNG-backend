@@ -1,5 +1,8 @@
 package com.ngng.api.product.dto.response;
 
+import com.ngng.api.product.dto.UserDTO;
+import com.ngng.api.report.entity.ReportType;
+import com.ngng.api.user.entity.User;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -12,9 +15,9 @@ import java.sql.Timestamp;
 public class ReadReportResponseDTO {
     Long reportId;
     String reportContents;
-    Long reportType;
-    Long reporterId;
-    Long userId;
+    ReportType reportType;
+    UserDTO reporter;
+    UserDTO user;
     Boolean isReport;
     Timestamp createdAt;
     Timestamp updatedAt;

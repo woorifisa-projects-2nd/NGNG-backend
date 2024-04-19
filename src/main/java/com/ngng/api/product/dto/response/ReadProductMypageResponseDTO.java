@@ -1,5 +1,6 @@
 package com.ngng.api.product.dto.response;
 
+import com.ngng.api.product.dto.UserDTO;
 import com.ngng.api.product.entity.Product;
 import com.ngng.api.thumbnail.dto.ThumbnailDTO;
 import com.ngng.api.transaction.dto.ReadTransactionDetailsDTO;
@@ -29,7 +30,7 @@ public class ReadProductMypageResponseDTO {
     private Boolean freeShipping;
     private Boolean available;
     private Timestamp refreshedAt;
-    private ReadProductUserResponseDTO user;
+    private UserDTO user;
     private ReadProductStatusResponseDTO status;
     private ReadProductCategoryResponseDTO category;
     private List<TagResponseDTO> tags;
@@ -68,7 +69,7 @@ public class ReadProductMypageResponseDTO {
                 .refreshedAt(product.getRefreshedAt())
                 .isEscrow(product.getIsEscrow())
                 .purchaseAt(product.getPurchaseAt())
-                .available(product.getAvailable())
+
                 .tags(product.getTags()
                         .stream().map(tag -> TagResponseDTO
                                 .builder()
@@ -81,11 +82,7 @@ public class ReadProductMypageResponseDTO {
                         .name(product.getStatus().getStatusName())
                         .build()
                 )
-                .user(ReadProductUserResponseDTO.builder()
-                        .id(product.getUser().getUserId())
-                        .name(product.getUser().getName())
-                        .nickname(product.getUser().getNickname())
-                        .build())
+                .user(new UserDTO(product.getUser()))
                 .category(ReadProductCategoryResponseDTO.builder()
                         .id(product.getCategory().getCategoryId())
                         .name(product.getCategory().getCategoryName())

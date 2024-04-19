@@ -1,5 +1,6 @@
 package com.ngng.api.product.dto.response;
 
+import com.ngng.api.product.dto.UserDTO;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -22,9 +23,8 @@ public class ReadAllProductsDTO {
     Timestamp updatedAt;
     Boolean visible;
     Boolean freeShipping;
-    Boolean available;
     Timestamp refreshedAt;
-    ReadProductUserResponseDTO user;
+    UserDTO user;
     ReadProductStatusResponseDTO status;
     ReadProductCategoryResponseDTO category;
 }

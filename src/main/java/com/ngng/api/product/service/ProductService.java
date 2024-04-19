@@ -1,7 +1,6 @@
 package com.ngng.api.product.service;
 
 import com.ngng.api.product.dto.UserDTO;
-import com.ngng.api.product.dto.request.TagRequestDTO;
 import com.ngng.api.product.dto.request.CreateProductRequestDTO;
 import com.ngng.api.product.dto.request.TagRequestDTO;
 import com.ngng.api.product.dto.request.UpdateProductRequestDTO;
@@ -49,6 +48,7 @@ public class ProductService {
                                                 .builder()
                                                 .id(image.getProductImageId())
                                                 .imageURL(image.getImageUrl())
+                                                .visible(image.getVisible())
                                                 .build())
                                 .collect(Collectors.toList()))
                         .title(product.getTitle())

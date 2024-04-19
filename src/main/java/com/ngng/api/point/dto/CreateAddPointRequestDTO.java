@@ -16,5 +16,4 @@ public class CreateAddPointRequestDTO {
 
     private String type;
 
-
 }

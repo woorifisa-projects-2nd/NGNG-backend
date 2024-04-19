@@ -9,6 +9,10 @@ import com.ngng.api.report.repository.ReportRepository;
 import com.ngng.api.report.repository.ReportTypeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,13 +30,31 @@ public class ReportServiceImpl implements ReportService {
 
 
     @Override
-    public List<ReadReportListResponseDTO> findAll() {
-        List<Report> reports = new ArrayList<>();
-        reportRepository.findAll().forEach(reports::add);
+    public Page<ReadReportListResponseDTO> findAll(int page, Boolean unprocessedOnly) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("reportId"));
+        Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
 
-        return reports.stream()
-                .map(ReadReportListResponseDTO::from)
-                .collect(Collectors.toList());
+        // 미처리 신고 분기
+        Page<Report> reports;
+        if(unprocessedOnly) {
+            reports = reportRepository.findByIsReport(null, pageable);
+        } else {
+            reports = reportRepository.findAll(pageable);
+        }
+
+        return reports.map(report -> ReadReportListResponseDTO.builder()
+                        .reportId(report.getReportId())
+                        .reportContents(report.getReportContents())
+                        .reportType(report.getReportType())
+                        .reporter(report.getReporter())
+                        .user(report.getUser())
+                        .isReport(report.getIsReport())
+                        .createdAt(report.getCreatedAt())
+                        .productId(report.getProductId())
+                        .privateChatId(report.getPrivateChatId())
+                        .visible(report.getVisible())
+                        .build());
     }
 
     @Override
@@ -62,7 +84,7 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public CreateReportResponseDTO save(CreateReportRequestDTO createReportRequestDTO) {
         Optional<ReportType> reportType = reportTypeRepository.findById(createReportRequestDTO.getReportTypeId());
-        ReportType responseReportType = reportType.orElseThrow();
+        ReportType responseReportType = reportType.orElseThrow(); // TODO 여기 예외처리하기
 
         Report report = Report.builder()
                 .reportContents(createReportRequestDTO.getReportContents())
@@ -93,8 +115,9 @@ public class ReportServiceImpl implements ReportService {
                 .build();
     }
 
+
     @Override
-    public ReadReportResponseDTO update(Long reportId, int isReport) {
+    public ReadReportResponseDTO update(Long reportId, Boolean isReport) {
         System.out.println("reportId = " + reportId);
         System.out.println("isReport = " + isReport);
 
@@ -129,7 +152,7 @@ public class ReportServiceImpl implements ReportService {
                 new EntityNotFoundException("report not found")
         );
 
-        report.setVisible(1);
+        report.setVisible(true);
 
         Report responseReport = reportRepository.save(report);
 

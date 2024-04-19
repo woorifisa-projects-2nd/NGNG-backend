@@ -21,6 +21,7 @@ public class DropOutService {
             return DropOutResponse.fail();
         }
 
+        // TODO visible 업데이트하는 거로 수정
         userRepository.deleteById(request.id());
 
         return DropOutResponse.success();

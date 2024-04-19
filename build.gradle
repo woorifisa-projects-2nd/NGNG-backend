@@ -46,6 +46,9 @@ dependencies {
 	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.20'
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+	implementation 'net.nurigo:sdk:4.2.7' // SMS
+	implementation 'org.springframework.boot:spring-boot-starter-mail' // Mail
 }
 
 tasks.named('test') {

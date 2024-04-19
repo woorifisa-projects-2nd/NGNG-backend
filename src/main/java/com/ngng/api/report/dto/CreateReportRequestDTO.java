@@ -14,7 +14,7 @@ public class CreateReportRequestDTO {
     private Long reportTypeId;
     private Long reporterId;
     private Long userId;
-    private int isReport;
+    private Boolean isReport;
     private Long productId;
     private Long privateChatId;
 

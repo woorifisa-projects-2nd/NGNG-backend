@@ -1,12 +1,8 @@
 package com.ngng.api.product.dto.response;
 
 import com.ngng.api.product.entity.Product;
-import com.ngng.api.productImage.dto.response.ReadProductImageResponseDTO;
-import com.ngng.api.productTag.dto.response.ReadProductTagResponseDTO;
 import com.ngng.api.thumbnail.dto.ThumbnailDTO;
-import com.ngng.api.thumbnail.entity.Thumbnail;
 import com.ngng.api.transaction.dto.ReadTransactionDetailsDTO;
-import com.ngng.api.transaction.entity.TransactionDetails;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -36,7 +32,7 @@ public class ReadProductMypageResponseDTO {
     private ReadProductUserResponseDTO user;
     private ReadProductStatusResponseDTO status;
     private ReadProductCategoryResponseDTO category;
-    private List<ReadProductTagResponseDTO> tags;
+    private List<TagResponseDTO> tags;
     private List<ReadProductImageResponseDTO> images;
     private ThumbnailDTO thumbnail;
     private ReadTransactionDetailsDTO transactionDetails;
@@ -57,7 +53,7 @@ public class ReadProductMypageResponseDTO {
                         .id(product.getThumbnail().getThumbnailId())
                         .thumbnailURL(product.getThumbnail().getThumbnailUrl())
                         .build())
-                .images(product.getImages()
+                .images(product.getProductImages()
                         .stream().map(image -> ReadProductImageResponseDTO
                                 .builder()
                                 .id(image.getProductImageId())
@@ -74,9 +70,9 @@ public class ReadProductMypageResponseDTO {
                 .purchaseAt(product.getPurchaseAt())
                 .available(product.getAvailable())
                 .tags(product.getTags()
-                        .stream().map(tag -> ReadProductTagResponseDTO
+                        .stream().map(tag -> TagResponseDTO
                                 .builder()
-                                .tagName(tag.getTag())
+                                .tagName(tag.getTagName())
                                 .build())
                         .collect(Collectors.toList())
                 )

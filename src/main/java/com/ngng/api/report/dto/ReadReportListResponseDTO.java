@@ -20,11 +20,11 @@ public class ReadReportListResponseDTO {
     private ReportType reportType;
     private User reporter;
     private User user;
-    private int isReport;
+    private Boolean isReport;
     private Timestamp createdAt;
     private Long productId;
     private Long privateChatId;
-    private int visible;
+    private Boolean visible;
 
     public static ReadReportListResponseDTO from(Report report) {
         // report 엔티티에 담긴 개별 값들을 추출
@@ -34,11 +34,11 @@ public class ReadReportListResponseDTO {
         final ReportType reportType = report.getReportType();
         final User reporter = report.getReporter();
         final User user = report.getUser();
-        final int isReport = report.getIsReport();
+        final Boolean isReport = report.getIsReport();
         final Timestamp createdAt = report.getCreatedAt();
         final Long productId = report.getProductId();
         final Long privateChatId = report.getPrivateChatId();
-        final int visible = report.getVisible();
+        final Boolean visible = report.getVisible();
 
         return new ReadReportListResponseDTO(reportId, reportContents, reportType, reporter, user, isReport, createdAt, productId, privateChatId, visible);
 

@@ -1,18 +1,17 @@
 package com.ngng.api.user.controller;
 
+import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
 import com.ngng.api.point.service.PointHistoryService;
 import com.ngng.api.product.service.ProductService;
 import com.ngng.api.transaction.service.TransactionDetailsService;
 import com.ngng.api.user.dto.UserMyPageReadResponseDTO;
 import com.ngng.api.user.dto.UserReadResponseDTO;
+import com.ngng.api.user.dto.UserUpdateRequestDTO;
 import com.ngng.api.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -23,20 +22,22 @@ public class UserController {
     private final PointHistoryService pointHistoryService;
     private final TransactionDetailsService transactionDetailsService;
     private final ProductService productService;
+    private final JwtTokenVerifier jwtTokenVerifier;
 
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<UserReadResponseDTO> read(@PathVariable("userId") Long userId) {
-
-        return ResponseEntity.ok().body(userService.readUserById(userId));
+    @GetMapping
+    public ResponseEntity<UserReadResponseDTO> read() {
+        return ResponseEntity.ok().body(userService.readUser());
     }
 
-    @GetMapping("/{userId}/mypage")
-    public ResponseEntity<UserMyPageReadResponseDTO> readMyPage(@PathVariable("userId") Long userId) {
-
-        return ResponseEntity.ok().body(userService.readUserMyPage(userId));
+    @GetMapping("/mypage")
+    public ResponseEntity<UserMyPageReadResponseDTO> readMyPage() {
+        return ResponseEntity.ok().body(userService.readUserMyPage());
     }
 
+    @PutMapping
+    public ResponseEntity<UserReadResponseDTO> update(@RequestBody UserUpdateRequestDTO userUpdateDTO) {
+            return ResponseEntity.ok().body(userService.update( userUpdateDTO));
 
-
+    }
 }

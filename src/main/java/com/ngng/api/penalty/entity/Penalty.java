@@ -33,7 +33,7 @@ public class Penalty {
     private PenaltyLevel penaltyLevel;
 
 //    @OneToOne
-//    @JoinColumn(name = "report_id")
+//    @JoinColumn(name = "report_id", referencedColumnName = "reportId") // 외래 키와 매핑
 //    private Report report;
 
     @CreationTimestamp

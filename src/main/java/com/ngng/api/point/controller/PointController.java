@@ -1,9 +1,11 @@
 package com.ngng.api.point.controller;
 
+import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
 import com.ngng.api.point.dto.CreateAddPointRequestDTO;
 import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.service.PointHistoryService;
 import com.ngng.api.user.entity.User;
+import com.ngng.api.user.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,21 +18,29 @@ import java.util.List;
 @RequestMapping("/points")
 public class PointController {
     private final PointHistoryService pointHistoryService;
-
+    private final JwtTokenVerifier jwtTokenVerifier;
+    private final UserRepository userRepository;
 
     @GetMapping("/{id}")
-    public ResponseEntity<PointHistory> readPoint(@PathVariable("id") User user){
+    public ResponseEntity<PointHistory> readPoint(@RequestHeader("Authorization") String token){
+        User user = userRepository.findUserByEmail(jwtTokenVerifier.getEmail(token)).orElse(null);
+
         return ResponseEntity.ok().body(pointHistoryService.readCostByUser(user));
     }
 
-    @GetMapping("/all/{id}")
-    public ResponseEntity<List<PointHistory>> readAllPointHistory(@PathVariable("id") User user){
+    @GetMapping("/all")
+    public ResponseEntity<List<PointHistory>> readAllPointHistory(@RequestHeader("Authorization") String token){
+
+        User user = userRepository.findUserByEmail(jwtTokenVerifier.getEmail(token)).orElse(null);
+
         return ResponseEntity.ok().body(pointHistoryService.readPointHistories(user));
     }
 
 
-    @PostMapping("/{id}")
-    public ResponseEntity<PointHistory> addPoint(@PathVariable("id") User user,@RequestBody @Valid final CreateAddPointRequestDTO dto){
+    @PostMapping("")
+    public ResponseEntity<PointHistory> addPoint(@RequestHeader("Authorization") String token,@RequestBody @Valid final CreateAddPointRequestDTO dto){
+        User user = userRepository.findUserByEmail(jwtTokenVerifier.getEmail(token)).orElse(null);
+
         return ResponseEntity.ok().body(pointHistoryService.updateCostByUserAndRequest(user,dto));
     }
 }

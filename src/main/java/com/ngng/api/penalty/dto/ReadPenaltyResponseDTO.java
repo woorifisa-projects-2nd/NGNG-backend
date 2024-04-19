@@ -1,7 +1,7 @@
 package com.ngng.api.penalty.dto;
 
-import com.ngng.api.penalty.entity.Penalty;
 import com.ngng.api.penalty.entity.PenaltyLevel;
+import com.ngng.api.report.dto.ReadReportResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,24 +21,22 @@ public class ReadPenaltyResponseDTO {
 //    private Long reporterId;
     private String reason;
     private PenaltyLevel penaltyLevel;
-    private Long reportId;
-//    private Timestamp createdAt;
-//    private Timestamp updatedAt;
+    private ReadReportResponseDTO report;
+//    private Long reportId;
 
-    public static ReadPenaltyResponseDTO from(Penalty penalty) {
-
-        final Long penaltyId = penalty.getPenaltyId();
-        final Timestamp startDate = penalty.getStartDate();
-        final Timestamp endDate = penalty.getEndDate();
-//        final Long userId = penalty.getUserId();
-//        final Long reporterId = penalty.getReporterId();
-        final String reason = penalty.getReason();
-        final PenaltyLevel penaltyLevel = penalty.getPenaltyLevel();
-        final Long reportId = penalty.getReportId();
-//        final Timestamp createdAt = penalty.getCreatedAt();
-//        final Timestamp updatedAt = penalty.getUpdatedAt();
-
-        return new ReadPenaltyResponseDTO(penaltyId, startDate, endDate, reason, penaltyLevel, reportId);
-
-    }
+//    public static ReadPenaltyResponseDTO from(Penalty penalty) {
+//
+//        final Long penaltyId = penalty.getPenaltyId();
+//        final Timestamp startDate = penalty.getStartDate();
+//        final Timestamp endDate = penalty.getEndDate();
+////        final Long userId = penalty.getUserId();
+////        final Long reporterId = penalty.getReporterId();
+//        final String reason = penalty.getReason();
+//        final PenaltyLevel penaltyLevel = penalty.getPenaltyLevel();
+//        final ReadReportResponseDTO report = penalty.getReport();
+////        final Long reportId = penalty.getReportId();
+//
+//        return new ReadPenaltyResponseDTO(penaltyId, startDate, endDate, reason, penaltyLevel, report);
+//
+//    }
 }

@@ -10,4 +10,5 @@ import lombok.*;
 public class ReadProductImageResponseDTO {
     Long id;
     String imageURL;
+    Boolean visible;
 }

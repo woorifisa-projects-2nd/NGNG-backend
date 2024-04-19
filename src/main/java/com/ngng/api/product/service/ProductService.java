@@ -3,14 +3,12 @@ package com.ngng.api.product.service;
 import com.ngng.api.product.dto.UserDTO;
 import com.ngng.api.product.dto.request.TagRequestDTO;
 import com.ngng.api.product.dto.request.CreateProductRequestDTO;
+import com.ngng.api.product.dto.request.TagRequestDTO;
 import com.ngng.api.product.dto.request.UpdateProductRequestDTO;
 import com.ngng.api.product.dto.response.*;
 import com.ngng.api.product.entity.Product;
 import com.ngng.api.product.entity.Tag;
 import com.ngng.api.product.repository.ProductRepository;
-import com.ngng.api.product.dto.response.ReadProductImageResponseDTO;
-import com.ngng.api.product.dto.response.TagResponseDTO;
-import com.ngng.api.thumbnail.service.ThumbnailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,13 +26,14 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final TagService tagService;
 
+
     public Long create(CreateProductRequestDTO request){
         return productRepository.save(new Product(request)).getProductId();
     }
 
     public ReadProductResponseDTO read(Long productId){
         Product product = productRepository.findById(productId).orElse(null);
-        if(product == null ){
+        if (product == null) {
             return null;
         }
         return ReadProductResponseDTO
@@ -63,7 +62,7 @@ public class ProductService {
                         .tags(product.getTags()
                                 .stream().map(tag -> TagResponseDTO
                                 .builder()
-                                        .tagName(tag.getTagName())
+                                .tagName(tag.getTagName())
                                 .build())
                                 .collect(Collectors.toList())
                         )
@@ -101,9 +100,9 @@ public class ProductService {
                 .build();
     }
 
-    public List<ReadAllProductsDTO> readAll(){
+    public List<ReadAllProductsDTO> readAll() {
         List<Product> products = productRepository.findAll();
-        if(products.isEmpty()){
+        if (products.isEmpty()) {
             return null;
         }
         return products.stream().map((product -> ReadAllProductsDTO
@@ -133,7 +132,7 @@ public class ProductService {
                         .build()).build())).toList();
     }
 
-    public List<Product> readSellProductsByUserId(Long sellerId){
+    public List<Product> readSellProductsByUserId(Long sellerId) {
 
         List<Product> products = productRepository.readAllSellProductBySellerId(sellerId);
 
@@ -144,10 +143,8 @@ public class ProductService {
     }
 
 
-
     @Transactional
     public Long update(Long productId, UpdateProductRequestDTO request){
-
         Product found = productRepository.findById(productId).orElseThrow();
 
         List<String> originalTags = found.getTags().stream().map(Tag::getTagName).toList();  // 기존의 태그dhk

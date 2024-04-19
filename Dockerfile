@@ -3,6 +3,9 @@ WORKDIR /usr/src/app
 
 COPY . .
 
+RUN apt-get install dos2unix
+RUN dos2unix ./gradlew
+
 RUN chmod +x ./gradlew
 RUN ./gradlew build
 

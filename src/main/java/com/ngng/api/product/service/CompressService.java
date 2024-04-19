@@ -68,8 +68,12 @@ public class CompressService {
         String[] tokens = fileName.split("\\."); // "." 문자를 기준으로 문자열을 분리합니다.
         String extension = tokens[tokens.length - 1];
 
+        String fileName = originFile.getOriginalFilename();
+        String[] tokens = fileName.split("\\."); // "." 문자를 기준으로 문자열을 분리합니다.
+        String extension = tokens[tokens.length - 1];
+
         try {
-            if(extension.equals("png")) ImageIO.write(image, "png", out);
+            if(extension == "png") ImageIO.write(image, "png", out);
             else ImageIO.write(image, "jpeg", out);
 
         } catch (IOException e) {

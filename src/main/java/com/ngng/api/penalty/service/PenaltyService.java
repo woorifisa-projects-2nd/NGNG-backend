@@ -1,7 +1,5 @@
 package com.ngng.api.penalty.service;
 
-import com.ngng.api.penalty.dto.CreatePenaltyRequestDTO;
-import com.ngng.api.penalty.dto.CreatePenaltyResponseDTO;
 import com.ngng.api.penalty.dto.ReadPenaltyListResponseDTO;
 import com.ngng.api.penalty.dto.ReadPenaltyResponseDTO;
 
@@ -12,6 +10,6 @@ public interface PenaltyService {
 
     ReadPenaltyResponseDTO findById(Long reportId);
 
-    CreatePenaltyResponseDTO save(CreatePenaltyRequestDTO createPenaltyRequestDTO);
+//    CreatePenaltyResponseDTO save(CreatePenaltyRequestDTO createPenaltyRequestDTO);
 
 }

@@ -6,6 +6,8 @@ import com.ngng.api.penalty.entity.Penalty;
 import com.ngng.api.penalty.entity.PenaltyLevel;
 import com.ngng.api.penalty.repository.PenaltyLevelRepository;
 import com.ngng.api.penalty.repository.PenaltyRepository;
+import com.ngng.api.product.entity.Product;
+import com.ngng.api.product.repository.ProductRepository;
 import com.ngng.api.report.entity.Report;
 import com.ngng.api.report.repository.ReportRepository;
 import com.ngng.api.report.service.ReportService;
@@ -26,6 +28,7 @@ public class PenaltyTran {
     private final PenaltyLevelRepository penaltyLevelRepository;
     private final ReportRepository reportRepository;
     private final ReportService reportService;
+    private final ProductRepository productRepository;
 
     @Transactional
     public CreatePenaltyResponseDTO penaltySaveAndReportUpdate(CreatePenaltyRequestDTO createPenaltyRequestDTO) {
@@ -33,6 +36,11 @@ public class PenaltyTran {
         Long penaltyLevelId = createPenaltyRequestDTO.getPenaltyLevelId();
         PenaltyLevel penaltyLevel = penaltyLevelRepository.findById(penaltyLevelId).orElseThrow(() ->
                 new EntityNotFoundException("penaltyLevel not found")
+        );
+
+        Long reportId = createPenaltyRequestDTO.getReportId();
+        Report report = reportRepository.findById(reportId).orElseThrow(() ->
+                new EntityNotFoundException("Report not found")
         );
 
         Timestamp banDate = new Timestamp(System.currentTimeMillis());
@@ -69,6 +77,7 @@ public class PenaltyTran {
 //        System.exit(0);
 
         updateIsReport(responsepenalty.getReportId(), true);
+        updateProductForSale(report.getProductId(), false);
 
         return CreatePenaltyResponseDTO.builder()
                 .startDate(responsepenalty.getStartDate())
@@ -94,5 +103,15 @@ public class PenaltyTran {
 
         reportRepository.save(report);
 
+    }
+
+    private void updateProductForSale(Long productId, Boolean forSale) {
+        Product product = productRepository.findById(productId).orElseThrow(() ->
+                new EntityNotFoundException("product not found")
+        );
+
+        product.setForSale(forSale);
+
+        productRepository.save(product);
     }
 }

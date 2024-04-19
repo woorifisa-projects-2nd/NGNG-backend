@@ -1,6 +1,5 @@
 package com.ngng.api.report.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ngng.api.report.dto.ReportImageDTO;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,7 +27,7 @@ public class ReportImage {
     // 신고 이미지 리스트 추가
     @ManyToOne
     @JoinColumn(name = "report_id")
-    @JsonIgnore
+//    @JsonIgnore
     private Report report;
 
     @CreationTimestamp

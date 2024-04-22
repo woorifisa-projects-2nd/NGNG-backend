@@ -3,6 +3,8 @@ WORKDIR /usr/src/app
 
 COPY . .
 
+RUN dos2unix ./gradlew
+
 RUN chmod +x ./gradlew
 RUN ./gradlew build
 

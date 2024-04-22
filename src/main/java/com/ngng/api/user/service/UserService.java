@@ -33,6 +33,7 @@ public class UserService {
     private final PointHistoryService pointHistoryService;
     private final TransactionDetailsService transactionDetailsService;
     private final ProductService productService;
+    private final AuthService authService;
 
 
     public List<UserReadResponseDTO> findAll() {
@@ -70,7 +71,7 @@ public class UserService {
     }
 
     public UserReadResponseDTO readUser() {
-        User user =  this.readAuthUser();
+        User user =  this.authService.readAuthUser();
         PointHistory pointHistory = pointHistoryService.readCostByUser(user);
 
         return new UserReadResponseDTO().from(user,pointHistory);
@@ -81,7 +82,7 @@ public class UserService {
 
     public UserMyPageReadResponseDTO readUserMyPage(){
 
-        User user =  this.readAuthUser();
+        User user =  this.authService.readAuthUser();
         PointHistory point = pointHistoryService.readCostByUser(user);
 
         List<ReadProductMypageResponseDTO> sellList = productService.readSellProductsByUserId(user.getUserId()).stream()
@@ -98,7 +99,7 @@ public class UserService {
     @Transactional
     public UserReadResponseDTO update( UserUpdateRequestDTO userDto){
 
-        User user = this.readAuthUser();
+        User user =  this.authService.readAuthUser();
 
         if(user == null) return UserReadResponseDTO.builder().build();
 
@@ -111,12 +112,4 @@ public class UserService {
 
     }
 
-    public User readAuthUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
-
-        String email = details.getUser().getEmail();
-
-        return this.userRepository.findUserByEmail(email).orElse(null);
-    }
 }

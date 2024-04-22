@@ -119,7 +119,8 @@ public class TransactionDetailsService extends Exception {
             User user = authService.readAuthUser();
 
             if(
-                transactionDetails.getProduct().getUser().getUserId() != user.getUserId()
+                transactionDetails.getProduct().getUser().getUserId() != user.getUserId()  &&
+                transactionDetails.getConsumer().getUserId() != user.getUserId()
             ) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"소유권이 없는 유저 입니다.");
 
 //            TransactionStatus status = transactionStatusRepository.findById(request.getStatus().getId()).orElseThrow();

@@ -1,6 +1,7 @@
 package com.ngng.api.transaction.entity;
 
 import com.ngng.api.product.entity.Product;
+import com.ngng.api.transaction.dto.CreateTransactionRequestDTO;
 import com.ngng.api.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,5 +41,6 @@ public class TransactionRequest {
     private Timestamp updatedAt;
 
     private Long price;
+
 
 }

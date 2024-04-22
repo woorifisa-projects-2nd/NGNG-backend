@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TransactionRequestRepository extends JpaRepository<TransactionRequest, Long> {
-    public List<TransactionRequest> findAllByProductProductId(Long productId);
+     List<TransactionRequest> findAllByProductProductId(Long productId);
 
 }

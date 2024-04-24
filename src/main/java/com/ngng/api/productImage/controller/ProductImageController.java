@@ -82,7 +82,7 @@ public class ProductImageController {
         return "hihi";
     }
 
-    @DeleteMapping("deleteImage/{productId}")
+    @DeleteMapping("/deleteImage/{productId}")
     public ResponseEntity<Long> deleteImage(@PathVariable("productId") Long productId, @RequestBody DeleteImageRequestDTO deleteImageRequestDTO) {
         System.out.println("productImageId = " + productId);
         System.out.println("deleteImageRequestDTO = " + deleteImageRequestDTO.getImageURL());

@@ -1,7 +1,7 @@
 package com.ngng.api.user.dto;
 
 import com.ngng.api.point.entity.PointHistory;
-import com.ngng.api.role.entity.Role;
+import com.ngng.api.user.entity.Role;
 import com.ngng.api.user.entity.User;
 import lombok.*;
 

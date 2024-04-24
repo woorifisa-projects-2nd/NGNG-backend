@@ -1,6 +1,5 @@
 package com.ngng.api.user.entity;
 
-import com.ngng.api.role.entity.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;

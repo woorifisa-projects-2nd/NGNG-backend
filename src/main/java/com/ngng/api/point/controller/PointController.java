@@ -30,6 +30,6 @@ public class PointController {
 
     @PostMapping("")
     public ResponseEntity<PointHistory> addPoint(@RequestBody @Valid final CreateAddPointRequestDTO dto){
-        return ResponseEntity.ok().body(pointHistoryService.updateCostByUserAndRequest(dto));
+        return ResponseEntity.ok().body(pointHistoryService.updateCost(dto));
     }
 }

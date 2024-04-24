@@ -16,21 +16,22 @@ import java.net.URI;
 @RequiredArgsConstructor
 @RequestMapping("/join")
 @RestController
-@Slf4j
+@Slf4j(topic = "user-log")
 public class JoinController {
 
     private final JoinService joinService;
 
     @PostMapping
     public ResponseEntity<?> join(@RequestBody JoinRequest request) {
-        log.info("join process start");
 
         JoinResponse response = joinService.join(request);
 
         if (!response.isJoinSuccess()) {
-
+            log.error("Faild Create User , Email - {}",request.email());
             return ResponseEntity.badRequest().build();
         }
+        log.info("Success Create User id: {} email: {} ",response.id(),request.email());
+
 
         URI location = URI.create("/users/" + response.id());
 

@@ -8,6 +8,7 @@ import com.ngng.api.user.service.EmailAuthService;
 import com.ngng.api.user.service.PhoneNumberAuthService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/join/auth")
 @RestController
+@Slf4j(topic = "user-log")
 public class JoinAuthController {
 
     private final EmailAuthService emailAuthService;
@@ -34,10 +36,10 @@ public class JoinAuthController {
         PhoneNumberAuthResponse response = phoneNumberAuthService.sendMessage(request);
 
         if (!response.isSuccess()) {
-
+            log.error("Faild Auth PhoneNumber , name - {}",request.name());
             return ResponseEntity.badRequest().build();
         }
-
+        log.info("Success  Auth PhoneNumber , name - {}",request.name());
         return ResponseEntity.ok().body(response);
     }
 
@@ -47,10 +49,10 @@ public class JoinAuthController {
         EmailAuthResponse response = emailAuthService.sendMail(request);
 
         if (!response.isSuccess()) {
-
+            log.error("Faild Auth email , name - {}",request.name());
             return ResponseEntity.badRequest().build();
         }
-
+        log.info("Success  Auth email , name - {}",request.name());
         return ResponseEntity.ok().body(response);
     }
 }

@@ -9,6 +9,7 @@ import com.ngng.api.report.repository.ReportRepository;
 import com.ngng.api.report.repository.ReportTypeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j(topic = "report-log")
 public class ReportServiceImpl implements ReportService {
 
     private final ReportRepository reportRepository;
@@ -101,6 +103,7 @@ public class ReportServiceImpl implements ReportService {
 
         Report responseReport = reportRepository.save(report);
 
+        log.info("Success Create report id: {} reporter : {}  user : {} product : {}",responseReport.getReporterId(),responseReport.getReporterId(),responseReport.getUserId(),responseReport.getProductId());
         return CreateReportResponseDTO.builder()
                 .reportId(responseReport.getReportId())
                 .reportContents(responseReport.getReportContents())
@@ -129,6 +132,7 @@ public class ReportServiceImpl implements ReportService {
 
         Report responseReport = reportRepository.save(report);
 
+        log.info("Success update report id: {} isReport : {} ",responseReport.getReporterId(),isReport);
         return ReadReportResponseDTO.builder()
                 .reportId(responseReport.getReportId())
                 .reportContents(responseReport.getReportContents())
@@ -156,6 +160,7 @@ public class ReportServiceImpl implements ReportService {
 
         Report responseReport = reportRepository.save(report);
 
+        log.info("Success Delete report id: {}",responseReport.getReporterId());
         return DeleteReportResponseDTO.builder()
                 .reportId(responseReport.getReportId())
                 .visible(responseReport.getVisible())

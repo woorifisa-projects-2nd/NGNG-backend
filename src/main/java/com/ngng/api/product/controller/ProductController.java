@@ -58,6 +58,13 @@ public class ProductController {
         }
     }
 
+    @PostMapping("/refresh/{productId}")
+    @Parameter(name = "id", description = "상품 id")
+    @Operation(summary = "상품 게시 날짜 끌어올리기 ( 갱신 )", description = "특정 id 값으로 상품을 찾아 게시 날짜를 갱신 합니다.")
+    public ResponseEntity<Long> updateRefresh(@PathVariable("productId") Long productId) {
+        return ResponseEntity.ok(productService.updateRefresh(productId));
+    }
+
     @PostMapping("/upload")
     @Parameter(name = "files", description = "이미지 파일 배열")
     @Operation(summary = "상품 이미지 업로드", description = "s3에 상품 썸네일과 이미지들을 등록합니다.")

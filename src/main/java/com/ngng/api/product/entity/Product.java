@@ -3,7 +3,6 @@ package com.ngng.api.product.entity;
 import com.ngng.api.product.dto.request.CreateProductRequestDTO;
 import com.ngng.api.product.dto.request.UpdateProductRequestDTO;
 import com.ngng.api.report.entity.Report;
-import com.ngng.api.status.entity.Status;
 import com.ngng.api.thumbnail.entity.Thumbnail;
 import com.ngng.api.transaction.entity.TransactionDetails;
 import com.ngng.api.user.entity.User;
@@ -16,6 +15,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -108,6 +108,7 @@ public class Product {
         this.freeShipping = request.getFreeShipping();
         this.user = User.builder().userId(request.getUserId()).build();
         this.status = Status.builder().statusId(request.getStatusId()).build();
+        this.refreshedAt = new Timestamp(new Date().getTime());
         this.category = Category.builder().categoryId(request.getCategoryId()).build();
         this.tags = request.getTags().stream().
                 map(tag -> Tag.builder()

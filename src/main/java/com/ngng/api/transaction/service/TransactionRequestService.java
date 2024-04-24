@@ -25,14 +25,22 @@ public class TransactionRequestService {
     private final TransactionDetailsService transactionDetailsService;
 
     public Long create(CreateTransactionRequestDTO request){
-        return transactionRequestRepository.save(
-                TransactionRequest.builder()
-                        .product(Product.builder().productId(request.getProductId()).build())
-                        .buyer(User.builder().userId(request.getBuyerId()).build())
-                        .seller(User.builder().userId(request.getSellerId()).build())
-                        .price(request.getPrice())
-                        .build()
-        ).getTransactionRequestId();
+
+        TransactionRequest target = transactionRequestRepository.findByProductProductIdAndBuyerUserId(request.getProductId(), request.getBuyerId()).orElse(null);
+        if(target == null){
+            return transactionRequestRepository.save(
+                    TransactionRequest.builder()
+                            .product(Product.builder().productId(request.getProductId()).build())
+                            .buyer(User.builder().userId(request.getBuyerId()).build())
+                            .seller(User.builder().userId(request.getSellerId()).build())
+                            .price(request.getPrice())
+                            .build()
+            ).getTransactionRequestId();
+        }else{
+            System.out.println("이미 요청 했었음");
+            return -1L;
+        }
+
     }
 
     @Transactional
@@ -50,10 +58,9 @@ public class TransactionRequestService {
                 productService.updateForSale(productId, false);
 
                 // 3. transactionDetails 추가
-                // TODO 배송지 어떤 값으로 추가할지? 구매자의 address값 넣을지 아님 수정하게 할지
                 transactionDetailsService.create(new CreateTransactionDetailsRequestDTO(productId, target.getBuyer().getUserId(), target.getPrice()));
-                List<TransactionRequest> others = transactionRequestRepository.findAllByProductProductId(productId);
 
+                List<TransactionRequest> others = transactionRequestRepository.findAllByProductProductId(productId);
                 // 4. 나머지는 거부 처리
                 others.forEach(request -> {
                     if(!Objects.equals(request.getTransactionRequestId(), requestId)){

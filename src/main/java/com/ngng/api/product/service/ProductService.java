@@ -14,12 +14,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
+@Slf4j(topic = "product")
 @Transactional
 public class ProductService {
 
@@ -49,6 +52,7 @@ public class ProductService {
                                                 .builder()
                                                 .id(image.getProductImageId())
                                                 .imageURL(image.getImageUrl())
+                                                .visible(image.getVisible())
                                                 .build())
                                 .collect(Collectors.toList()))
                         .title(product.getTitle())
@@ -169,7 +173,17 @@ public class ProductService {
             target.setForSale(forSale);
         }
         return target.getProductId();
+
     }
+
+    public Long updateRefresh(Long productId){
+        Product target = productRepository.findById(productId).orElse(null);
+        if(target != null){
+            target.setRefreshedAt(new Timestamp(new Date().getTime()));
+        }
+        return target.getProductId();
+    }
+
     public Long delete(Long productId){
         Product product = productRepository.findById(productId).orElseThrow();
         // 신고 안 받았고 거래 진행 안 했거나 거래취소된 경우에만 삭제 가능

@@ -4,18 +4,12 @@ package com.ngng.api.transaction.dto;
 import com.ngng.api.product.dto.response.ReadProductImageResponseDTO;
 import com.ngng.api.product.dto.response.ReadProductStatusResponseDTO;
 import com.ngng.api.product.dto.response.TagResponseDTO;
-import com.ngng.api.product.entity.Category;
 import com.ngng.api.product.entity.Product;
-import com.ngng.api.product.entity.ProductImage;
-import com.ngng.api.product.entity.Tag;
-import com.ngng.api.status.entity.Status;
 import com.ngng.api.thumbnail.dto.ThumbnailDTO;
-import com.ngng.api.thumbnail.entity.Thumbnail;
 import com.ngng.api.transaction.entity.TransactionDetails;
 import com.ngng.api.transaction.entity.TransactionStatus;
 
 import com.ngng.api.user.entity.User;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
@@ -57,7 +51,7 @@ public class ReadTransactionDetailsDTO {
     @NoArgsConstructor
     private static class DetailsProductDTO{
 
-        private Long productId;
+        private Long id;
         private String title;
         private Long price;
         private Boolean isEscrow;
@@ -72,7 +66,7 @@ public class ReadTransactionDetailsDTO {
 
         public DetailsProductDTO from(Product product){
             return DetailsProductDTO.builder()
-                    .productId(product.getProductId())
+                    .id(product.getProductId())
                     .title(product.getTitle())
                     .price(product.getPrice())
                     .isEscrow(product.getIsEscrow())
@@ -90,6 +84,7 @@ public class ReadTransactionDetailsDTO {
                                     .builder()
                                     .id(image.getProductImageId())
                                     .imageURL(image.getImageUrl())
+                                    .visible(image.getVisible())
                                     .build())
                             .collect(Collectors.toList()))
                     .tags(product.getTags()

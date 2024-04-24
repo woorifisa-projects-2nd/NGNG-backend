@@ -1,4 +1,4 @@
-package com.ngng.api.status.entity;
+package com.ngng.api.product.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -78,7 +78,7 @@ public class SecurityConfig {
                 * security filter에도 적용되어 2번 동작하기 때문에 bean주입을 하지않고 new를 통해 생성
                 * jwt를 통한 인증/인가 필터 설정
                 * */
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), tokenVerifier, tokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), tokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new TokenFilter(tokenProvider, tokenVerifier), LoginFilter.class)
 
                 /*

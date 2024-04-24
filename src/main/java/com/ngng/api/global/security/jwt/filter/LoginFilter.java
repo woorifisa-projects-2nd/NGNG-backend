@@ -28,7 +28,6 @@ import java.io.PrintWriter;
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
-    private final JwtTokenVerifier tokenVerifier;
     private final JwtTokenProvider tokenProvider;
 
     @Override

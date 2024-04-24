@@ -79,7 +79,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
         Pattern uriPattern = Pattern.compile("/(login|logout|search|join|find|products)(/.*)?");
 
-        return (uri.startsWith("/products") && method.equals("GET")) || uriPattern.matcher(uri).matches();
+        return (uri.startsWith("/product") && method.equals("GET")) || uriPattern.matcher(uri).matches();
     }
 
     private CustomUserDetails createCustomUserDetails(String token) throws JsonProcessingException {
@@ -99,7 +99,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
         return accessToken == null ||
                 !accessToken.startsWith("Bearer ") ||
-                tokenVerifier.validateToken(accessToken) ||
+                !tokenVerifier.validateToken(accessToken) ||
                 !tokenVerifier.getType(accessToken).equals("access");
     }
 
@@ -107,7 +107,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
         return refreshToken == null ||
                 !tokenVerifier.getType(refreshToken).equals("refresh") ||
-                tokenVerifier.checkRefreshToken(refreshToken);
+                !tokenVerifier.checkRefreshToken(refreshToken);
     }
 
     private void createAndSetReissuedAccessToken(String refreshToken, HttpServletResponse response) throws IOException {

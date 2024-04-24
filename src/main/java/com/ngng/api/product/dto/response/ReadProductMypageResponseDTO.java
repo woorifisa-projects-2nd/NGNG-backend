@@ -59,6 +59,7 @@ public class ReadProductMypageResponseDTO {
                                 .builder()
                                 .id(image.getProductImageId())
                                 .imageURL(image.getImageUrl())
+                                .visible(image.getVisible())
                                 .build())
                         .collect(Collectors.toList()))
                 .title(product.getTitle())

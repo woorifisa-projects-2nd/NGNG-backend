@@ -51,7 +51,7 @@ public class ReadTransactionDetailsDTO {
     @NoArgsConstructor
     private static class DetailsProductDTO{
 
-        private Long productId;
+        private Long id;
         private String title;
         private Long price;
         private Boolean isEscrow;
@@ -66,7 +66,7 @@ public class ReadTransactionDetailsDTO {
 
         public DetailsProductDTO from(Product product){
             return DetailsProductDTO.builder()
-                    .productId(product.getProductId())
+                    .id(product.getProductId())
                     .title(product.getTitle())
                     .price(product.getPrice())
                     .isEscrow(product.getIsEscrow())
@@ -84,6 +84,7 @@ public class ReadTransactionDetailsDTO {
                                     .builder()
                                     .id(image.getProductImageId())
                                     .imageURL(image.getImageUrl())
+                                    .visible(image.getVisible())
                                     .build())
                             .collect(Collectors.toList()))
                     .tags(product.getTags()

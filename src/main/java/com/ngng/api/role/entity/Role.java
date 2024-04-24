@@ -2,7 +2,7 @@ package com.ngng.api.role.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
+
 
 @Setter
 @Getter

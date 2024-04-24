@@ -6,7 +6,7 @@ import com.ngng.api.global.security.dto.response.ReissuanceAccessTokenResponse;
 import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
 import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
 import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
-import com.ngng.api.role.entity.Role;
+import com.ngng.api.user.entity.Role;
 import com.ngng.api.user.entity.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -48,7 +48,9 @@ public class SecurityConfig {
 
                     CorsConfiguration configuration = new CorsConfiguration();
 
-                    configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+//                    configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+//                    배포시 CORS 설정 떄문에 *로 설정함
+                    configuration.addAllowedOrigin("*");
                     configuration.setAllowedMethods(Collections.singletonList("*"));
                     configuration.setAllowCredentials(true);
                     configuration.setAllowedHeaders(Collections.singletonList("*"));

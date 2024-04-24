@@ -7,6 +7,7 @@ import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
 import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
 import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
 import com.ngng.api.role.entity.Role;
+import com.ngng.api.role.entity.Role;
 import com.ngng.api.user.entity.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -99,7 +100,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
         return accessToken == null ||
                 !accessToken.startsWith("Bearer ") ||
-                tokenVerifier.validateToken(accessToken) ||
+                !tokenVerifier.validateToken(accessToken) ||
                 !tokenVerifier.getType(accessToken).equals("access");
     }
 

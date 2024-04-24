@@ -99,7 +99,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
         return accessToken == null ||
                 !accessToken.startsWith("Bearer ") ||
-                tokenVerifier.validateToken(accessToken) ||
+                !tokenVerifier.validateToken(accessToken) ||
                 !tokenVerifier.getType(accessToken).equals("access");
     }
 

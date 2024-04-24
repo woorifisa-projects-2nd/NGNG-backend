@@ -2,18 +2,18 @@ package com.ngng.api.user.controller;
 
 import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.service.PointHistoryService;
-import com.ngng.api.user.dto.*;
+import com.ngng.api.user.dto.UserReadResponseDTO;
+import com.ngng.api.user.dto.UserUpdateRequestDTO;
 import com.ngng.api.user.entity.User;
 import com.ngng.api.user.service.JoinService;
 import com.ngng.api.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/admin/users")
@@ -25,10 +25,10 @@ public class AdminUserController {
     private final JoinService joinService;
 
     @GetMapping
-    public ResponseEntity<List<UserReadResponseDTO>> readAll() {
-        List<UserReadResponseDTO> users = userService.findAll();
+    public ResponseEntity<Page<UserReadResponseDTO>> readAll(@RequestParam(value="page", defaultValue="0") Integer page) {
 
-        return ResponseEntity.ok(users);
+        Page<UserReadResponseDTO> usersPage = userService.findAll(page);
+        return ResponseEntity.ok(usersPage);
     }
 
     @GetMapping("/{userId}")
@@ -67,12 +67,12 @@ public class AdminUserController {
 
 
     // 사용자 삭제(visible 여부)
-//    @PatchMapping("/{userId}")
-//    public ResponseEntity<DeleteUserResponseDTO> delete(@PathVariable Long userId) {
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Long> delete(@PathVariable Long userId) {
 //        User found = userService.findById(userId);
-//
-//
-//    }
+        return ResponseEntity.ok(userService.delete(userId));
+
+    }
 
 
     @ExceptionHandler(BadRequestException.class)

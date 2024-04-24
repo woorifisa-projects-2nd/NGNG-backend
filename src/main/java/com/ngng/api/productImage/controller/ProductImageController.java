@@ -37,7 +37,7 @@ public class ProductImageController {
 //            확장자 구분
             String fileName = file.getOriginalFilename();
             String[] tokens = fileName.split("\\."); // "." 문자를 기준으로 문자열을 분리합니다.
-            String extension = tokens[tokens.length - 1];
+            String extension = tokens[tokens.length - 1].toLowerCase();
 
 
         try {

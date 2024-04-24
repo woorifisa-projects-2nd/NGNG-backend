@@ -1,4 +1,4 @@
-package com.ngng.api.productTag.dto.request;
+package com.ngng.api.product.dto.request;
 
 import lombok.*;
 

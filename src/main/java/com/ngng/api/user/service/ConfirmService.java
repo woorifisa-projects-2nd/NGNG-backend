@@ -1,7 +1,7 @@
 package com.ngng.api.user.service;
 
 import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
-import com.ngng.api.role.entity.Role;
+import com.ngng.api.user.entity.Role;
 import com.ngng.api.user.dto.request.AccountConfirmRequest;
 import com.ngng.api.user.dto.request.AddressConfirmRequest;
 import com.ngng.api.user.dto.response.AccountConfirmResponse;

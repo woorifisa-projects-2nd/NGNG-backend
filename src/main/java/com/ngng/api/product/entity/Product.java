@@ -3,7 +3,6 @@ package com.ngng.api.product.entity;
 import com.ngng.api.product.dto.request.CreateProductRequestDTO;
 import com.ngng.api.product.dto.request.UpdateProductRequestDTO;
 import com.ngng.api.report.entity.Report;
-import com.ngng.api.status.entity.Status;
 import com.ngng.api.thumbnail.entity.Thumbnail;
 import com.ngng.api.transaction.entity.TransactionDetails;
 import com.ngng.api.user.entity.User;

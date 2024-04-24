@@ -12,6 +12,7 @@ import com.ngng.api.transaction.repository.TransactionStatusRepository;
 import com.ngng.api.user.entity.User;
 import com.ngng.api.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j(topic = "transaction-log")
 public class TransactionDetailsService extends Exception {
 
     private final TransactionDetailsRepository transactionDetailsRepository;
@@ -98,7 +100,7 @@ public class TransactionDetailsService extends Exception {
                 .build();
 
         TransactionDetails ds = transactionDetailsRepository.save(transactionDetails);
-
+        log.info("Success Create TransactionDetails id: {} Seller : {}  Consumer : {} ",ds.getId(),ds.getSeller().getUserId(),ds.getConsumer().getUserId());
 
         return new ReadTransactionDetailsDTO().from(ds);
     }
@@ -127,13 +129,14 @@ public class TransactionDetailsService extends Exception {
             TransactionStatus status = transactionStatusRepository.findById(request.getStatusId()).orElseThrow();
 
 
-//            transactionDetails.setUpdatedAt(null);
             transactionDetails.setStatus(status);
 
+            log.info("Success Update TransactionDetails id: {} Status :{} ",transactionDetails.getId(),status.getId());
 
         } catch (ResponseStatusException e) {
             System.out.println(e);
 
+            log.error("Faild Create TransactionDetails id: {} ",transId);
             throw new ResponseStatusException(e.getStatusCode(),e.getMessage());
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"잘못된 쿼리 요청 입니다.");
         }

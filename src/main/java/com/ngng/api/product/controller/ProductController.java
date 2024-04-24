@@ -28,7 +28,7 @@ import java.util.List;
 
 @RequestMapping("/products")
 @RestController
-@Slf4j
+@Slf4j(topic = "product-log")
 @RequiredArgsConstructor
 @Tag(name = "Product API")
 public class ProductController {
@@ -43,6 +43,7 @@ public class ProductController {
     @PostMapping()
     public ResponseEntity<Long> create(@RequestBody CreateProductRequestDTO product){
         Long productId = productService.create(product);
+        log.info("Success Create Product id: {} Owner: {}",productId,product.getUserId());
         return ResponseEntity.created(URI.create("/products/"+productId)).body(productId);
     }
 

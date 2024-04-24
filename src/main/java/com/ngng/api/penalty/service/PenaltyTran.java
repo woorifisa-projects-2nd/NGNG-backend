@@ -13,6 +13,7 @@ import com.ngng.api.report.repository.ReportRepository;
 import com.ngng.api.report.service.ReportService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ import java.util.Calendar;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j(topic = "penalty-log")
 public class PenaltyTran {
 
     private final PenaltyRepository penaltyRepository;
@@ -79,6 +81,7 @@ public class PenaltyTran {
         updateIsReport(responsepenalty.getReportId(), true);
         updateProductForSale(report.getProductId(), false);
 
+        log.info("Success Create Penalty id: {} User id : {} level : {} ",responsepenalty.getPenaltyId(),responsepenalty.getUserId(),responsepenalty.getPenaltyLevel());
         return CreatePenaltyResponseDTO.builder()
                 .startDate(responsepenalty.getStartDate())
                 .endDate(responsepenalty.getEndDate())

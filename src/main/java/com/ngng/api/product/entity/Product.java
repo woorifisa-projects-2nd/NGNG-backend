@@ -16,6 +16,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -108,6 +109,7 @@ public class Product {
         this.freeShipping = request.getFreeShipping();
         this.user = User.builder().userId(request.getUserId()).build();
         this.status = Status.builder().statusId(request.getStatusId()).build();
+        this.refreshedAt = new Timestamp(new Date().getTime());
         this.category = Category.builder().categoryId(request.getCategoryId()).build();
         this.tags = request.getTags().stream().
                 map(tag -> Tag.builder()

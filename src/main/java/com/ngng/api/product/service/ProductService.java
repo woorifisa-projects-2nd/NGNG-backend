@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j(topic = "product")
+@Slf4j(topic = "product-log")
 @Transactional
 public class ProductService {
 
@@ -164,6 +164,7 @@ public class ProductService {
         found.getTags().clear();
         found.from(request);
 
+        log.info("Success Update Product id: {} ",productId);
         return found.getProductId();
     }
 
@@ -171,6 +172,7 @@ public class ProductService {
         Product target = productRepository.findById(productId).orElse(null);
         if(target != null){
             target.setForSale(forSale);
+            log.info("Success Update Product ForSale id: {} ",productId);
         }
         return target.getProductId();
 
@@ -180,6 +182,7 @@ public class ProductService {
         Product target = productRepository.findById(productId).orElse(null);
         if(target != null){
             target.setRefreshedAt(new Timestamp(new Date().getTime()));
+            log.info("Success Update Product Refresh id: {} ",productId);
         }
         return target.getProductId();
     }
@@ -190,6 +193,7 @@ public class ProductService {
         if(product.getReports() == null || product.getTransactionDetails() == null || product.getTransactionDetails().getStatus().getId().equals(6L)){
             product.setVisible(false);
             product.setForSale(false);
+            log.info("Success Delete Product id: {} ",productId);
             return productRepository.save(product).getProductId();
         }else{
             return -1L;

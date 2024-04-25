@@ -7,12 +7,14 @@ import com.ngng.api.user.entity.User;
 import com.ngng.api.user.service.AuthService;
 import com.ngng.api.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j(topic ="point-log")
 public class PointHistoryService {
 
     private final PointHistoryRepository pointHistoryRepository;
@@ -29,8 +31,10 @@ public class PointHistoryService {
                 .user(user)
                 .build();
 
+        PointHistory response = pointHistoryRepository.save(pointHistory);
 
-        return pointHistoryRepository.save(pointHistory);
+        log.info("Success Create PointHistory id: {} User : {} ",response.getId(),response.getUser().getUserId());
+        return response;
 //        return pointHistory;
     }
 
@@ -49,7 +53,7 @@ public class PointHistoryService {
         return pointHistoryRepository.findAllByUserId(user.getUserId());
     }
 
-    public PointHistory updateCostByUserAndRequest(CreateAddPointRequestDTO request){
+    public PointHistory updateCost(CreateAddPointRequestDTO request){
         User user = this.authService.readAuthUser();
         PointHistory lastHistory = readCostByUser(user);
 
@@ -62,7 +66,11 @@ public class PointHistoryService {
                 .user(user)
                 .build();
 
-        return pointHistoryRepository.save(pointHistory);
+        PointHistory response = pointHistoryRepository.save(pointHistory);
+
+        log.info("Success Charge Point UserId: {} cost : {} ",response.getUser().getUserId(),request.getAddCost());
+
+        return response;
 
     }
 

@@ -90,6 +90,7 @@ public class SecurityConfig {
                 * */
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/", "/search/**").permitAll() // 메인페이지, 검색은 누구나 가능
+                        .requestMatchers("/main").permitAll()
                         .requestMatchers(HttpMethod.GET, "/products/**").permitAll() // 상품 조회는 누구나 가능
 
                         .requestMatchers("/login", "/join", "/find/**").anonymous() // 회원가입, 로그인, 아이디/비밀번호 찾기 등은 비로그인 유저만 가능

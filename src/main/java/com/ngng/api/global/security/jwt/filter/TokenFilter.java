@@ -6,7 +6,7 @@ import com.ngng.api.global.security.dto.response.ReissuanceAccessTokenResponse;
 import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
 import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
 import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
-import com.ngng.api.role.entity.Role;
+import com.ngng.api.user.entity.Role;
 import com.ngng.api.user.entity.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -77,9 +77,9 @@ public class TokenFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         String method = request.getMethod();
 
-        Pattern uriPattern = Pattern.compile("/(login|logout|search|join|find|products)(/.*)?");
+        Pattern uriPattern = Pattern.compile("/(login|logout|search|join|find|product|main)(/.*)?");
 
-        return (uri.startsWith("/products") && method.equals("GET")) || uriPattern.matcher(uri).matches();
+        return (uri.startsWith("/product") && method.equals("GET")) || uriPattern.matcher(uri).matches();
     }
 
     private CustomUserDetails createCustomUserDetails(String token) throws JsonProcessingException {
@@ -99,7 +99,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
         return accessToken == null ||
                 !accessToken.startsWith("Bearer ") ||
-                tokenVerifier.validateToken(accessToken) ||
+                !tokenVerifier.validateToken(accessToken) ||
                 !tokenVerifier.getType(accessToken).equals("access");
     }
 
@@ -107,7 +107,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
         return refreshToken == null ||
                 !tokenVerifier.getType(refreshToken).equals("refresh") ||
-                tokenVerifier.checkRefreshToken(refreshToken);
+                !tokenVerifier.checkRefreshToken(refreshToken);
     }
 
     private void createAndSetReissuedAccessToken(String refreshToken, HttpServletResponse response) throws IOException {

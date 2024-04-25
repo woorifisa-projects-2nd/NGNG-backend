@@ -5,7 +5,6 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-src/main/resources/*
 
 ### STS ###
 .apt_generated
@@ -38,5 +37,4 @@ out/
 ### VS Code ###
 .vscode/
 
-src/main/resources/**
-src/main/resources/application.yml
+src/main/resources/*.yml

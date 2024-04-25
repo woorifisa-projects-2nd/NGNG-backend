@@ -31,6 +31,7 @@ public class ProductService {
 
 
     public Long create(CreateProductRequestDTO request){
+        System.out.println("request = " + request.getUserId());
         return productRepository.save(new Product(request)).getProductId();
     }
 

@@ -13,6 +13,8 @@ import com.ngng.api.product.service.ProductImageService;
 import com.ngng.api.product.service.UploadService;
 import com.ngng.api.thumbnail.entity.Thumbnail;
 import com.ngng.api.thumbnail.service.ThumbnailService;
+import com.ngng.api.user.entity.User;
+import com.ngng.api.user.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,11 +40,14 @@ public class ProductController {
     private final UploadService uploadService;
     private final ProductImageService productImageService;
     private final ThumbnailService thumbnailService;
+    private final AuthService authService;
 
     @Operation(summary = "상품 추가", description = "전달받은 값으로 상품을 생성합니다.")
     @PostMapping()
     public ResponseEntity<Long> create(@RequestBody CreateProductRequestDTO product){
+
         Long productId = productService.create(product);
+
         return ResponseEntity.created(URI.create("/products/"+productId)).body(productId);
     }
 

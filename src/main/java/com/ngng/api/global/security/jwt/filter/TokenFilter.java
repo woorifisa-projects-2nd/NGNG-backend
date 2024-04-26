@@ -77,7 +77,7 @@ public class TokenFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         String method = request.getMethod();
 
-        Pattern uriPattern = Pattern.compile("/(login|logout|search|join|find|products)(/.*)?");
+        Pattern uriPattern = Pattern.compile("/(login|logout|search|join|find|product|main)(/.*)?");
 
         return (uri.startsWith("/product") && method.equals("GET")) || uriPattern.matcher(uri).matches();
     }

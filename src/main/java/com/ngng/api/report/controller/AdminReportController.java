@@ -31,13 +31,6 @@ public class AdminReportController {
         return ResponseEntity.ok().body(reportDTO);
     }
 
-    @PostMapping
-    public ResponseEntity<CreateReportResponseDTO> create(@RequestBody CreateReportRequestDTO createReportRequestDTO) {
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(reportService.save(createReportRequestDTO));
-    }
-
     // is_report 값만 수정
     @PatchMapping("/{reportId}")
     public ResponseEntity<ReadReportResponseDTO> update(@PathVariable Long reportId) {

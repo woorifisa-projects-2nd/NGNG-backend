@@ -12,4 +12,5 @@ public interface ThumbnailRepository extends JpaRepository<Thumbnail, Long> {
     public void deleteByProduct(Product product);
 
     Optional<Thumbnail> findByProduct(Product productId);
+
 }

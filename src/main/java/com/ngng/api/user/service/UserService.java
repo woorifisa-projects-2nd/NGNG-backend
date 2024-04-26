@@ -10,6 +10,7 @@ import com.ngng.api.transaction.service.TransactionDetailsService;
 import com.ngng.api.user.dto.UserMyPageReadResponseDTO;
 import com.ngng.api.user.dto.UserReadResponseDTO;
 import com.ngng.api.user.dto.UserUpdateRequestDTO;
+import com.ngng.api.user.dto.request.AdminUserUpdateRequest;
 import com.ngng.api.user.entity.User;
 import com.ngng.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +36,7 @@ public class UserService {
     private final PointHistoryService pointHistoryService;
     private final TransactionDetailsService transactionDetailsService;
     private final ProductService productService;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
 
     public List<UserReadResponseDTO> findAll() {
@@ -141,4 +144,21 @@ public class UserService {
 
     }
 
+    @Transactional
+    public UserReadResponseDTO adminUserUpdate(AdminUserUpdateRequest userUpdateDTO) {
+        User user = this.readAuthUser();
+
+        if (user == null) return UserReadResponseDTO.builder().build();
+
+        if (userUpdateDTO.getName() != null) user.setName(userUpdateDTO.getName());
+        if (userUpdateDTO.getNickName() != null) user.setNickname(userUpdateDTO.getNickName());
+        if (userUpdateDTO.getPhoneNumber() != null) user.setPhoneNumber(userUpdateDTO.getPhoneNumber());
+        if (userUpdateDTO.getEmail() != null) user.setEmail(userUpdateDTO.getEmail());
+        if (userUpdateDTO.getPassword() != null) user.setPassword(bCryptPasswordEncoder.encode(userUpdateDTO.getPassword()));
+        if (userUpdateDTO.getAccountBank() != null) user.setAccountBank(userUpdateDTO.getAccountBank());
+        if (userUpdateDTO.getAccountNumber() != null) user.setAccountNumber(userUpdateDTO.getAccountNumber());
+        if (userUpdateDTO.getAddress() != null) user.setAddress(userUpdateDTO.getAddress());
+
+        return new UserReadResponseDTO().from(user);
+    }
 }

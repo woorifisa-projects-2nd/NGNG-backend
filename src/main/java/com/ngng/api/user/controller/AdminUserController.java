@@ -4,6 +4,7 @@ import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.service.PointHistoryService;
 import com.ngng.api.user.dto.UserReadResponseDTO;
 import com.ngng.api.user.dto.UserUpdateRequestDTO;
+import com.ngng.api.user.dto.request.AdminUserUpdateRequest;
 import com.ngng.api.user.entity.User;
 import com.ngng.api.user.service.JoinService;
 import com.ngng.api.user.service.UserService;
@@ -55,13 +56,13 @@ public class AdminUserController {
 //    }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserReadResponseDTO> update(@PathVariable Long userId, @RequestBody UserUpdateRequestDTO userUpdateDTO) {
+    public ResponseEntity<UserReadResponseDTO> update(@PathVariable Long userId, @RequestBody AdminUserUpdateRequest userUpdateDTO) {
         User found = userService.findById(userId);
 
         if(found == null) {
             return ResponseEntity.badRequest().build();
         } else{
-            return ResponseEntity.ok().body(userService.update(userUpdateDTO));
+            return ResponseEntity.ok().body(userService.adminUserUpdate(userUpdateDTO));
         }
     }
 

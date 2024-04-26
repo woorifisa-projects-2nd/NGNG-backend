@@ -103,10 +103,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/products/**").permitAll()
                         //.hasAnyRole("USER", "ADMIN")
 
-//                        .requestMatchers("/admin/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/admin/reports/**").permitAll() // 관리자페이지
                         .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자페이지
 
                         .requestMatchers("/mypage/**", "/confirm", "/logout").permitAll() // 마이페이지 등은 로그인한 유저 모두가 사용 가능 + 로그인도
+
+                        .requestMatchers("/my_page/**", "/confirm", "/logout", "/reports/**").authenticated()
 
                         .anyRequest().permitAll() // 존재하지 않은 요청은 404 NotFound
                 );

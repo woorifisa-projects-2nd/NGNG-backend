@@ -11,4 +11,5 @@ public class ReadProductImageResponseDTO {
     Long id;
     String imageURL;
     Boolean visible;
+    String contentType;
 }

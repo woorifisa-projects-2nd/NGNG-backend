@@ -51,6 +51,7 @@ public class ReadProductResponseDTO {
                                 .id(image.getProductImageId())
                                 .imageURL(image.getImageUrl())
                                 .visible(image.getVisible())
+                                .contentType(image.getContentType())
                                 .build())
                         .collect(Collectors.toList()))
                 .title(product.getTitle())

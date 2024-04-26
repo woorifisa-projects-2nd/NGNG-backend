@@ -25,6 +25,7 @@ public class MainProductsService {
         * 검색 or 카테고리 선택 권유
         * (ex 찾으시는 상품이 없으신가요? 원하는 키워드로 상품을 검색해보세요)
         * */
+
         Pageable pageable = PageRequest.of(0, 60);
 
         Page<ProductsDocument> products = productsDocumentRepository.findByForSaleOrderByCreatedAtDesc(true, pageable);

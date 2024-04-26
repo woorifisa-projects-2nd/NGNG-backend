@@ -44,7 +44,7 @@ public class CompressService {
         int originWidth = originalImage.getWidth();
         int originHeight = originalImage.getHeight();
 
-        int newHeight = 100;
+        int newHeight = 200;
 
         //        이미지 비율
         double  aspectRatio = (double) originWidth / originHeight;

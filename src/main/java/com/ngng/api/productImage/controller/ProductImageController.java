@@ -84,5 +84,6 @@ public class ProductImageController {
     @DeleteMapping("deleteImage/{productId}")
     public ResponseEntity<Long> deleteImage(@PathVariable("productId") Long productId) {
         return ResponseEntity.ok(productImageService.deleteImages(productId));
+
     }
 }

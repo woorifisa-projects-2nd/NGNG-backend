@@ -17,21 +17,23 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
+@Slf4j(topic = "product-log")
 @Transactional
 public class ProductService {
 
     private final ProductRepository productRepository;
     private final TagService tagService;
 
-
-    public Long create(CreateProductRequestDTO request) {
+    public Long create(CreateProductRequestDTO request){
+        System.out.println("request = " + request.getUserId());
         return productRepository.save(new Product(request)).getProductId();
     }
 
@@ -202,6 +204,7 @@ public class ProductService {
         found.getTags().clear();
         found.from(request);
 
+        log.info("Success Update Product id: {} ",productId);
         return found.getProductId();
     }
 
@@ -209,16 +212,30 @@ public class ProductService {
         Product target = productRepository.findById(productId).orElse(null);
         if (target != null) {
             target.setForSale(forSale);
+            log.info("Success Update Product ForSale id: {} ",productId);
+        }
+        return target.getProductId();
+
+    }
+
+    public Long updateRefresh(Long productId){
+        Product target = productRepository.findById(productId).orElse(null);
+        if(target != null){
+            target.setRefreshedAt(new Timestamp(new Date().getTime()));
+            log.info("Success Update Product Refresh id: {} ",productId);
         }
         return target.getProductId();
     }
 
-    public Long delete(Long productId) {
+
+    public Long delete(Long productId){
+
         Product product = productRepository.findById(productId).orElseThrow();
         // 신고 안 받았고 거래 진행 안 했거나 거래취소된 경우에만 삭제 가능
         if (product.getReports() == null || product.getTransactionDetails() == null || product.getTransactionDetails().getStatus().getId().equals(6L)) {
             product.setVisible(false);
             product.setForSale(false);
+            log.info("Success Delete Product id: {} ",productId);
             return productRepository.save(product).getProductId();
         } else {
             return -1L;

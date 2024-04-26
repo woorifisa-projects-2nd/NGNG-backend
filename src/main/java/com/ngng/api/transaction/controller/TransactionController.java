@@ -25,27 +25,26 @@ public class TransactionController {
         );
     }
 
-    @GetMapping("/sell/{userId}")
+    @GetMapping("/sell")
     public ResponseEntity<List<ReadTransactionDetailsDTO>> getTransactionDetailsBySellerDTO(
-            @PathVariable("userId") Long userId,
             @RequestParam(name = "status", required = false) Long status
     ){
         System.out.println(status);
         if(status != null){
             return ResponseEntity.ok().body(
-                    transactionDetailsService.readAllBySellerIdAndStatusId(userId,status)
+                    transactionDetailsService.readAllBySellerIdAndStatusId(status)
             );
         }
 
         return ResponseEntity.ok().body(
-                transactionDetailsService.readAllBySellerId(userId)
+                transactionDetailsService.readAllBySeller()
         );
     }
 
-    @GetMapping("/buy/{userId}")
-    public ResponseEntity<List<ReadTransactionDetailsDTO>> readTransactionDetailsByBuyerDTO(@PathVariable("userId") Long userId){
+    @GetMapping("/buy")
+    public ResponseEntity<List<ReadTransactionDetailsDTO>> readTransactionDetailsByBuyerDTO(){
         return ResponseEntity.ok().body(
-                transactionDetailsService.readAllByConsumerId(userId)
+                transactionDetailsService.readAllByConsumer()
         );
     }
 

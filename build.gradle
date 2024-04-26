@@ -49,6 +49,9 @@ dependencies {
 
 	implementation 'net.nurigo:sdk:4.2.7' // SMS
 	implementation 'org.springframework.boot:spring-boot-starter-mail' // Mail
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+	implementation "io.projectreactor:reactor-core"
 }
 
 tasks.named('test') {

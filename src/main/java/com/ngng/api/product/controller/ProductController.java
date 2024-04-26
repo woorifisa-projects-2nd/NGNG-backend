@@ -6,6 +6,8 @@ import com.ngng.api.product.dto.response.ReadAllProductsDTO;
 import com.ngng.api.product.dto.response.ReadProductResponseDTO;
 import com.ngng.api.product.service.*;
 import com.ngng.api.thumbnail.service.ThumbnailService;
+import com.ngng.api.user.entity.User;
+import com.ngng.api.user.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +24,7 @@ import java.util.List;
 
 @RequestMapping("/products")
 @RestController
-@Slf4j
+@Slf4j(topic = "product-log")
 @RequiredArgsConstructor
 @Tag(name = "Product API")
 public class ProductController {
@@ -32,12 +34,17 @@ public class ProductController {
     private final UploadService uploadService;
     private final ProductImageService productImageService;
     private final ThumbnailService thumbnailService;
+    private final AuthService authService;
 
     @Operation(summary = "상품 추가", description = "전달받은 값으로 상품을 생성합니다.")
     @PostMapping()
-    public ResponseEntity<Long> create(@RequestBody CreateProductRequestDTO product) {
+
+    public ResponseEntity<Long> create(@RequestBody CreateProductRequestDTO product){
+
         Long productId = productService.create(product);
-        return ResponseEntity.created(URI.create("/products/" + productId)).body(productId);
+        log.info("Success Create Product id: {} Owner: {}",productId,product.getUserId());
+
+        return ResponseEntity.created(URI.create("/products/"+productId)).body(productId);
     }
 
     @GetMapping(path = "/{productId}")
@@ -50,6 +57,13 @@ public class ProductController {
         } else {
             return ResponseEntity.ok(productService.read(productId));
         }
+    }
+
+    @PostMapping("/refresh/{productId}")
+    @Parameter(name = "id", description = "상품 id")
+    @Operation(summary = "상품 게시 날짜 끌어올리기 ( 갱신 )", description = "특정 id 값으로 상품을 찾아 게시 날짜를 갱신 합니다.")
+    public ResponseEntity<Long> updateRefresh(@PathVariable("productId") Long productId) {
+        return ResponseEntity.ok(productService.updateRefresh(productId));
     }
 
     @PostMapping("/upload")

@@ -48,7 +48,9 @@ public class SecurityConfig {
 
                     CorsConfiguration configuration = new CorsConfiguration();
 
-                    configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+//                    configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+//                    배포 환경 테스트
+                    configuration.addAllowedOriginPattern("*");
                     configuration.setAllowedMethods(Collections.singletonList("*"));
                     configuration.setAllowCredentials(true);
                     configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -78,7 +80,7 @@ public class SecurityConfig {
                 * security filter에도 적용되어 2번 동작하기 때문에 bean주입을 하지않고 new를 통해 생성
                 * jwt를 통한 인증/인가 필터 설정
                 * */
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), tokenVerifier, tokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), tokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new TokenFilter(tokenProvider, tokenVerifier), LoginFilter.class)
 
                 /*
@@ -90,6 +92,7 @@ public class SecurityConfig {
                 * */
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/", "/search/**").permitAll() // 메인페이지, 검색은 누구나 가능
+                        .requestMatchers("/main").permitAll()
                         .requestMatchers(HttpMethod.GET, "/products/**").permitAll() // 상품 조회는 누구나 가능
 
                         .requestMatchers("/login", "/join", "/find/**").anonymous() // 회원가입, 로그인, 아이디/비밀번호 찾기 등은 비로그인 유저만 가능

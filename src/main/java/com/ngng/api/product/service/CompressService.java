@@ -44,7 +44,7 @@ public class CompressService {
         int originWidth = originalImage.getWidth();
         int originHeight = originalImage.getHeight();
 
-        int newHeight = 100;
+        int newHeight = 200;
 
         //        이미지 비율
         double  aspectRatio = (double) originWidth / originHeight;
@@ -69,7 +69,7 @@ public class CompressService {
         String extension = tokens[tokens.length - 1].toLowerCase();
 
         try {
-            if(extension.equals("png")) ImageIO.write(image, "png", out);
+            if(extension == "png") ImageIO.write(image, "png", out);
             else ImageIO.write(image, "jpeg", out);
 
         } catch (IOException e) {

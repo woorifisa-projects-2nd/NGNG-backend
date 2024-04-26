@@ -21,12 +21,21 @@ public class SearchProductsController {
 
     private final SearchProductsService searchProductsService;
 
+//    @GetMapping("/{keyword}")
+//    public ResponseEntity<?> findBySearchFirst(@PathVariable String keyword) {
+//
+//        // URL은 ASCII코드를 기준으로 하지만 한글은 아스키테이블에 없기 때문에 UTF-8 형태로 디코딩 필요
+//        keyword = URLDecoder.decode(keyword, StandardCharsets.UTF_8);
+//        SearchProductsResponse response = searchProductsService.findBySearchKeyword(keyword, 0);
+//
+//        return ResponseEntity.ok().body(response);
+//    }
+
     @GetMapping("/{keyword}/{page}")
     public ResponseEntity<?> findBySearch(@PathVariable String keyword, @PathVariable int page) {
 
         keyword = URLDecoder.decode(keyword, StandardCharsets.UTF_8);
-
-        SearchProductsResponse response = searchProductsService.findBySearch(keyword, page);
+        SearchProductsResponse response = searchProductsService.findBySearchKeyword(keyword, page);
 
         return ResponseEntity.ok().body(response);
     }

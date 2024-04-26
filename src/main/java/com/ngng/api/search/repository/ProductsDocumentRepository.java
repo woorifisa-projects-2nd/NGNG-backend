@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductsDocumentRepository extends ElasticsearchRepository<ProductsDocument, String> {
 
-    Page<ProductsDocument> findAll(Pageable pageable);
-    Page<ProductsDocument> findByOrderByCreatedAtDesc(Pageable pageable);
+    Page<ProductsDocument> findByForSaleOrderByCreatedAtDesc(boolean forSale, Pageable pageable);
     Page<ProductsDocument> findByCategoryOrderByCreatedAtDesc(String category, Pageable pageable);
 }

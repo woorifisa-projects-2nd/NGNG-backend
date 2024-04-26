@@ -1,6 +1,5 @@
 package com.ngng.api.search.controller;
 
-import com.ngng.api.search.document.ProductsDocument;
 import com.ngng.api.search.dto.response.SearchProductsResponse;
 import com.ngng.api.search.service.SearchProductsService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/search")
@@ -29,5 +27,4 @@ public class SearchProductsController {
         SearchProductsResponse response = searchProductsService.findBySearch(keyword, page);
 
         return ResponseEntity.ok().body(response);
-    }
-}
+    }}

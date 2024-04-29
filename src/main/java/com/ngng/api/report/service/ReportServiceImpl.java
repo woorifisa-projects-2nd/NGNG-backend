@@ -32,7 +32,7 @@ public class ReportServiceImpl implements ReportService {
 
 
     @Override
-    public Page<ReadReportListResponseDTO> findAll(int page, Boolean unprocessedOnly) {
+    public Page<ReadReportListResponseDTO> findAll(Integer page, Boolean unprocessedOnly) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("reportId"));
         Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));

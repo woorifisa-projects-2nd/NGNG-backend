@@ -17,6 +17,9 @@ public class CategoryProductsService {
 
     public CategoryProductsResponse findByCategory(String category, int page) {
 
+
+        // 페이지당 20개
+
         Pageable pageable = PageRequest.of(page, 20);
         Page<ProductsDocument> products = productsDocumentRepository.findByCategoryOrderByCreatedAtDesc(category, pageable);
 

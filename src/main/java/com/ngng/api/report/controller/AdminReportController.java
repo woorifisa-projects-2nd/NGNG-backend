@@ -18,8 +18,7 @@ public class AdminReportController {
     private final ReportService reportService;
 
     @GetMapping
-    public ResponseEntity<Page<ReadReportListResponseDTO>> readAll(@RequestParam(value="page", defaultValue="0") int page, @RequestParam Boolean unprocessedOnly) {
-        System.out.println("unprocessedOnly = " + unprocessedOnly);
+    public ResponseEntity<Page<ReadReportListResponseDTO>> readAll(@RequestParam(value="page", defaultValue="0") Integer page, @RequestParam Boolean unprocessedOnly) {
         Page<ReadReportListResponseDTO> reports = reportService.findAll(page, unprocessedOnly);
 
         return ResponseEntity.ok(reports);
@@ -30,13 +29,6 @@ public class AdminReportController {
         ReadReportResponseDTO reportDTO = reportService.findById(reportId);
 
         return ResponseEntity.ok().body(reportDTO);
-    }
-
-    @PostMapping
-    public ResponseEntity<CreateReportResponseDTO> create(@RequestBody CreateReportRequestDTO createReportRequestDTO) {
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(reportService.save(createReportRequestDTO));
     }
 
     // is_report 값만 수정

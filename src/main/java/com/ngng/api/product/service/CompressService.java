@@ -44,7 +44,7 @@ public class CompressService {
         int originWidth = originalImage.getWidth();
         int originHeight = originalImage.getHeight();
 
-        int newHeight = 100;
+        int newHeight = 200;
 
         //        이미지 비율
         double  aspectRatio = (double) originWidth / originHeight;
@@ -66,7 +66,7 @@ public class CompressService {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         String fileName = originFile.getOriginalFilename();
         String[] tokens = fileName.split("\\."); // "." 문자를 기준으로 문자열을 분리합니다.
-        String extension = tokens[tokens.length - 1];
+        String extension = tokens[tokens.length - 1].toLowerCase();
 
         try {
             if(extension == "png") ImageIO.write(image, "png", out);

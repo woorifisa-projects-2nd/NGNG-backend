@@ -4,6 +4,7 @@ import com.ngng.api.transaction.dto.*;
 import com.ngng.api.transaction.service.TransactionDetailsService;
 import com.ngng.api.transaction.service.TransactionRequestService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/transaction")
+@Slf4j(topic = "transaction-log")
 public class TransactionController {
 
     private final TransactionDetailsService transactionDetailsService;
@@ -71,13 +73,26 @@ public class TransactionController {
 
     @PostMapping("/request")
     public ResponseEntity<Long> createTransactionRequest(@RequestBody CreateTransactionRequestDTO request){
-        return ResponseEntity.ok().body(transactionRequestService.create(request));
+        Long requestId = transactionRequestService.create(request);
+        log.info("Success Create TransactionRequest id: {}",requestId);
+        return ResponseEntity.ok().body(requestId);
 
     }
 
     @PutMapping("/request")
     public ResponseEntity<Long> updatedTransactionRequest(@RequestBody UpdateTransactionRequestDTO request){
-        return ResponseEntity.ok().body(transactionRequestService.update(request.getTransactionRequestId(), request.getIsAccepted()));
+        Long res = transactionRequestService.update(request.getTransactionRequestId(), request.getIsAccepted());
+        if(res > 0) {
+            if(request.getIsAccepted()){
+                log.info("Success Accept TransactionRequest id: {}",request.getTransactionRequestId());
+            }else{
+                log.info("Success Decline TransactionRequest id: {}",request.getTransactionRequestId());
+            }
+
+            return ResponseEntity.ok()
+                    .body(res);
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }

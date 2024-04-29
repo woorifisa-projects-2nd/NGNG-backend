@@ -149,6 +149,15 @@ public class ProductController {
     @Parameter(name = "id", description = "상품 id")
     @Operation(summary = "상품 삭제", description = "id값으로 해당 상품을 찾아 보이지 않게 숨깁니다.")
     public ResponseEntity<Long> updateVisibility(@PathVariable Long productId){
-        return  ResponseEntity.ok(productService.delete(productId)); // TODO : no content 코드 찾아보기
+        Long res = productService.delete(productId);
+        if(res > 0 ){
+            log.info("Success Delete Product id: {}",productId);
+            return  ResponseEntity.ok(res);
+        }
+        else {
+            log.info("Fail Delete Product id: {}",productId);
+            return ResponseEntity.noContent().build();
+        }
+
     }
 }

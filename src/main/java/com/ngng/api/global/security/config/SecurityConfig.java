@@ -103,9 +103,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/products/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/products/**").hasAnyRole("USER", "ADMIN")
 
+                        .requestMatchers(HttpMethod.POST,"/admin/reports/**").permitAll() // 관리자페이지
                         .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자페이지
 
                         .requestMatchers("/my_page/**", "/confirm", "/logout", "/report/**").authenticated()
+
+                        .requestMatchers("/my_page/**", "/confirm", "/logout", "/reports/**").authenticated()
 
                         .anyRequest().permitAll() // 존재하지 않은 요청은 404 NotFound
                 );

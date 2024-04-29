@@ -4,7 +4,6 @@ import com.ngng.api.product.service.AwsS3Service;
 import com.ngng.api.product.service.CompressService;
 import com.ngng.api.product.service.ProductImageService;
 import com.ngng.api.product.service.UploadService;
-import com.ngng.api.productImage.dto.request.DeleteImageRequestDTO;
 import com.ngng.api.thumbnail.service.ThumbnailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +36,7 @@ public class ProductImageController {
 //            확장자 구분
             String fileName = file.getOriginalFilename();
             String[] tokens = fileName.split("\\."); // "." 문자를 기준으로 문자열을 분리합니다.
-            String extension = tokens[tokens.length - 1];
+            String extension = tokens[tokens.length - 1].toLowerCase();
 
 
         try {
@@ -82,10 +81,9 @@ public class ProductImageController {
         return "hihi";
     }
 
-    @DeleteMapping("/deleteImage/{productId}")
-    public ResponseEntity<Long> deleteImage(@PathVariable("productId") Long productId, @RequestBody DeleteImageRequestDTO deleteImageRequestDTO) {
-        System.out.println("productImageId = " + productId);
-        System.out.println("deleteImageRequestDTO = " + deleteImageRequestDTO.getImageURL());
-        return ResponseEntity.ok(productImageService.delete(productId, deleteImageRequestDTO.getImageURL()));
+    @DeleteMapping("deleteImage/{productId}")
+    public ResponseEntity<Long> deleteImage(@PathVariable("productId") Long productId) {
+        return ResponseEntity.ok(productImageService.deleteImages(productId));
+
     }
 }

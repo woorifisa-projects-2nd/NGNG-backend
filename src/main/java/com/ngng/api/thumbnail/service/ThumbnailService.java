@@ -6,6 +6,7 @@ import com.ngng.api.thumbnail.repository.ThumbnailRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class ThumbnailService {
     private final ThumbnailRepository thumbnailRepository;
 
+    @Transactional
     public void create( Long productId , String thumbnailUrl){
 
         thumbnailRepository.save(Thumbnail.builder()

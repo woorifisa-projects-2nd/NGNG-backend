@@ -65,7 +65,8 @@ public class TransactionController {
     }
 
     @GetMapping("/request/{productId}")
-    public ResponseEntity<List<TransactionRequestDTO>> readAllTransactionRequestByProductId(@PathVariable Long productId){
+    public ResponseEntity<List<TransactionRequestDTO>> readAllTransactionRequestByProductId(@PathVariable("productId") Long productId){
+
         return ResponseEntity.ok().body(transactionRequestService.readAll(productId));
     }
 

@@ -1,0 +1,92 @@
+#spring.application.name=api
+
+# JPA 설정
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    hibernate:
+      format_sql: true
+      ddl-auto: update
+
+  #  업로드 파일 제한
+  servlet:
+    multipart:
+      maxFileSize: 10MB # 파일 하나의 최대 크기
+      maxRequestSize: 30MB # 한 번에 최대 업로드 가능 용량
+
+  # DB 설정
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://team3-ngng.c9ee0ua66vfr.ap-northeast-2.rds.amazonaws.com/NGNG?serverTimezone=UTC&characterEncoding=UTF-8
+    username: admin
+    password: 12341234
+
+  #Elasticsearch 설정
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+      cluster-name: es.ngng.site
+      cluster-node: es.ngng.site:9200
+
+  # 콘솔창 컬러
+  output:
+    ansi:
+      enabled: always
+
+  # 메일 인증
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: mnjh2001@gmail.com
+    password: nqxh vkab dhkh dket
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+# 토큰 설정
+jwt:
+  secret:
+    key: aea99bbff033f9baeeb576f51573e265a3f49d3c5e7216bf3f42a94fbda0c7df63803a41b4aeb7ba98d12d482346bd897737023ce51676d406bf4d0dfbb0297a
+  expiration:
+    access: 3600000
+    refresh: 1209600000
+
+# SMS 인증 설정
+message:
+  key:
+    api: NCSAJNF8ET9HZIII
+    secret: DJ4X8ZOAUATU4EBBRO9GYWW1IQI9KY2N
+  from: 01041296078
+
+es:
+  host: es.ngng.site
+  username: elastic
+  password: XvdvfZFIJ-m55_J9D5ey
+
+#springdoc:
+#    packages-to-scan: com.jihwan.prince.controller
+#    default-consumes-media-type: application/json;charset=UTF-8
+#    default-produces-media-type: application/json;charset=UTF-8
+#    swagger-ui:
+#        path: /
+#        disable-swagger-default-url: true
+#        display-request-duration: true
+#        operations-sorter: alpha
+
+cloud:
+  aws:
+    s3:
+      bucket: team3-ngng
+    credentials:
+      access-key: AKIA2UC3FWV67JJLEIOC
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
+import org.springframework.data.elasticsearch.core.SearchHitSupport;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.Criteria;
 import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
@@ -15,15 +16,15 @@ import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class SearchProductsService {
 
     private final ElasticsearchOperations elasticsearchOperations;
+    private final int PAGE_SIZE = 20;
 
-    public SearchProductsResponse findBySearch(String keyword, int page) {
+    public SearchProductsResponse findBySearchKeyword(String keyword, int page) {
 
         Criteria criteria;
 
@@ -39,16 +40,18 @@ public class SearchProductsService {
             criteria = titleCriteria.or(contentCriteria).or(tagsCriteria);
         }
 
-        Pageable pageable = PageRequest.of(page, 20, Sort.by("createdAt").descending());
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.by("createdAt").descending());
 
         Query query = new CriteriaQuery(criteria).setPageable(pageable);
 
         SearchHits<ProductsDocument> hits = elasticsearchOperations.search(query, ProductsDocument.class);
 
-        List<ProductsDocument> asdf = hits.stream()
+        int totalPages = (int) Math.ceil((double) hits.getTotalHits() / PAGE_SIZE);
+
+        List<ProductsDocument> products = hits.stream()
                 .map(SearchHit::getContent)
                 .toList();
 
-        return SearchProductsResponse.of(asdf);
+        return SearchProductsResponse.of(products, totalPages);
     }
 }

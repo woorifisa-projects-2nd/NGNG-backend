@@ -55,7 +55,6 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-
     public void accountConfirm(String accountBank, String accountNumber, Role role) {
 
         this.accountBank = accountBank;
@@ -66,6 +65,11 @@ public class User {
     public void addressConfirm(String address) {
 
         this.address = address;
+    }
+
+    public void changeVisible() {
+
+        this.visible = !this.visible;
     }
 
     public User(Long userId) {

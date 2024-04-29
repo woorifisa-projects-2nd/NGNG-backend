@@ -6,12 +6,14 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public record SearchProductsResponse(List<ProductsDocument> products) {
+public record SearchProductsResponse(List<ProductsDocument> products,
+                                     int totalPages) {
 
-    public static SearchProductsResponse of(List<ProductsDocument> products) {
+    public static SearchProductsResponse of(List<ProductsDocument> products, int totalPages) {
 
         return SearchProductsResponse.builder()
                 .products(products)
+                .totalPages(totalPages)
                 .build();
     }
 }

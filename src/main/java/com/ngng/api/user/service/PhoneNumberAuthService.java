@@ -17,15 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class PhoneNumberAuthService {
 
-    private final EmailAuthService emailAuthService;
     private final DefaultMessageService messageService;
     private final UserRepository userRepository;
 
     @Value("${message.from}")
     private String from;
 
-    public PhoneNumberAuthService(EmailAuthService emailAuthService,
-                                  @Value("${message.key.api}")
+    public PhoneNumberAuthService(@Value("${message.key.api}")
                                   String apiKey,
                                   @Value("${message.key.secret}")
                                   String secretKey,
@@ -33,7 +31,6 @@ public class PhoneNumberAuthService {
 
         String nurigoDomain = "https://api.coolsms.co.kr";
 
-        this.emailAuthService = emailAuthService;
         this.messageService = NurigoApp.INSTANCE.initialize(apiKey, secretKey, nurigoDomain);
         this.userRepository = userRepository;
     }

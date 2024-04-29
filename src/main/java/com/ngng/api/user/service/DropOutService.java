@@ -2,8 +2,10 @@ package com.ngng.api.user.service;
 
 import com.ngng.api.user.dto.request.DropOutRequest;
 import com.ngng.api.user.dto.response.DropOutResponse;
+import com.ngng.api.user.entity.User;
 import com.ngng.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,15 +18,9 @@ public class DropOutService {
     @Transactional
     public DropOutResponse dropOut(DropOutRequest request) {
 
-        boolean isExistingUser = userRepository.existsById(request.id());
+        User user = userRepository.findById(request.id()).orElseThrow(() -> new UsernameNotFoundException("no user"));
 
-        if (!isExistingUser) {
-
-            return DropOutResponse.fail();
-        }
-
-        // TODO visible 업데이트하는 거로 수정
-        userRepository.deleteById(request.id());
+        user.changeVisible();
 
         return DropOutResponse.success();
     }

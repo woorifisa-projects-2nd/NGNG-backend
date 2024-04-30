@@ -69,6 +69,7 @@ public class PenaltyTran {
                 .penaltyLevel(PenaltyLevel.builder()
                         .penaltyLevelId(penaltyLevel.getPenaltyLevelId())
                         .penaltyLevelName(penaltyLevel.getPenaltyLevelName())
+                        .penaltyLevelDays(penaltyLevel.getPenaltyLevelDays())
                         .build()
                 )
                 .reportId(createPenaltyRequestDTO.getReportId())

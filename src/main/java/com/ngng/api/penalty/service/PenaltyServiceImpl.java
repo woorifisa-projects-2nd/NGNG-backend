@@ -43,7 +43,6 @@ public class PenaltyServiceImpl implements PenaltyService {
                 new EntityNotFoundException("report not found")
         );
 
-//        return ReadPenaltyResponseDTO.from(penalty);
         return ReadPenaltyResponseDTO.builder()
                 .penaltyId(penalty.getPenaltyId())
                 .startDate(penalty.getStartDate())
@@ -55,18 +54,6 @@ public class PenaltyServiceImpl implements PenaltyService {
                         .productId(report.getProductId())
                         .build())
                 .build();
-
-//        return CreatePenaltyResponseDTO.builder()
-//                .startDate(responsepenalty.getStartDate())
-//                .endDate(responsepenalty.getEndDate())
-//                .userId(responsepenalty.getUserId())
-//                .reporterId(responsepenalty.getReporterId())
-//                .reason(responsepenalty.getReason())
-//                .penaltyLevel(responsepenalty.getPenaltyLevel())
-//                .reportId(responsepenalty.getReportId())
-//                .createdAt(responsepenalty.getCreatedAt())
-//                .updatedAt(responsepenalty.getUpdatedAt())
-//                .build();
     }
 
 }

@@ -80,6 +80,7 @@ class TransactionControllerTest {
 
 
     @Test
+    // 거래내역 조회
     void getTransactionById() throws Exception {
         String transctionId = "3";
 
@@ -89,6 +90,7 @@ class TransactionControllerTest {
     }
 
     @Test
+    // 판매중인 상품 조회
     void getTransactionDetailsBySellerDTO() throws Exception{
 
         mvc.perform(get("/transaction/sell")).andExpect(status().isOk());
@@ -100,12 +102,14 @@ class TransactionControllerTest {
     }
 
     @Test
+    // 구매중인 내역 조회
     void readTransactionDetailsByBuyerDTO()throws Exception {
 //    @GetMapping("/buy")
             mvc.perform(get("/transaction/buy")).andExpect(status().isOk());
     }
 
     @Test
+    // 거래 시작
     void createTransactionDetails()throws Exception {
         Long productId = 6L;
         Long buyerId = 3L;
@@ -127,6 +131,7 @@ class TransactionControllerTest {
     }
 
     @Test
+    // 거래 프로세스 진행
     void updateTransactionStatus()throws Exception {
 //        @PutMapping("/{id}")
 //        public ResponseEntity<ReadTransactionDetailsDTO> updateTransactionStatus(@PathVariable("id") Long transId, @RequestBody UpdateTransactionDetailsRequestDTO request){
@@ -147,6 +152,7 @@ class TransactionControllerTest {
     }
 
     @Test
+    // 상품정보로 거래내역 조회
     void readAllTransactionRequestByProductId() throws Exception{
          String productId = "12";
 
@@ -155,6 +161,7 @@ class TransactionControllerTest {
     }
 
     @Test
+    // 거래 요청 보내기
     void createTransactionRequest()throws Exception {
 
         Long productId = 12L;
@@ -178,6 +185,7 @@ class TransactionControllerTest {
     }
 
     @Test
+    // 거래 요청 거절하기
     void updatedTransactionRequest()throws Exception {
 
         Long transactionRequestId = 9L;

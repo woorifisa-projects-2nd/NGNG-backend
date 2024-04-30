@@ -2,9 +2,6 @@ package com.ngng.api.product.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngng.api.product.dto.request.TagRequestDTO;
-import com.ngng.api.transaction.dto.CreateTransactionDetailsRequestDTO;
-import com.ngng.api.transaction.service.TransactionDetailsService;
-import com.ngng.api.transaction.service.TransactionRequestService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,23 +16,18 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc(addFilters = false)
 @SpringBootTest
 @Transactional
-@WithUserDetails(value = "jin@gmail.com" , setupBefore = TestExecutionEvent.TEST_EXECUTION)  // BeforeEach 실행전 인증 세션을 생성한다.
+@WithUserDetails(value = "jin@gmail.com" , setupBefore = TestExecutionEvent.TEST_EXECUTION)
+// BeforeEach 실행전 인증 세션을 생성한다.
 class ProductControllerTest {
 
     @Autowired
@@ -65,6 +57,7 @@ class ProductControllerTest {
 //==================================
 
     @Test
+    // 상품 생성 테스트
     void create() throws Exception {
         String title = "code test";
         String content =" code test 입니다.";
@@ -106,6 +99,7 @@ class ProductControllerTest {
     }
 
     @Test
+    // 상품 조회 테스트
     void read()throws Exception {
         String productId = "3";
 
@@ -114,6 +108,7 @@ class ProductControllerTest {
     }
 
     @Test
+    // 끌올 테스트
     void updateRefresh() throws Exception{
 //        @PostMapping("/refresh/{productId}")
         String productId = "3";
@@ -127,11 +122,13 @@ class ProductControllerTest {
     }
 
     @Test
+    // 전체상품 조회 테스트
     void readAll() throws Exception{
         mvc.perform(get("/products")).andExpect(status().isOk());
     }
 
     @Test
+    // 상품 수정 테스트
     void update() throws Exception{
 //        @PutMapping(path = "/{productId}")
 
@@ -175,6 +172,7 @@ class ProductControllerTest {
     }
 
     @Test
+    // 상품 삭제 테스트
     void updateVisibility() throws Exception{
 //        @DeleteMapping(path = "/{productId}")
         String productId = "16";

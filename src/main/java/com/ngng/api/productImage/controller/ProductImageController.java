@@ -27,8 +27,6 @@ public class ProductImageController {
     @PostMapping("/upload")
     public String fileUpload(@RequestParam("files") MultipartFile[] files , @RequestParam("productId") String productId ){
 
-        System.out.println(productId);
-
         for (int i=0; i < files.length; i++ ){
 
             MultipartFile file = files[i];

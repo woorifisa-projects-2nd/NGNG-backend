@@ -21,6 +21,10 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+@AutoConfigureMockMvc(addFilters = false)
+@SpringBootTest
+@Transactional
+@WithUserDetails(value = "jin@gmail.com" , setupBefore = TestExecutionEvent.TEST_EXECUTION)
 public class UserControllerTest {
 
     @Autowired
@@ -31,4 +35,16 @@ public class UserControllerTest {
     PlatformTransactionManager transactionManager;
 
     TransactionStatus status;
+
+    @BeforeEach
+    void beforeEach() {
+        // 트랜잭션 시작
+        status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+    }
+
+    @AfterEach
+    void afterEach() {
+        // 트랜잭션 롤백
+        transactionManager.rollback(status);
+    }
 }

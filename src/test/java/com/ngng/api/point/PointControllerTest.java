@@ -1,7 +1,8 @@
-package com.ngng.api.penalty;
+package com.ngng.api.point;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngng.api.penalty.dto.CreatePenaltyRequestDTO;
+import com.ngng.api.point.dto.CreateAddPointRequestDTO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,13 +21,11 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @AutoConfigureMockMvc(addFilters = false)
 @SpringBootTest
 @Transactional
 @WithUserDetails(value = "jin@gmail.com" , setupBefore = TestExecutionEvent.TEST_EXECUTION)
-public class PenaltyControllerTest {
-
+public class PointControllerTest {
     @Autowired
     private MockMvc mvc;
     @Autowired
@@ -36,51 +35,32 @@ public class PenaltyControllerTest {
 
     TransactionStatus status;
 
-    @BeforeEach
-    void beforeEach() {
-        // 트랜잭션 시작
-        status = transactionManager.getTransaction(new DefaultTransactionDefinition());
-    }
-
-    @AfterEach
-    void afterEach() {
-        // 트랜잭션 롤백
-        transactionManager.rollback(status);
-    }
-
-
-
-    // readAll 테스트
+    // read point test
     @Test
-    void readAll() throws Exception {
-        mvc.perform(get("/admin/penalties")).andExpect(status().isOk());
+    void readPoint() throws Exception {
+        mvc.perform(get("/points")).andExpect(status().isOk());
     }
 
-    // read 테스트
+    // readAllPointHistory test
     @Test
-    void read() throws Exception {
-        String reportId = "33";
-        mvc.perform(get("/admin/penalties/"+reportId)).andExpect(status().isOk());
+    void readAllPointHistory() throws Exception {
+        mvc.perform(get("/points/all")).andExpect(status().isOk());
     }
 
-    // create 테스트
+    // addPoint test
     @Test
-    void create() throws Exception{
-        LocalDateTime endDate = LocalDateTime.now().plusWeeks(1);
-        Timestamp timestamp = Timestamp.valueOf(endDate);
+    void addPoint() throws Exception {
 
-        Long userId = 2L;
-        Long reporterId = 1L;
-        String reason = "신고 사유 : 욕설";
-        Long penaltyLevelId = 1L;
-        Long reportId = 34L;
+        Long addCost = 1000L;
+        String type = "충전";
 
-        CreatePenaltyRequestDTO requestDto = new CreatePenaltyRequestDTO(timestamp, userId, reporterId, reason, penaltyLevelId, reportId);
+        CreateAddPointRequestDTO requestDto = new CreateAddPointRequestDTO(addCost, type);
         String jsonStr = objectMapper.writeValueAsString(requestDto);
 
-        mvc.perform(post("/admin/penalties")
-                        .content(jsonStr)
-                        .contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(post("/points")
+                .content(jsonStr)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
     }
+
 }

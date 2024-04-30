@@ -1,6 +1,5 @@
 package com.ngng.api.product.entity;
 
-import com.ngng.api.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -31,6 +30,8 @@ public class ProductImage {
 
     @ColumnDefault("true")
     private Boolean visible;
+
+    private String contentType;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

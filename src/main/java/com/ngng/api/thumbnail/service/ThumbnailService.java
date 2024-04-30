@@ -6,6 +6,9 @@ import com.ngng.api.thumbnail.repository.ThumbnailRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -13,7 +16,16 @@ import org.springframework.stereotype.Service;
 public class ThumbnailService {
     private final ThumbnailRepository thumbnailRepository;
 
+    @Transactional
     public void create( Long productId , String thumbnailUrl){
+
+        Product product = new Product(productId);
+        Optional<Thumbnail> thumbnail = thumbnailRepository.findByProduct(product);
+
+        // 기존 썸네일이 존재하는 경우
+        if (thumbnail.isPresent()) {
+            thumbnailRepository.deleteByProduct(thumbnail.get().getProduct());
+        }
 
         thumbnailRepository.save(Thumbnail.builder()
                         .thumbnailUrl(thumbnailUrl)

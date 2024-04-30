@@ -28,8 +28,6 @@ public class ProductImageController {
     @PostMapping("/upload")
     public String fileUpload(@RequestParam("files") MultipartFile[] files , @RequestParam("productId") String productId ){
 
-        System.out.println(productId);
-
         for (int i=0; i < files.length; i++ ){
 
             MultipartFile file = files[i];
@@ -37,7 +35,7 @@ public class ProductImageController {
 //            확장자 구분
             String fileName = file.getOriginalFilename();
             String[] tokens = fileName.split("\\."); // "." 문자를 기준으로 문자열을 분리합니다.
-            String extension = tokens[tokens.length - 1];
+            String extension = tokens[tokens.length - 1].toLowerCase();
 
 
         try {
@@ -82,10 +80,9 @@ public class ProductImageController {
         return "hihi";
     }
 
-    @DeleteMapping("/deleteImage/{productId}")
+    @DeleteMapping("deleteImage/{productId}")
     public ResponseEntity<Long> deleteImage(@PathVariable("productId") Long productId, @RequestBody DeleteImageRequestDTO deleteImageRequestDTO) {
-        System.out.println("productImageId = " + productId);
-        System.out.println("deleteImageRequestDTO = " + deleteImageRequestDTO.getImageURL());
         return ResponseEntity.ok(productImageService.delete(productId, deleteImageRequestDTO.getImageURL()));
+
     }
 }

@@ -107,6 +107,8 @@ public class SecurityConfig {
 
                         .requestMatchers("/my_page/**", "/confirm", "/logout", "/report/**").authenticated()
 
+                        .requestMatchers("/my_page/**", "/confirm", "/logout", "/reports/**").authenticated()
+
                         .anyRequest().permitAll() // 존재하지 않은 요청은 404 NotFound
                 );
 

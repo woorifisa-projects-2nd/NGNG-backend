@@ -10,19 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/product")
+@RequestMapping("/category")
 @RestController
 public class CategoryProductsController {
 
     private final CategoryProductsService categoryProductsService;
-
-//    @GetMapping("/{category}")
-//    public ResponseEntity<?> findByCategoryFirst(@PathVariable String category) {
-//
-//        CategoryProductsResponse response = categoryProductsService.findByCategory(category, 0);
-//
-//        return ResponseEntity.ok().body(response);
-//    }
 
     @GetMapping("/{category}/{page}")
     public ResponseEntity<?> findByCategory(@PathVariable String category, @PathVariable int page) {

@@ -4,7 +4,6 @@ import com.ngng.api.user.dto.request.EmailAuthRequest;
 import com.ngng.api.user.dto.response.EmailAuthResponse;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

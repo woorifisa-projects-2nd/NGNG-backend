@@ -6,7 +6,6 @@ import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.repository.PointHistoryRepository;
 import com.ngng.api.user.entity.User;
 import com.ngng.api.user.service.AuthService;
-import com.ngng.api.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

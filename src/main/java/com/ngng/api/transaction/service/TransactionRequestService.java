@@ -1,8 +1,6 @@
 package com.ngng.api.transaction.service;
 
-import com.ngng.api.product.dto.request.UpdateProductRequestDTO;
 import com.ngng.api.product.entity.Product;
-import com.ngng.api.product.repository.ProductRepository;
 import com.ngng.api.product.service.ProductService;
 import com.ngng.api.transaction.dto.CreateTransactionDetailsRequestDTO;
 import com.ngng.api.transaction.dto.CreateTransactionRequestDTO;

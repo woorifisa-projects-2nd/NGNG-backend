@@ -2,8 +2,8 @@ package com.ngng.api.user.dto;
 
 import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.product.dto.response.ReadProductMypageResponseDTO;
-import com.ngng.api.user.entity.Role;
 import com.ngng.api.transaction.dto.ReadTransactionDetailsDTO;
+import com.ngng.api.user.entity.Role;
 import com.ngng.api.user.entity.User;
 import lombok.*;
 

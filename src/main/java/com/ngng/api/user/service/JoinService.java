@@ -1,9 +1,9 @@
 package com.ngng.api.user.service;
 
 import com.ngng.api.point.service.PointHistoryService;
-import com.ngng.api.user.entity.Role;
 import com.ngng.api.user.dto.request.JoinRequest;
 import com.ngng.api.user.dto.response.JoinResponse;
+import com.ngng.api.user.entity.Role;
 import com.ngng.api.user.entity.User;
 import com.ngng.api.user.repository.UserRepository;
 import com.ngng.api.user.repository.UserRoleRepository;

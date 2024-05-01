@@ -2,9 +2,10 @@ package com.ngng.api.product.utils;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 
     public class CustomMultipartFile implements MultipartFile {

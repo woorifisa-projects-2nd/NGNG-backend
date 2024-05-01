@@ -4,8 +4,6 @@ import com.ngng.api.search.document.ProductsDocument;
 import lombok.Builder;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 @Builder
 public record MainProductsResponse(Page<ProductsDocument> products) {
 

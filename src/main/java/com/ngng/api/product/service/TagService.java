@@ -1,7 +1,7 @@
 package com.ngng.api.product.service;
 
-import com.ngng.api.product.entity.Product;
 import com.ngng.api.product.dto.response.TagResponseDTO;
+import com.ngng.api.product.entity.Product;
 import com.ngng.api.product.entity.Tag;
 import com.ngng.api.product.repository.TagRepository;
 import lombok.RequiredArgsConstructor;

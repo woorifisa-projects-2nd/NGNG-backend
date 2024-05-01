@@ -1,6 +1,6 @@
 package com.ngng.api.global.security.jwt.entity;
 
-import com.ngng.api.user.entity.User;
+import com.ngng.api.user.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

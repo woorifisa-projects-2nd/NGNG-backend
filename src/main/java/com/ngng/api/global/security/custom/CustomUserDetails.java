@@ -1,6 +1,6 @@
 package com.ngng.api.global.security.custom;
 
-import com.ngng.api.user.entity.User;
+import com.ngng.api.user.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;

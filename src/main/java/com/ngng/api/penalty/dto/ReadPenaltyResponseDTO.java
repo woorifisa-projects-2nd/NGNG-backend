@@ -1,7 +1,7 @@
 package com.ngng.api.penalty.dto;
 
 import com.ngng.api.penalty.entity.PenaltyLevel;
-import com.ngng.api.report.dto.ReadReportResponseDTO;
+import com.ngng.api.report.report.dto.ReadReportResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

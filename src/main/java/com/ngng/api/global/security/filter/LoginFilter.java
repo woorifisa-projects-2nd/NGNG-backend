@@ -5,7 +5,7 @@ import com.ngng.api.global.security.custom.CustomHttpServletResponseWrapper;
 import com.ngng.api.global.security.custom.CustomUserDetails;
 import com.ngng.api.global.security.dto.response.LoginResponse;
 import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
-import com.ngng.api.user.entity.User;
+import com.ngng.api.user.user.entity.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

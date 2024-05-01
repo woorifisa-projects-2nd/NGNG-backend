@@ -1,7 +1,7 @@
 package com.ngng.api.user.service;
 
-import com.ngng.api.global.security.jwt.custom.CustomHttpServletResponseWrapper;
-import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
+import com.ngng.api.global.security.custom.CustomHttpServletResponseWrapper;
+import com.ngng.api.global.security.custom.CustomUserDetails;
 import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
 import com.ngng.api.user.dto.request.AccountConfirmRequest;
 import com.ngng.api.user.dto.request.AddressConfirmRequest;

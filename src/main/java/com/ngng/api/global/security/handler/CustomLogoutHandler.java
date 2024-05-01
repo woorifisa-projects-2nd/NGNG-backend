@@ -1,7 +1,6 @@
 package com.ngng.api.global.security.handler;
 
-import com.ngng.api.global.security.jwt.custom.CustomHttpServletResponseWrapper;
-import com.ngng.api.global.security.jwt.repository.TokenRepository;
+import com.ngng.api.global.security.custom.CustomHttpServletResponseWrapper;
 import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +19,6 @@ import java.util.Arrays;
 @Component
 public class CustomLogoutHandler implements LogoutHandler {
 
-    private final TokenRepository tokenRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override

@@ -1,9 +1,9 @@
-package com.ngng.api.global.security.jwt.filter;
+package com.ngng.api.global.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ngng.api.global.security.custom.CustomHttpServletResponseWrapper;
+import com.ngng.api.global.security.custom.CustomUserDetails;
 import com.ngng.api.global.security.dto.response.LoginResponse;
-import com.ngng.api.global.security.jwt.custom.CustomHttpServletResponseWrapper;
-import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
 import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
 import com.ngng.api.user.entity.User;
 import jakarta.servlet.FilterChain;

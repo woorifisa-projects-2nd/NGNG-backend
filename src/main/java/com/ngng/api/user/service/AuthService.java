@@ -1,7 +1,7 @@
 package com.ngng.api.user.service;
 
 
-import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
+import com.ngng.api.global.security.custom.CustomUserDetails;
 import com.ngng.api.user.entity.User;
 import com.ngng.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

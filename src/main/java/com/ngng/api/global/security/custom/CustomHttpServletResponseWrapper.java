@@ -1,4 +1,4 @@
-package com.ngng.api.global.security.jwt.custom;
+package com.ngng.api.global.security.custom;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpServletResponseWrapper;

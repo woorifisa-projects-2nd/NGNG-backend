@@ -50,6 +50,7 @@ public class PhoneNumberAuthService {
         String formattedRandomNum = String.format("%06d", randomNum);
 
         message.setText(request.name() + "님의 내꺼니꺼 인증번호\n" + formattedRandomNum); // 내용
+
         SingleMessageSentResponse response = messageService.sendOne(new SingleMessageSendingRequest(message)); // 발송 후  get response
 
         if (response.getStatusCode().equals("2000")) { // 정상 처리

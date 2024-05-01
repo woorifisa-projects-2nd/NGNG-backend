@@ -90,7 +90,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
         Pattern uriPattern = Pattern.compile("/(login|logout|search|join|find|category|main)(/.*)?");
 
-        return (uri.startsWith("/product") && method.equals("GET")) || uriPattern.matcher(uri).matches();
+        return (uri.startsWith("/products") && method.equals("GET")) || uriPattern.matcher(uri).matches();
     }
 
     private CustomUserDetails createCustomUserDetails(String token) throws JsonProcessingException {

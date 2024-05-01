@@ -95,7 +95,7 @@ public class SecurityConfig {
                         .requestMatchers("/main").permitAll()
                         .requestMatchers(HttpMethod.GET, "/products/**").permitAll() // 상품 조회는 누구나 가능
 
-                        .requestMatchers("/login", "/join", "/find/**").anonymous() // 회원가입, 로그인, 아이디/비밀번호 찾기 등은 비로그인 유저만 가능
+                        .requestMatchers("/login", "/join", "/find/**").permitAll() // 회원가입, 로그인, 아이디/비밀번호 찾기 등은 비로그인 유저만 가능
 
                         // 채팅, 상품 등록, 수정, 삭제는 계좌인증을 완료한 유저 혹은 관리자만 가능
                         .requestMatchers("/chat/**").hasAnyRole("USER", "ADMIN")

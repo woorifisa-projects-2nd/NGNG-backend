@@ -46,7 +46,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
             if (tokenVerifier.isExpired(refreshToken)) {
 
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
                 return;
             }
@@ -75,7 +75,7 @@ public class TokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         }
 
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 
     @Override

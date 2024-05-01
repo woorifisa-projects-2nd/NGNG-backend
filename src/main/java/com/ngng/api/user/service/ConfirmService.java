@@ -62,7 +62,7 @@ public class ConfirmService {
                 .build();
 
         wrapper.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
-        wrapper.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        wrapper.setHeader(HttpHeaders.SET_COOKIE, responseCookie.toString());
 
         return AccountConfirmResponse.success(accessToken);
     }

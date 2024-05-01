@@ -13,3 +13,22 @@
 2024-05-01 12:07:38.544 | INFO  | [http-nio-8080-exec-5] | user-log | Success Create User id: 13 email:  
 2024-05-01 12:09:03.596 | INFO  | [http-nio-8080-exec-6] | user-log | Success  Auth email , name - 
 2024-05-01 12:09:15.099 | INFO  | [http-nio-8080-exec-8] | user-log | Success Create User id: 14 email: mnjh2001@gmail.com 
+2024-05-01 15:31:41.733 | INFO  | [http-nio-8080-exec-8] | user-log | Success  Auth PhoneNumber , name - 문지환
+2024-05-01 15:32:04.634 | INFO  | [http-nio-8080-exec-9] | user-log | Success  Auth email , name - 문지환
+2024-05-01 15:32:22.047 | ERROR | [http-nio-8080-exec-10] | user-log | Faild Create User , Email - mnjh2001@gmail.com
+2024-05-01 16:12:55.645 | ERROR | [http-nio-8080-exec-10] | user-log | Faild Confirm account , userId : 2  bank : 국민  number : 1234
+2024-05-01 16:13:33.381 | ERROR | [http-nio-8080-exec-3] | user-log | Faild Confirm account , userId : 2  bank : 국민  number : 1234
+2024-05-01 16:13:38.633 | ERROR | [http-nio-8080-exec-4] | user-log | Faild Confirm account , userId : 2  bank : 국민  number : 1234
+2024-05-01 16:14:21.232 | ERROR | [http-nio-8080-exec-2] | user-log | Faild Confirm account , userId : 2  bank : 국민  number : 1234
+2024-05-01 16:14:41.197 | ERROR | [http-nio-8080-exec-5] | user-log | Faild Confirm account , userId : 2  bank : 국민  number : 11
+2024-05-01 16:14:48.611 | ERROR | [http-nio-8080-exec-9] | user-log | Faild Confirm account , userId : 2  bank : 국민  number : 11
+2024-05-01 16:15:40.129 | ERROR | [http-nio-8080-exec-1] | user-log | Faild Confirm account , userId : 2  bank : 국민  number : 11
+2024-05-01 16:17:12.888 | ERROR | [http-nio-8080-exec-2] | user-log | Failed Confirm account , userId : 2  bank : 국민  number : 11
+2024-05-01 16:17:57.260 | ERROR | [http-nio-8080-exec-2] | user-log | Failed Confirm account , userId : 2  bank : 국민  number : 11
+2024-05-01 16:18:02.580 | ERROR | [http-nio-8080-exec-4] | user-log | Failed Confirm account , userId : 2  bank : 국민  number : 11
+2024-05-01 16:18:03.502 | ERROR | [http-nio-8080-exec-5] | user-log | Failed Confirm account , userId : 2  bank : 국민  number : 11
+2024-05-01 16:19:19.129 | ERROR | [http-nio-8080-exec-8] | user-log | Failed Confirm account , userId : 2  bank : 국민  number : 11
+2024-05-01 16:20:25.311 | ERROR | [http-nio-8080-exec-2] | user-log | Failed Confirm account , userId : 2  bank : 국민  number : 11
+2024-05-01 16:22:50.181 | INFO  | [http-nio-8080-exec-5] | user-log | Success Confirm address , userId : 2  address : 123
+2024-05-01 16:23:33.949 | INFO  | [http-nio-8080-exec-6] | user-log | Success  Confirm account , userId : 2  bank : 국민  number : 11
+2024-05-01 16:32:15.171 | INFO  | [http-nio-8080-exec-7] | user-log | Success  Confirm account , userId : 2  bank : 국민  number : 11

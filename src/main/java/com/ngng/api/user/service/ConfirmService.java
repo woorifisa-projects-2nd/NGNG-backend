@@ -11,6 +11,7 @@ import com.ngng.api.user.entity.Role;
 import com.ngng.api.user.entity.User;
 import com.ngng.api.user.repository.UserRepository;
 import com.ngng.api.user.repository.UserRoleRepository;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpServletResponseWrapper;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class ConfirmService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public AccountConfirmResponse accountConfirm(AccountConfirmRequest request, HttpServletResponse response) {
+    public AccountConfirmResponse accountConfirm(AccountConfirmRequest request, Cookie cookie, HttpServletResponse response) {
 
         User user = userRepository.findById(request.userId()).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저"));
 
@@ -43,20 +44,25 @@ public class ConfirmService {
 
         user.accountConfirm(request.accountBank(), request.accountNumber(), role);
 
-        // accessToken과 refreshToken 재발급
+        // accessToken과 refreshToken 재발급 및 기존 토큰 삭제
+        jwtTokenProvider.deleteRefreshToken(cookie.getValue());
+
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
+
         String accessToken = jwtTokenProvider.createAccessToken(customUserDetails);
         String refreshToken = jwtTokenProvider.createRefreshToken(customUserDetails);
 
         HttpServletResponseWrapper wrapper = new CustomHttpServletResponseWrapper(response);
-        wrapper.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+        ResponseCookie responseCookie = ResponseCookie.from("refreshToken", refreshToken)
                 .path("/")
                 .domain("localhost")
                 .httpOnly(true)
                 .secure(true)
                 .build();
+
+        wrapper.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        wrapper.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         return AccountConfirmResponse.success(accessToken);
     }

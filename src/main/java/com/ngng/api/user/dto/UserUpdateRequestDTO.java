@@ -12,4 +12,7 @@ public class UserUpdateRequestDTO {
     private String nickname;
     private String address;
 
+    private String accountBank;
+    private String accountNumber;
+
 }

@@ -123,9 +123,11 @@ public class UserService {
 
         if (user == null) return UserReadResponseDTO.builder().build();
 
-
         if (userDto.getNickname() != null) user.setNickname(userDto.getNickname());
         if (userDto.getAddress() != null) user.setAddress(userDto.getAddress());
+
+        if(userDto.getAccountBank() != null) user.setAccountBank(userDto.getAccountBank());
+        if(userDto.getAccountNumber() != null) user.setAccountNumber(userDto.getAccountNumber());
 
 
         return new UserReadResponseDTO().from(user);

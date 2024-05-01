@@ -1,6 +1,8 @@
 package com.ngng.api.point.controller;
 
+import com.ngng.api.point.dto.CheckPointRequestDTO;
 import com.ngng.api.point.dto.CreateAddPointRequestDTO;
+import com.ngng.api.point.dto.PaymentPointRequestDto;
 import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.service.PointHistoryService;
 import jakarta.validation.Valid;
@@ -34,4 +36,19 @@ public class PointController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(pointHistoryService.updateCost(dto));
     }
+
+
+    @PostMapping("/payment")
+    public ResponseEntity<PointHistory> payProduct(@RequestBody PaymentPointRequestDto paymentPointRequestDto){
+
+        return ResponseEntity.ok().body(pointHistoryService.payment(paymentPointRequestDto));
+    }
+
+
+    @PostMapping("/check")
+    public ResponseEntity<Boolean> checkPoint(@RequestBody CheckPointRequestDTO checkPointRequestDTO) {
+        return ResponseEntity.ok().body(pointHistoryService.isPaymnet(checkPointRequestDTO.getPaymentCost()));
+    }
+
+
 }

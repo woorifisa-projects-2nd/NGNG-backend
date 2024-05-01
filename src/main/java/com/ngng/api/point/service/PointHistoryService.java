@@ -1,6 +1,7 @@
 package com.ngng.api.point.service;
 
 import com.ngng.api.point.dto.CreateAddPointRequestDTO;
+import com.ngng.api.point.dto.PaymentPointRequestDto;
 import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.repository.PointHistoryRepository;
 import com.ngng.api.user.entity.User;
@@ -69,6 +70,38 @@ public class PointHistoryService {
         PointHistory response = pointHistoryRepository.save(pointHistory);
 
         log.info("Success Charge Point UserId: {} cost : {} ",response.getUser().getUserId(),request.getAddCost());
+
+        return response;
+
+    }
+
+    public boolean isPaymnet(Long pay) {
+        User user = this.authService.readAuthUser();
+        PointHistory lastHistory = readCostByUser(user);
+
+        System.out.println(lastHistory.getCost());
+        System.out.println(pay);
+        if(lastHistory.getCost() > pay) return true;
+
+        return false;
+    }
+
+    public PointHistory payment(PaymentPointRequestDto request){
+        User user = this.authService.readAuthUser();
+        PointHistory lastHistory = readCostByUser(user);
+
+        PointHistory pointHistory = PointHistory.builder()
+                .beforeCost(lastHistory.getCost())
+                .addCost(request.getPaymentCost())
+                .cost((Long) lastHistory.getCost() - (Long) request.getPaymentCost())
+                .type("결제")
+                .typeDetail(lastHistory.getUser().getName() + " 유저가 "+request.getPaymentCost() + " 금액 만큼 " + request.getPayProductId() + "상품을 구매 하셨습니다.")
+                .user(user)
+                .build();
+
+        PointHistory response = pointHistoryRepository.save(pointHistory);
+
+        log.info("Success Payment Point UserId: {} ProductId : {} cost : {} ",response.getUser().getUserId(),request.getPayProductId(),request.getPaymentCost());
 
         return response;
 

@@ -7,6 +7,7 @@ import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.service.PointHistoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,8 @@ public class PointController {
 
     @PostMapping("")
     public ResponseEntity<PointHistory> addPoint(@RequestBody @Valid final CreateAddPointRequestDTO dto){
-        return ResponseEntity.ok().body(pointHistoryService.updateCost(dto));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(pointHistoryService.updateCost(dto));
     }
 
 

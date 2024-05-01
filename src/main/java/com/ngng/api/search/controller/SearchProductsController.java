@@ -23,8 +23,7 @@ public class SearchProductsController {
     public ResponseEntity<?> findBySearch(@PathVariable String keyword, @PathVariable int page) {
 
         keyword = URLDecoder.decode(keyword, StandardCharsets.UTF_8);
-
-        SearchProductsResponse response = searchProductsService.findBySearch(keyword, page);
+        SearchProductsResponse response = searchProductsService.findBySearchKeyword(keyword, page);
 
         return ResponseEntity.ok().body(response);
     }}

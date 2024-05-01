@@ -62,6 +62,7 @@ public class JwtTokenProvider {
 
         Token token = Token.builder()
                 .tokenName(refreshToken)
+                .id(userDetails.getUser().getUserId())
                 .build();
 
         // refreshToken은 로그인 할 때 발급되기 때문에 repository에 저장하고 이를 확인하여 현재 로그인중임을 확인

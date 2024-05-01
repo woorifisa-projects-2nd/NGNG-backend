@@ -1,9 +1,9 @@
 package com.ngng.api.global.security.jwt.util;
 
-import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
-import com.ngng.api.global.security.jwt.entity.Token;
 import com.ngng.api.global.security.jwt.repository.TokenRepository;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -29,34 +29,45 @@ public class JwtTokenVerifier {
 
     public String getEmail(String token) {
 
-        return tokenParser(token).getSubject();
+        return parseToken(token).getSubject();
     }
 
     public String getRole(String token) {
 
-        return tokenParser(token).get("role", String.class);
+        return parseToken(token).get("role", String.class);
     }
     public String getType(String token) {
 
-        return tokenParser(token).get("type", String.class);
-    }
-
-    public boolean isExpired(String token) {
-
-        return tokenParser(token).getExpiration().before(new Date());
+        return parseToken(token).get("type", String.class);
     }
 
     public boolean validateToken(String token) {
 
         try {
             // 우리가 서명한 key값과 일치한지 확인
-            tokenParser(token);
+            parseToken(token);
         } catch (Exception e) {
 
             return false;
         }
 
         return true;
+    }
+
+    public boolean isExpired(String token) {
+
+        if (token.startsWith("Bearer ")) {
+
+            token = token.substring(7);
+        }
+
+        try {
+
+            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getExpiration().before(new Date());
+        } catch (ExpiredJwtException e) {
+
+            return true;
+        }
     }
 
     public boolean checkRefreshToken(String token) {
@@ -66,12 +77,16 @@ public class JwtTokenVerifier {
         return isExists && validateToken(token);
     }
 
-
     // 각 claim getter에서 공통적인 부분 메서드화
-    public Claims tokenParser(String token) {
+    public Claims parseToken(String token) {
 
-        token = token.replaceAll("Bearer ", "");
+        if (token.startsWith("Bearer ")) {
 
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+            token = token.substring(7);
+        }
+
+        Jws<Claims> jwtClaims = jwtClaims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+
+        return jwtClaims.getBody();
     }
 }

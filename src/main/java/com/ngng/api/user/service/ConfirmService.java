@@ -1,5 +1,8 @@
 package com.ngng.api.user.service;
 
+import com.ngng.api.global.security.jwt.custom.CustomHttpServletResponseWrapper;
+import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
+import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
 import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
 import com.ngng.api.user.entity.Role;
 import com.ngng.api.user.dto.request.AccountConfirmRequest;
@@ -9,7 +12,11 @@ import com.ngng.api.user.dto.response.AddressConfirmResponse;
 import com.ngng.api.user.entity.User;
 import com.ngng.api.user.repository.UserRepository;
 import com.ngng.api.user.repository.UserRoleRepository;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +27,10 @@ public class ConfirmService {
 
     private final UserRepository userRepository;
     private final UserRoleRepository roleRepository;
-    private final JwtTokenVerifier jwtTokenVerifier;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public AccountConfirmResponse accountConfirm(AccountConfirmRequest request) {
+    public AccountConfirmResponse accountConfirm(AccountConfirmRequest request, HttpServletResponse response) {
 
         User user = userRepository.findById(request.userId()).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저"));
 
@@ -35,11 +42,24 @@ public class ConfirmService {
         // user entity에 accountNumber, accountBank 저장, role 변경
         Role role = roleRepository.findByRoleType("USER");
 
-        // TODO 토큰 재발급 추가
-
         user.accountConfirm(request.accountBank(), request.accountNumber(), role);
 
-        return AccountConfirmResponse.success();
+        // accessToken과 refreshToken 재발급
+        CustomUserDetails customUserDetails = new CustomUserDetails(user);
+        String accessToken = jwtTokenProvider.createAccessToken(customUserDetails);
+        String refreshToken = jwtTokenProvider.createRefreshToken(customUserDetails);
+
+        HttpServletResponseWrapper wrapper = new CustomHttpServletResponseWrapper(response);
+        wrapper.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+                .path("/")
+                .domain("localhost")
+                .httpOnly(true)
+                .secure(true)
+                .build();
+
+        return AccountConfirmResponse.success(accessToken);
     }
 
     @Transactional

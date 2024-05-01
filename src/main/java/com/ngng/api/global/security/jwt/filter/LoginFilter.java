@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngng.api.global.security.dto.response.LoginResponse;
 import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
 import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
-import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
 import com.ngng.api.user.entity.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -68,12 +67,13 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                 .secure(true)
                 .build();
 
+        response.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         // servlet에서 response를 보낼 때 객체 그대로를 보낼 수 없어 ObjectMapper를 통해 객체를 String형으로 변환
         ObjectMapper mapper = new ObjectMapper();
 
-        LoginResponse loginResponse = LoginResponse.of(user, accessToken);
+        LoginResponse loginResponse = LoginResponse.success(user);
         String stringResponse = mapper.writeValueAsString(loginResponse);
 
         // accessToken은 body에 담아서 전달

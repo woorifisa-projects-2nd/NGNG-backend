@@ -29,8 +29,8 @@ public class JoinService {
             return JoinResponse.fail();
         }
 
-        // TODO: 계좌인증 로직이 완성되면 UNCONFIRMED_USER 로 변경
-        Role role = roleRepository.findByRoleType("USER");
+        // TODO: 계좌인증 로직
+        Role role = roleRepository.findByRoleType("UNCONFIRMED_USER");
 
         User user = userRepository.save(User.builder()
                 .name(request.name())

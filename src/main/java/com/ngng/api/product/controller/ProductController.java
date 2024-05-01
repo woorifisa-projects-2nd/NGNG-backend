@@ -6,7 +6,6 @@ import com.ngng.api.product.dto.response.ReadAllProductsDTO;
 import com.ngng.api.product.dto.response.ReadProductResponseDTO;
 import com.ngng.api.product.service.*;
 import com.ngng.api.thumbnail.service.ThumbnailService;
-import com.ngng.api.user.entity.User;
 import com.ngng.api.user.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -77,7 +76,7 @@ public class ProductController {
 //            확장자 구분
             String fileName = file.getOriginalFilename();
             String[] tokens = fileName.split("\\."); // "." 문자를 기준으로 문자열을 분리합니다.
-            String extension = tokens[tokens.length - 1];
+            String extension = tokens[tokens.length - 1].toLowerCase();
 
 
             try {
@@ -146,14 +145,22 @@ public class ProductController {
     @PutMapping(path = "/{productId}")
     @Parameter(name = "id", description = "상품 id")
     @Operation(summary = "상품 정보 수정", description = "id값과 전달받은 값으로 특정 상품의 정보를 수정합니다.")
-    public ResponseEntity<Long> update(@PathVariable("productId") Long productId, @RequestBody UpdateProductRequestDTO request) {
+    public ResponseEntity<Long> update(@PathVariable("productId") Long productId, @RequestBody UpdateProductRequestDTO request){
         return ResponseEntity.ok(productService.update(productId, request));
     }
 
     @DeleteMapping(path = "/{productId}")
     @Parameter(name = "id", description = "상품 id")
     @Operation(summary = "상품 삭제", description = "id값으로 해당 상품을 찾아 보이지 않게 숨깁니다.")
-    public ResponseEntity<Long> updateVisibility(@PathVariable Long productId) {
-        return ResponseEntity.ok(productService.delete(productId)); // TODO : no content 코드 찾아보기
+    public ResponseEntity<Long> updateVisibility(@PathVariable("productId") Long productId){
+        Long res = productService.delete(productId);
+        if(res > 0 ){
+            log.info("Success Delete Product id: {}",productId);
+            return  ResponseEntity.ok(res);
+        }
+        else {
+            log.info("Fail Delete Product id: {}",productId);
+            return ResponseEntity.noContent().build();
+        }
     }
 }

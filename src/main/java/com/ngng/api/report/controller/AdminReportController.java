@@ -18,7 +18,7 @@ public class AdminReportController {
     private final ReportService reportService;
 
     @GetMapping
-    public ResponseEntity<Page<ReadReportListResponseDTO>> readAll(@RequestParam(value="page", defaultValue="0") Integer page, @RequestParam Boolean unprocessedOnly) {
+    public ResponseEntity<Page<ReadReportListResponseDTO>> readAll(@RequestParam(value="page", defaultValue="0") Integer page, @RequestParam(defaultValue = "false") Boolean unprocessedOnly) {
         Page<ReadReportListResponseDTO> reports = reportService.findAll(page, unprocessedOnly);
 
         return ResponseEntity.ok(reports);

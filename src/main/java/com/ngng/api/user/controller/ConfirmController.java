@@ -5,6 +5,7 @@ import com.ngng.api.user.dto.request.AddressConfirmRequest;
 import com.ngng.api.user.dto.response.AccountConfirmResponse;
 import com.ngng.api.user.dto.response.AddressConfirmResponse;
 import com.ngng.api.user.service.ConfirmService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +23,11 @@ public class ConfirmController {
     private final ConfirmService confirmService;
 
     @PutMapping("/account")
-    public ResponseEntity<?> accountConfirm(@RequestBody AccountConfirmRequest request) {
+    public ResponseEntity<?> accountConfirm(@RequestBody AccountConfirmRequest request, HttpServletResponse response) {
 
-        AccountConfirmResponse response = confirmService.accountConfirm(request);
+        AccountConfirmResponse accountConfirmResponse = confirmService.accountConfirm(request, response);
 
-        if (!response.isConfirmAccount()) {
+        if (!accountConfirmResponse.isConfirmAccount()) {
             log.error("Faild Confirm account , userId : {}  bank : {}  number : {}",request.userId() , request.accountBank() , request.accountNumber());
             return ResponseEntity.badRequest().build();
         }

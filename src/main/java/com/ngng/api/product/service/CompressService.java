@@ -69,7 +69,7 @@ public class CompressService {
         String extension = tokens[tokens.length - 1].toLowerCase();
 
         try {
-            if(extension == "png") ImageIO.write(image, "png", out);
+            if(extension.equals("png")) ImageIO.write(image, "png", out);
             else ImageIO.write(image, "jpeg", out);
 
         } catch (IOException e) {

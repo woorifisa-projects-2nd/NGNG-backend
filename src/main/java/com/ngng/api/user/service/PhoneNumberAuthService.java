@@ -2,30 +2,25 @@ package com.ngng.api.user.service;
 
 import com.ngng.api.user.dto.request.PhoneNumberAuthRequest;
 import com.ngng.api.user.dto.response.PhoneNumberAuthResponse;
-import com.ngng.api.user.entity.User;
 import com.ngng.api.user.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PhoneNumberAuthService {
 
-    private final EmailAuthService emailAuthService;
     private final DefaultMessageService messageService;
     private final UserRepository userRepository;
 
     @Value("${message.from}")
     private String from;
 
-    public PhoneNumberAuthService(EmailAuthService emailAuthService,
-                                  @Value("${message.key.api}")
+    public PhoneNumberAuthService(@Value("${message.key.api}")
                                   String apiKey,
                                   @Value("${message.key.secret}")
                                   String secretKey,
@@ -33,7 +28,6 @@ public class PhoneNumberAuthService {
 
         String nurigoDomain = "https://api.coolsms.co.kr";
 
-        this.emailAuthService = emailAuthService;
         this.messageService = NurigoApp.INSTANCE.initialize(apiKey, secretKey, nurigoDomain);
         this.userRepository = userRepository;
     }
@@ -56,6 +50,7 @@ public class PhoneNumberAuthService {
         String formattedRandomNum = String.format("%06d", randomNum);
 
         message.setText(request.name() + "님의 내꺼니꺼 인증번호\n" + formattedRandomNum); // 내용
+
         SingleMessageSentResponse response = messageService.sendOne(new SingleMessageSendingRequest(message)); // 발송 후  get response
 
         if (response.getStatusCode().equals("2000")) { // 정상 처리

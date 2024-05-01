@@ -1,0 +1,5 @@
+2024-05-01 11:55:46.414 | INFO  | [http-nio-8080-exec-5] | point-log | Success Create PointHistory id: 27 User : 10 
+2024-05-01 12:00:25.662 | INFO  | [http-nio-8080-exec-10] | point-log | Success Create PointHistory id: 28 User : 11 
+2024-05-01 12:02:56.447 | INFO  | [http-nio-8080-exec-4] | point-log | Success Create PointHistory id: 29 User : 12 
+2024-05-01 12:07:38.527 | INFO  | [http-nio-8080-exec-5] | point-log | Success Create PointHistory id: 30 User : 13 
+2024-05-01 12:09:15.084 | INFO  | [http-nio-8080-exec-8] | point-log | Success Create PointHistory id: 31 User : 14 

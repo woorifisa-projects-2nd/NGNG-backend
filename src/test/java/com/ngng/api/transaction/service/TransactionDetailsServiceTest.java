@@ -3,28 +3,17 @@ package com.ngng.api.transaction.service;
 import com.ngng.api.transaction.dto.CreateTransactionDetailsRequestDTO;
 import com.ngng.api.transaction.dto.ReadTransactionDetailsDTO;
 import com.ngng.api.transaction.dto.UpdateTransactionDetailsRequestDTO;
-import com.ngng.api.transaction.dto.UpdateTransactionRequestDTO;
 import com.ngng.api.transaction.repository.TransactionDetailsRepository;
-import com.ngng.api.user.entity.User;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.List;
 

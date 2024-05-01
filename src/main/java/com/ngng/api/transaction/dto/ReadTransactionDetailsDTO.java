@@ -1,14 +1,14 @@
 package com.ngng.api.transaction.dto;
 
 
-import com.ngng.api.product.dto.response.ReadProductImageResponseDTO;
-import com.ngng.api.product.dto.response.ReadProductStatusResponseDTO;
-import com.ngng.api.product.dto.response.TagResponseDTO;
-import com.ngng.api.product.entity.Product;
-import com.ngng.api.thumbnail.dto.ThumbnailDTO;
+import com.ngng.api.product.product.dto.response.ReadProductImageResponseDTO;
+import com.ngng.api.product.product.dto.response.ReadProductStatusResponseDTO;
+import com.ngng.api.product.product.dto.response.TagResponseDTO;
+import com.ngng.api.product.product.entity.Product;
+import com.ngng.api.product.thumbnail.dto.ThumbnailDTO;
 import com.ngng.api.transaction.entity.TransactionDetails;
 import com.ngng.api.transaction.entity.TransactionStatus;
-import com.ngng.api.user.entity.User;
+import com.ngng.api.user.user.entity.User;
 import lombok.*;
 
 import java.util.List;

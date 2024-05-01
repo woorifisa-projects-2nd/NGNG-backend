@@ -1,7 +1,7 @@
 package com.ngng.api.product.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ngng.api.product.dto.request.TagRequestDTO;
+import com.ngng.api.product.product.dto.request.TagRequestDTO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

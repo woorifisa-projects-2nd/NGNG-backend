@@ -2,10 +2,8 @@ package com.ngng.api.user;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ngng.api.penalty.dto.CreatePenaltyRequestDTO;
-import com.ngng.api.user.dto.UserUpdateRequestDTO;
-import com.ngng.api.user.dto.request.*;
-import jakarta.validation.constraints.Email;
+import com.ngng.api.user.user.dto.UserUpdateRequestDTO;
+import com.ngng.api.user.user.dto.request.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,9 +18,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.concurrent.ExecutionException;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

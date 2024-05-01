@@ -1,7 +1,7 @@
 package com.ngng.api.transaction.dto;
 
-import com.ngng.api.product.dto.UserDTO;
-import com.ngng.api.product.dto.response.ProductDTO;
+import com.ngng.api.product.product.dto.UserDTO;
+import com.ngng.api.product.product.dto.response.ProductDTO;
 import com.ngng.api.transaction.entity.TransactionRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

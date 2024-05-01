@@ -1,9 +1,9 @@
 package com.ngng.api.global.security.config;
 
+import com.ngng.api.global.security.filter.LoginFilter;
+import com.ngng.api.global.security.filter.TokenFilter;
 import com.ngng.api.global.security.handler.CustomLogoutHandler;
 import com.ngng.api.global.security.handler.CustomLogoutSuccessHandler;
-import com.ngng.api.global.security.jwt.filter.LoginFilter;
-import com.ngng.api.global.security.jwt.filter.TokenFilter;
 import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
 import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
 import lombok.RequiredArgsConstructor;
@@ -95,7 +95,7 @@ public class SecurityConfig {
                         .requestMatchers("/main").permitAll()
                         .requestMatchers(HttpMethod.GET, "/products/**").permitAll() // 상품 조회는 누구나 가능
 
-                        .requestMatchers("/login", "/join", "/find/**").anonymous() // 회원가입, 로그인, 아이디/비밀번호 찾기 등은 비로그인 유저만 가능
+                        .requestMatchers("/login", "/join", "/find/**").permitAll() // 회원가입, 로그인, 아이디/비밀번호 찾기 등은 비로그인 유저만 가능
 
                         // 채팅, 상품 등록, 수정, 삭제는 계좌인증을 완료한 유저 혹은 관리자만 가능
                         .requestMatchers("/chat/**").hasAnyRole("USER", "ADMIN")
@@ -106,8 +106,7 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자페이지
 
                         .requestMatchers("/my_page/**", "/confirm", "/logout", "/report/**").authenticated()
-
-                        .requestMatchers("/my_page/**", "/confirm", "/logout", "/reports/**").authenticated()
+                        .requestMatchers("/confirm/account").hasRole("UNCONFIRMED_USER")
 
                         .anyRequest().permitAll() // 존재하지 않은 요청은 404 NotFound
                 );

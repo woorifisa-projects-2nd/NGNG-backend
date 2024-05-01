@@ -1,7 +1,7 @@
 package com.ngng.api.transaction.service;
 
-import com.ngng.api.product.entity.Product;
-import com.ngng.api.product.repository.ProductRepository;
+import com.ngng.api.product.product.entity.Product;
+import com.ngng.api.product.product.repository.ProductRepository;
 import com.ngng.api.transaction.dto.CreateTransactionDetailsRequestDTO;
 import com.ngng.api.transaction.dto.ReadTransactionDetailsDTO;
 import com.ngng.api.transaction.dto.UpdateTransactionDetailsRequestDTO;
@@ -9,18 +9,15 @@ import com.ngng.api.transaction.entity.TransactionDetails;
 import com.ngng.api.transaction.entity.TransactionStatus;
 import com.ngng.api.transaction.repository.TransactionDetailsRepository;
 import com.ngng.api.transaction.repository.TransactionStatusRepository;
-import com.ngng.api.user.entity.User;
-import com.ngng.api.user.service.AuthService;
+import com.ngng.api.user.user.entity.User;
+import com.ngng.api.user.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.naming.AuthenticationException;
 import java.util.List;
 import java.util.stream.Collectors;
 

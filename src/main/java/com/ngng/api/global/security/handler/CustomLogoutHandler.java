@@ -1,12 +1,14 @@
 package com.ngng.api.global.security.handler;
 
-import com.ngng.api.global.security.jwt.entity.Token;
-import com.ngng.api.global.security.jwt.repository.TokenRepository;
+import com.ngng.api.global.security.custom.CustomHttpServletResponseWrapper;
+import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
 import io.jsonwebtoken.JwtException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Component;
@@ -17,7 +19,7 @@ import java.util.Arrays;
 @Component
 public class CustomLogoutHandler implements LogoutHandler {
 
-    private final TokenRepository tokenRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
@@ -28,13 +30,18 @@ public class CustomLogoutHandler implements LogoutHandler {
                 .orElseThrow(() -> new JwtException("no token"))
                 .getValue();
 
-        Token token = tokenRepository.findTokenByTokenName(refreshToken).orElseThrow(() -> new JwtException("invalid token"));
+        jwtTokenProvider.deleteRefreshToken(refreshToken);
 
-        tokenRepository.delete(token);
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
+                .path("/")
+                .domain("localhost")
+                .httpOnly(true)
+                .secure(true)
+                .maxAge(0)
+                .build();
 
-        Cookie cookie = new Cookie("refreshToken", "");
-        cookie.setMaxAge(0);
+        HttpServletResponseWrapper wrapper = new CustomHttpServletResponseWrapper(response);
 
-        response.addCookie(cookie);
+        wrapper.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     }
 }

@@ -41,4 +41,4 @@ src/main/resources/*.yml
 
 
 ### logs ###
-logs
+logs/

@@ -1,6 +1,6 @@
 package com.ngng.api.global.security.dto.response;
 
-import com.ngng.api.user.entity.User;
+import com.ngng.api.user.user.entity.User;
 import lombok.Builder;
 
 @Builder

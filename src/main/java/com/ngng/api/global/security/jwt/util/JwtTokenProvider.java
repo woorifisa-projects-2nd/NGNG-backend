@@ -1,8 +1,9 @@
 package com.ngng.api.global.security.jwt.util;
 
-import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
+import com.ngng.api.global.security.custom.CustomUserDetails;
 import com.ngng.api.global.security.jwt.entity.Token;
 import com.ngng.api.global.security.jwt.repository.TokenRepository;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -62,11 +63,19 @@ public class JwtTokenProvider {
 
         Token token = Token.builder()
                 .tokenName(refreshToken)
+                .id(userDetails.getUser().getUserId())
                 .build();
 
         // refreshToken은 로그인 할 때 발급되기 때문에 repository에 저장하고 이를 확인하여 현재 로그인중임을 확인
         tokenRepository.save(token);
 
         return refreshToken;
+    }
+
+    public void deleteRefreshToken(String refreshToken) {
+
+        Token token = tokenRepository.findTokenByTokenName(refreshToken).orElseThrow(() -> new JwtException("invalid token"));
+
+        tokenRepository.delete(token);
     }
 }

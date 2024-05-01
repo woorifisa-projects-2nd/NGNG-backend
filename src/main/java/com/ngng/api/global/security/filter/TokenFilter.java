@@ -78,6 +78,8 @@ public class TokenFilter extends OncePerRequestFilter {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);
+
+            return;
         }
 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

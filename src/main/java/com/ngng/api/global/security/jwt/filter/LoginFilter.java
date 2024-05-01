@@ -2,6 +2,7 @@ package com.ngng.api.global.security.jwt.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngng.api.global.security.dto.response.LoginResponse;
+import com.ngng.api.global.security.jwt.custom.CustomHttpServletResponseWrapper;
 import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
 import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
 import com.ngng.api.user.entity.User;
@@ -9,6 +10,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -67,8 +69,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                 .secure(true)
                 .build();
 
-        response.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
-        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        HttpServletResponseWrapper wrapper = new CustomHttpServletResponseWrapper(response);
+
+        wrapper.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        wrapper.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         // servlet에서 response를 보낼 때 객체 그대로를 보낼 수 없어 ObjectMapper를 통해 객체를 String형으로 변환
         ObjectMapper mapper = new ObjectMapper();

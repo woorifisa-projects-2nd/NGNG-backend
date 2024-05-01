@@ -2,13 +2,6 @@ package com.ngng.api.product.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 @Setter
 @Getter

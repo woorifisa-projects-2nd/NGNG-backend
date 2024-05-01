@@ -2,7 +2,7 @@ package com.ngng.api.product.dto.request;
 
 import com.ngng.api.product.entity.Product;
 import lombok.*;
-import java.sql.Timestamp;
+
 import java.util.List;
 
 @Getter

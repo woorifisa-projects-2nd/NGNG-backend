@@ -3,7 +3,6 @@ package com.ngng.api.user.controller;
 import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.service.PointHistoryService;
 import com.ngng.api.user.dto.UserReadResponseDTO;
-import com.ngng.api.user.dto.UserUpdateRequestDTO;
 import com.ngng.api.user.dto.request.AdminUserUpdateRequest;
 import com.ngng.api.user.entity.User;
 import com.ngng.api.user.service.JoinService;

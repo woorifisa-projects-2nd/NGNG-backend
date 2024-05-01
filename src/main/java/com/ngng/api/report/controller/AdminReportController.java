@@ -1,6 +1,8 @@
 package com.ngng.api.report.controller;
 
-import com.ngng.api.report.dto.*;
+import com.ngng.api.report.dto.DeleteReportResponseDTO;
+import com.ngng.api.report.dto.ReadReportListResponseDTO;
+import com.ngng.api.report.dto.ReadReportResponseDTO;
 import com.ngng.api.report.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

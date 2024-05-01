@@ -1,6 +1,5 @@
 package com.ngng.api.product.entity;
 
-import com.ngng.api.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

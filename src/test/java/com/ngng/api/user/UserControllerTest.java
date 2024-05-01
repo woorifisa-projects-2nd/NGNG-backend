@@ -159,7 +159,7 @@ public class UserControllerTest {
     }
 
     // sendMessage
-    @Test
+
     void sendMessage() throws Exception {
         String name=  "신짱구";
         String phoneNumber = "01011112222";

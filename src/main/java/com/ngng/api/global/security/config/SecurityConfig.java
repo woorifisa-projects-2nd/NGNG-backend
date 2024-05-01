@@ -99,9 +99,12 @@ public class SecurityConfig {
 
                         // 채팅, 상품 등록, 수정, 삭제는 계좌인증을 완료한 유저 혹은 관리자만 가능
                         .requestMatchers("/chat/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/products/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/products/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/products/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/products/**").authenticated()
+//                        .hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/products/**").authenticated()
+//                        .hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/products/**").authenticated()
+//                                .hasAnyRole("USER", "ADMIN")
 
                         .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자페이지
 

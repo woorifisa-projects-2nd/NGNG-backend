@@ -1,0 +1,15 @@
+2024-05-01 11:51:43.082 | INFO  | [http-nio-8080-exec-1] | user-log | Success  Auth PhoneNumber , name - 문지환
+2024-05-01 11:52:56.210 | INFO  | [http-nio-8080-exec-2] | user-log | Success  Auth PhoneNumber , name - 문지환
+2024-05-01 11:54:22.495 | INFO  | [http-nio-8080-exec-4] | user-log | Success  Auth PhoneNumber , name - 문지환
+2024-05-01 11:55:16.318 | INFO  | [http-nio-8080-exec-3] | user-log | Success  Auth email , name - 문지환
+2024-05-01 11:55:46.434 | INFO  | [http-nio-8080-exec-5] | user-log | Success Create User id: 10 email:  
+2024-05-01 11:57:41.871 | INFO  | [http-nio-8080-exec-8] | user-log | Success  Auth PhoneNumber , name - 문지환
+2024-05-01 11:59:40.509 | INFO  | [http-nio-8080-exec-7] | user-log | Success  Auth PhoneNumber , name - 문지환
+2024-05-01 12:00:02.528 | INFO  | [http-nio-8080-exec-9] | user-log | Success  Auth email , name - 문지환
+2024-05-01 12:00:25.675 | INFO  | [http-nio-8080-exec-10] | user-log | Success Create User id: 11 email:  
+2024-05-01 12:02:41.215 | INFO  | [http-nio-8080-exec-2] | user-log | Success  Auth email , name - 
+2024-05-01 12:02:56.460 | INFO  | [http-nio-8080-exec-4] | user-log | Success Create User id: 12 email:  
+2024-05-01 12:07:26.111 | INFO  | [http-nio-8080-exec-3] | user-log | Success  Auth email , name - 
+2024-05-01 12:07:38.544 | INFO  | [http-nio-8080-exec-5] | user-log | Success Create User id: 13 email:  
+2024-05-01 12:09:03.596 | INFO  | [http-nio-8080-exec-6] | user-log | Success  Auth email , name - 
+2024-05-01 12:09:15.099 | INFO  | [http-nio-8080-exec-8] | user-log | Success Create User id: 14 email: mnjh2001@gmail.com 

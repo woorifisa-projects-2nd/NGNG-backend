@@ -40,6 +40,7 @@ public class ReadTransactionDetailsDTO {
                 .product(new DetailsProductDTO().from(details.getProduct()))
                 .consumer(new DetailsUserDTO().from(details.getConsumer()))
                 .seller(new DetailsUserDTO().from(details.getSeller()))
+                .price(details.getPrice())
                 .build();
     }
 

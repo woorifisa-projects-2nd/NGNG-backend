@@ -7,16 +7,15 @@ import lombok.Builder;
 public record LoginResponse(Long id,
                             String name,
                             String nickname,
-                            String accessToken,
-                            String refreshToken) {
+                            String role) {
 
-    public static LoginResponse of(User user, String accessToken) {
+    public static LoginResponse success(User user) {
 
         return LoginResponse.builder()
                 .id(user.getUserId())
                 .name(user.getName())
+                .role(user.getRole().getRoleType())
                 .nickname(user.getNickname())
-                .accessToken(accessToken)
                 .build();
     }
 }

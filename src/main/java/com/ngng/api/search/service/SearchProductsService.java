@@ -46,12 +46,13 @@ public class SearchProductsService {
 
         SearchHits<ProductsDocument> hits = elasticsearchOperations.search(query, ProductsDocument.class);
 
-        int totalPages = (int) Math.ceil((double) hits.getTotalHits() / PAGE_SIZE);
+        long totalHits = hits.getTotalHits();
+        int totalPages = (int) Math.ceil((double) totalHits / PAGE_SIZE);
 
         List<ProductsDocument> products = hits.stream()
                 .map(SearchHit::getContent)
                 .toList();
 
-        return SearchProductsResponse.of(products, totalPages);
+        return SearchProductsResponse.of(products, totalHits, totalPages);
     }
 }

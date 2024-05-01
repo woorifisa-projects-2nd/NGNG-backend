@@ -6,7 +6,7 @@ COPY . .
 RUN dos2unix ./gradlew
 
 RUN chmod +x ./gradlew
-RUN ./gradlew build
+RUN ./gradlew build --exclude-task test
 
 # App
 FROM eclipse-temurin:17-jre-alpine

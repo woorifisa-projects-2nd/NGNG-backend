@@ -1,9 +1,9 @@
 package com.ngng.api.global.security.config;
 
+import com.ngng.api.global.security.filter.LoginFilter;
+import com.ngng.api.global.security.filter.TokenFilter;
 import com.ngng.api.global.security.handler.CustomLogoutHandler;
 import com.ngng.api.global.security.handler.CustomLogoutSuccessHandler;
-import com.ngng.api.global.security.jwt.filter.LoginFilter;
-import com.ngng.api.global.security.jwt.filter.TokenFilter;
 import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
 import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
 import lombok.RequiredArgsConstructor;

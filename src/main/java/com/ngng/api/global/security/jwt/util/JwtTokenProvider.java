@@ -1,6 +1,6 @@
 package com.ngng.api.global.security.jwt.util;
 
-import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
+import com.ngng.api.global.security.custom.CustomUserDetails;
 import com.ngng.api.global.security.jwt.entity.Token;
 import com.ngng.api.global.security.jwt.repository.TokenRepository;
 import io.jsonwebtoken.JwtException;

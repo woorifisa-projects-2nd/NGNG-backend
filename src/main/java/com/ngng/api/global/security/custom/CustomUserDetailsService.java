@@ -1,4 +1,4 @@
-package com.ngng.api.global.security.jwt.custom;
+package com.ngng.api.global.security.custom;
 
 import com.ngng.api.user.entity.User;
 import com.ngng.api.user.repository.UserRepository;

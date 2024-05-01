@@ -1,8 +1,8 @@
-package com.ngng.api.global.security.jwt.filter;
+package com.ngng.api.global.security.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.ngng.api.global.security.jwt.custom.CustomHttpServletResponseWrapper;
-import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
+import com.ngng.api.global.security.custom.CustomHttpServletResponseWrapper;
+import com.ngng.api.global.security.custom.CustomUserDetails;
 import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
 import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
 import com.ngng.api.user.entity.Role;

@@ -1,6 +1,6 @@
 package com.ngng.api.user.service;
 
-import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
+import com.ngng.api.global.security.custom.CustomUserDetails;
 import com.ngng.api.point.entity.PointHistory;
 import com.ngng.api.point.service.PointHistoryService;
 import com.ngng.api.product.dto.response.ReadProductMypageResponseDTO;

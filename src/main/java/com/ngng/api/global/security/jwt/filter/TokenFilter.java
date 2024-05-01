@@ -41,6 +41,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
         if (accessToken.isEmpty() || tokenVerifier.isExpired(accessToken)) {
 
+            System.out.println("accessToken = " + accessToken);
             // Cookie에서 get refreshToken
             String refreshToken = Arrays.stream(request.getCookies())
                     .filter(cookie -> cookie.getName().equals("refreshToken"))

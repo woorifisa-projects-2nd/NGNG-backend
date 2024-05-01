@@ -3,6 +3,7 @@ package com.ngng.api.global.security.jwt.util;
 import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
 import com.ngng.api.global.security.jwt.entity.Token;
 import com.ngng.api.global.security.jwt.repository.TokenRepository;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -69,5 +70,12 @@ public class JwtTokenProvider {
         tokenRepository.save(token);
 
         return refreshToken;
+    }
+
+    public void deleteRefreshToken(String refreshToken) {
+
+        Token token = tokenRepository.findTokenByTokenName(refreshToken).orElseThrow(() -> new JwtException("invalid token"));
+
+        tokenRepository.delete(token);
     }
 }

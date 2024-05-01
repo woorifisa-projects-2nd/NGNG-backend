@@ -1,6 +1,7 @@
 package com.ngng.api.global.security.jwt.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ngng.api.global.security.jwt.custom.CustomHttpServletResponseWrapper;
 import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
 import com.ngng.api.global.security.jwt.util.JwtTokenProvider;
 import com.ngng.api.global.security.jwt.util.JwtTokenVerifier;
@@ -10,6 +11,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -32,10 +34,12 @@ public class TokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        HttpServletResponseWrapper wrapper = new CustomHttpServletResponseWrapper(response);
+
         // Authorization Header에서 get accessToken
         String accessToken = request.getHeader("Authorization");
 
-        if (tokenVerifier.isExpired(accessToken)) {
+        if (accessToken.isEmpty() || tokenVerifier.isExpired(accessToken)) {
 
             // Cookie에서 get refreshToken
             String refreshToken = Arrays.stream(request.getCookies())
@@ -44,7 +48,7 @@ public class TokenFilter extends OncePerRequestFilter {
                     .get()
                     .getValue();
 
-            if (tokenVerifier.isExpired(refreshToken)) {
+            if (refreshToken.isEmpty() || tokenVerifier.isExpired(refreshToken)) {
 
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
@@ -54,11 +58,11 @@ public class TokenFilter extends OncePerRequestFilter {
             if (isValidRefreshToken(refreshToken)) {
 
                 CustomUserDetails customUserDetails = createCustomUserDetails(refreshToken);
-                String Token = tokenProvider.createAccessToken(customUserDetails);
+                String token = tokenProvider.createAccessToken(customUserDetails);
+                wrapper.setHeader(HttpHeaders.AUTHORIZATION, token);
 
-                response.setHeader(HttpHeaders.AUTHORIZATION, Token);
+                // 원래 token만 재발급해줘야하지만, 임의로 이후 동작까지 되도록 설정(추후 변경)
                 Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 filterChain.doFilter(request, response);
 

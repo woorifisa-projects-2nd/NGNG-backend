@@ -26,10 +26,14 @@ public class ConfirmController {
         AccountConfirmResponse accountConfirmResponse = confirmService.accountConfirm(request, cookie, response);
 
         if (!accountConfirmResponse.isConfirmAccount()) {
+
             log.error("Failed Confirm account , userId : {}  bank : {}  number : {}", request.userId(), request.accountBank(), request.accountNumber());
+
             return ResponseEntity.badRequest().build();
         }
+
         log.info("Success  Confirm account , userId : {}  bank : {}  number : {}", request.userId(), request.accountBank(), request.accountNumber());
+
         return ResponseEntity.noContent().build();
     }
 
@@ -39,10 +43,14 @@ public class ConfirmController {
         AddressConfirmResponse response = confirmService.addressConfirm(request);
 
         if (!response.isConfirmAddress()) {
+
             log.error("Faild Confirm address , userId : {}  address : {}", request.id(), request.address());
+
             return ResponseEntity.badRequest().build();
         }
+
         log.info("Success Confirm address , userId : {}  address : {}", request.id(), request.address());
+
         return ResponseEntity.noContent().build();
     }
 }

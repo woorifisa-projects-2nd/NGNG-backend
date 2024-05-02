@@ -9,6 +9,7 @@ import com.ngng.api.user.user.entity.Role;
 import com.ngng.api.user.user.entity.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpServletResponseWrapper;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -41,15 +43,23 @@ public class TokenFilter extends OncePerRequestFilter {
 
         if (accessToken.isEmpty() || tokenVerifier.isExpired(accessToken)) {
 
-            System.out.println("accessToken = " + accessToken);
+            Cookie[] cookies = request.getCookies();
+
+            if (cookies == null || ObjectUtils.isEmpty(cookies)) {
+
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+                return;
+            }
+
             // Cookie에서 get refreshToken
-            String refreshToken = Arrays.stream(request.getCookies())
+            String refreshToken = Arrays.stream(cookies)
                     .filter(cookie -> cookie.getName().equals("refreshToken"))
                     .findFirst()
                     .get()
                     .getValue();
 
-            if (refreshToken.isEmpty() || tokenVerifier.isExpired(refreshToken)) {
+            if (tokenVerifier.isExpired(refreshToken)) {
 
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 

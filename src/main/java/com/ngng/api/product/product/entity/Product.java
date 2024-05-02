@@ -2,8 +2,8 @@ package com.ngng.api.product.product.entity;
 
 import com.ngng.api.product.product.dto.request.CreateProductRequestDTO;
 import com.ngng.api.product.product.dto.request.UpdateProductRequestDTO;
-import com.ngng.api.report.report.entity.Report;
 import com.ngng.api.product.thumbnail.entity.Thumbnail;
+import com.ngng.api.report.report.entity.Report;
 import com.ngng.api.transaction.entity.TransactionDetails;
 import com.ngng.api.user.user.entity.User;
 import jakarta.persistence.*;

@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -50,10 +51,17 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     // 로그인에 성공할 시 동작되는 메서드
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
         CustomUserDetails userDetails = (CustomUserDetails) authResult.getPrincipal();
         User user = userDetails.getUser();
+
+        if (!userDetails.isEnabled()) {
+
+            unsuccessfulAuthentication(request, response, new DisabledException("정지된 계정입니다."));
+
+            return;
+        }
 
         String accessToken = tokenProvider.createAccessToken(userDetails);
         String refreshToken = tokenProvider.createRefreshToken(userDetails);
@@ -86,7 +94,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         writer.write(stringResponse);
         writer.flush();
 
-        response.setStatus(HttpServletResponse.SC_OK);
+        wrapper.setStatus(HttpServletResponse.SC_OK);
     }
 
     // 로그인에 실패할 시 동작되는 메서드

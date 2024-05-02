@@ -27,10 +27,13 @@ public class JoinController {
         JoinResponse response = joinService.join(request);
 
         if (!response.isJoinSuccess()) {
-            log.error("Faild Create User , Email - {}",request.email());
+
+            log.error("Faild Create User , Email - {}", request.email());
+
             return ResponseEntity.badRequest().build();
         }
-        log.info("Success Create User id: {} email: {} ",response.id(),request.email());
+
+        log.info("Success Create User id: {} email: {} ", response.id(), request.email());
 
 
         URI location = URI.create("/users/" + response.id());

@@ -1,9 +1,6 @@
 package com.ngng.api.global.security.jwt.util;
 
 import com.ngng.api.global.security.custom.CustomUserDetails;
-import com.ngng.api.global.security.jwt.entity.Token;
-import com.ngng.api.global.security.jwt.repository.TokenRepository;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -16,15 +13,15 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final TokenRepository tokenRepository;
+//    private final TokenRepository tokenRepository;
     private final Key key;
 
     public JwtTokenProvider(@Value("${jwt.secret.key}")
-                            String secretKey,
-                            TokenRepository tokenRepository) {
+                            String secretKey) {
+//                            TokenRepository tokenRepository) {
 
         this.key = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
-        this.tokenRepository = tokenRepository;
+//        this.tokenRepository = tokenRepository;
     }
 
     @Value("${jwt.expiration.access}")
@@ -61,21 +58,21 @@ public class JwtTokenProvider {
                 .signWith(key)
                 .compact();
 
-        Token token = Token.builder()
-                .tokenName(refreshToken)
-                .id(userDetails.getUser().getUserId())
-                .build();
-
-        // refreshToken은 로그인 할 때 발급되기 때문에 repository에 저장하고 이를 확인하여 현재 로그인중임을 확인
-        tokenRepository.save(token);
+//        Token token = Token.builder()
+//                .tokenName(refreshToken)
+//                .id(userDetails.getUser().getUserId())
+//                .build();
+//
+//        // refreshToken은 로그인 할 때 발급되기 때문에 repository에 저장하고 이를 확인하여 현재 로그인중임을 확인
+//        tokenRepository.save(token);
 
         return refreshToken;
     }
 
-    public void deleteRefreshToken(String refreshToken) {
-
-        Token token = tokenRepository.findTokenByTokenName(refreshToken).orElseThrow(() -> new JwtException("invalid token"));
-
-        tokenRepository.delete(token);
-    }
+//    public void deleteRefreshToken(String refreshToken) {
+//
+//        Token token = tokenRepository.findTokenByTokenName(refreshToken).orElseThrow(() -> new JwtException("invalid token"));
+//
+//        tokenRepository.delete(token);
+//    }
 }

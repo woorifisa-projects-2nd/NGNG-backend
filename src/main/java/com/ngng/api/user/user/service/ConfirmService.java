@@ -44,8 +44,8 @@ public class ConfirmService {
 
         user.accountConfirm(request.accountBank(), request.accountNumber(), role);
 
-        // accessToken과 refreshToken 재발급 및 기존 토큰 삭제
-        jwtTokenProvider.deleteRefreshToken(cookie.getValue());
+//         accessToken과 refreshToken 재발급 및 기존 토큰 삭제
+//        jwtTokenProvider.deleteRefreshToken(cookie.getValue());
 
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
 

@@ -30,7 +30,7 @@ public class CustomLogoutHandler implements LogoutHandler {
                 .orElseThrow(() -> new JwtException("no token"))
                 .getValue();
 
-        jwtTokenProvider.deleteRefreshToken(refreshToken);
+//        jwtTokenProvider.deleteRefreshToken(refreshToken);
 
         ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
                 .path("/")

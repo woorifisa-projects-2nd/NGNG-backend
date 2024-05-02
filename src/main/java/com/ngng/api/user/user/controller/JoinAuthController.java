@@ -30,10 +30,14 @@ public class JoinAuthController {
         PhoneNumberAuthResponse response = phoneNumberAuthService.sendMessage(request);
 
         if (!response.isSuccess()) {
+
             log.error("Faild Auth PhoneNumber , name - {}",request.name());
+
             return ResponseEntity.badRequest().build();
         }
+
         log.info("Success  Auth PhoneNumber , name - {}",request.name());
+
         return ResponseEntity.ok().body(response);
     }
 
@@ -43,10 +47,14 @@ public class JoinAuthController {
         EmailAuthResponse response = emailAuthService.sendMail(request);
 
         if (!response.isSuccess()) {
+
             log.error("Faild Auth email , name - {}",request.name());
+
             return ResponseEntity.badRequest().build();
         }
+
         log.info("Success  Auth email , name - {}",request.name());
+
         return ResponseEntity.ok().body(response);
     }
 }

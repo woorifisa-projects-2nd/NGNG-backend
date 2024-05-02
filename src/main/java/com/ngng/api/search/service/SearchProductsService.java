@@ -39,7 +39,7 @@ public class SearchProductsService {
             criteria = titleCriteria.or(contentCriteria).or(tagsCriteria);
         }
 
-        Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.by("createdAt").descending());
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.by("refreshedAt").descending());
 
         Query query = new CriteriaQuery(criteria).setPageable(pageable);
 

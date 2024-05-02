@@ -29,7 +29,6 @@ public class JoinService {
             return JoinResponse.fail();
         }
 
-        // TODO: 계좌인증 로직
         Role role = roleRepository.findByRoleType("UNCONFIRMED_USER");
 
         User user = userRepository.save(User.builder()

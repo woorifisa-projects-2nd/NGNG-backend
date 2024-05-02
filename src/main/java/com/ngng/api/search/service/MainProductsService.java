@@ -28,7 +28,7 @@ public class MainProductsService {
 
         Pageable pageable = PageRequest.of(0, 60);
 
-        Page<ProductsDocument> products = productsDocumentRepository.findByForSaleOrderByCreatedAtDesc(true, pageable);
+        Page<ProductsDocument> products = productsDocumentRepository.findByForSaleOrderByRefreshedAtDesc(true, pageable);
 
         return MainProductsResponse.of(products);
     }

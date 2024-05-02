@@ -154,9 +154,8 @@ public class UserService {
 
     @Transactional
     public UserReadResponseDTO adminUserUpdate(AdminUserUpdateRequest userUpdateDTO) {
-        User user = this.readAuthUser();
 
-        if (user == null) return UserReadResponseDTO.builder().build();
+        User user = userRepository.findById(userUpdateDTO.getUserId()).orElseThrow(null);
 
         if (userUpdateDTO.getName() != null) user.setName(userUpdateDTO.getName());
         if (userUpdateDTO.getNickName() != null) user.setNickname(userUpdateDTO.getNickName());

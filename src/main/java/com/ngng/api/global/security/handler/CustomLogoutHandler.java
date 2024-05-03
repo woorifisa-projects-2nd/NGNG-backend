@@ -24,14 +24,6 @@ public class CustomLogoutHandler implements LogoutHandler {
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 
-        String refreshToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> cookie.getName().equals("refreshToken"))
-                .findFirst()
-                .orElseThrow(() -> new JwtException("no token"))
-                .getValue();
-
-//        jwtTokenProvider.deleteRefreshToken(refreshToken);
-
         ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
                 .path("/")
                 .domain("localhost")

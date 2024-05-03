@@ -16,14 +16,11 @@ import java.util.Date;
 public class JwtTokenVerifier {
 
     private final Key key;
-//    private final TokenRepository tokenRepository;
 
     public JwtTokenVerifier(@Value("${jwt.secret.key}")
                             String secretKey) {
-//                            TokenRepository tokenRepository) {
 
         this.key = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
-//        this.tokenRepository = tokenRepository;
     }
 
     public String getEmail(String token) {
@@ -69,14 +66,6 @@ public class JwtTokenVerifier {
         }
     }
 
-    public boolean checkRefreshToken(String token) {
-        // db에 해당 refreshToekn이 저장되어 있는지 확인
-//        boolean isExists = !tokenRepository.existsByTokenName(token);
-
-//        return isExists && validateToken(token);
-        return validateToken(token);
-    }
-
     // 각 claim getter에서 공통적인 부분 메서드화
     public Claims parseToken(String token) {
 
@@ -85,7 +74,7 @@ public class JwtTokenVerifier {
             token = token.substring(7);
         }
 
-        Jws<Claims> jwtClaims = jwtClaims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+        Jws<Claims> jwtClaims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
 
         return jwtClaims.getBody();
     }

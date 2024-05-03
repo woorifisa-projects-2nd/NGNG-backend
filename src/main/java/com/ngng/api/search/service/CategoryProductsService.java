@@ -15,10 +15,12 @@ public class CategoryProductsService {
 
     private final ProductsDocumentRepository productsDocumentRepository;
 
+    private final int PAGE_SIZE = 20;
+
     public CategoryProductsResponse findByCategory(String category, int page) {
 
         // 페이지당 20개
-        Pageable pageable = PageRequest.of(page, 20);
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
         Page<ProductsDocument> products = productsDocumentRepository.findByCategoryOrderByRefreshedAtDesc(category, pageable);
 
         return CategoryProductsResponse.of(products);

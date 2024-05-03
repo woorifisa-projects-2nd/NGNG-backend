@@ -41,11 +41,12 @@ public class TokenFilter extends OncePerRequestFilter {
         // Authorization Header에서 get accessToken
         String accessToken = request.getHeader("Authorization");
 
+        // accessToken이 없거나 유효기간이 지났을 경우 refreshToken 검증
         if (accessToken.isEmpty() || tokenVerifier.isExpired(accessToken)) {
 
             Cookie[] cookies = request.getCookies();
 
-            if (cookies == null || ObjectUtils.isEmpty(cookies)) {
+            if (cookies == null || ObjectUtils.isEmpty(cookies)) { // cookies가 비어있을 경우
 
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
@@ -59,20 +60,19 @@ public class TokenFilter extends OncePerRequestFilter {
                     .get()
                     .getValue();
 
-            if (tokenVerifier.isExpired(refreshToken)) {
+            if (tokenVerifier.isExpired(refreshToken)) { // refreshToken의 유효기간이 지났을 경우
 
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
                 return;
             }
 
-            if (isValidRefreshToken(refreshToken)) {
+            if (isValidRefreshToken(refreshToken)) { // refreshToken이 유효할 경우 accessToken을 재발급하고 이후 동작(기존 요청) 처리
 
                 CustomUserDetails customUserDetails = createCustomUserDetails(refreshToken);
                 String token = tokenProvider.createAccessToken(customUserDetails);
                 wrapper.setHeader(HttpHeaders.AUTHORIZATION, token);
 
-                // 원래 token만 재발급해줘야하지만, 임의로 이후 동작까지 되도록 설정(추후 변경)
                 Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 filterChain.doFilter(request, response);
@@ -81,7 +81,7 @@ public class TokenFilter extends OncePerRequestFilter {
             }
         }
 
-        if (isValidAccessToken(accessToken)) {
+        if (isValidAccessToken(accessToken)) { // accessToken이 유효할 경우 곧바로 이후 동작(기존 요청) 처리
 
             CustomUserDetails customUserDetails = createCustomUserDetails(accessToken);
             Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
@@ -92,6 +92,7 @@ public class TokenFilter extends OncePerRequestFilter {
             return;
         }
 
+        // 여기까지 올 경우가 없어야 하지만, accessToken이 invalid할 경우 401 에러 반환
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 
@@ -101,12 +102,14 @@ public class TokenFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         String method = request.getMethod();
 
+        // 해당 패턴과 일치한 요청일 경우 TokenFilter를 거치지 않도록 설정
         Pattern uriPattern = Pattern.compile("/(login|logout|search|join|find|category|main)(/.*)?");
 
         return (uri.startsWith("/products") && method.equals("GET")) || uriPattern.matcher(uri).matches();
     }
 
-    private CustomUserDetails createCustomUserDetails(String token) throws JsonProcessingException {
+    // createAccessToken이 UserDetails를 인자로 받기 때문에 token의 정보를 기준으로 UserDetails를 생성하는 메서드
+    private CustomUserDetails createCustomUserDetails(String token) {
 
         String email = tokenVerifier.getEmail(token);
         String role = tokenVerifier.getRole(token);
@@ -119,6 +122,7 @@ public class TokenFilter extends OncePerRequestFilter {
                 .build());
     }
 
+    // accessToken과 refreshToken의 유효성을 검증
     private boolean isValidAccessToken(String token) {
 
         return token.startsWith("Bearer ") ||

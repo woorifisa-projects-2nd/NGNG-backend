@@ -56,13 +56,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         CustomUserDetails userDetails = (CustomUserDetails) authResult.getPrincipal();
         User user = userDetails.getUser();
 
-        if (!userDetails.isEnabled()) {
+        if (!userDetails.isEnabled()) { // 정지된 사용자일 경우 unsuccessfulAuthentication 메서드로 보냄
 
             unsuccessfulAuthentication(request, response, new DisabledException("정지된 계정입니다."));
 
             return;
         }
 
+        // accessToken과 refreshToken을 Header에 각각 담고, 유저 정보를 Body에 담아 보냄
         String accessToken = tokenProvider.createAccessToken(userDetails);
         String refreshToken = tokenProvider.createRefreshToken(userDetails);
 
@@ -88,7 +89,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         LoginResponse loginResponse = LoginResponse.success(user);
         String stringResponse = mapper.writeValueAsString(loginResponse);
 
-        // accessToken은 body에 담아서 전달
+        // 유저 정보를 body에 담기 위해 writer 사용
         PrintWriter writer = response.getWriter();
 
         writer.write(stringResponse);

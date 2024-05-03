@@ -28,6 +28,7 @@ public class JwtTokenProvider {
 
     public String createAccessToken(CustomUserDetails userDetails) {
 
+        // accessToken은 Authorization Header를 통해 주고받기 때문에 Bearer 라는 접두사를 붙혀서 만듦
         String PREFIX_TOKEN = "Bearer ";
         Date now = new Date();
 

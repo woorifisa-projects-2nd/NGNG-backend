@@ -19,11 +19,11 @@ import java.util.Arrays;
 @Component
 public class CustomLogoutHandler implements LogoutHandler {
 
-    private final JwtTokenProvider jwtTokenProvider;
-
+    // /logout 경로로 요청이 들어올 경우 해당 handler가 동작
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 
+        // refreshToken의 value와 maxAge를 삭제 후 Cookie에 set하여 return, 사용자의 브라우저에서 refreshToken을 삭제하는 과정
         ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
                 .path("/")
                 .domain("localhost")

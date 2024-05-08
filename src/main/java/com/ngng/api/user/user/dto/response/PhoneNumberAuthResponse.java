@@ -17,7 +17,7 @@ public record PhoneNumberAuthResponse(String authNumber,
     public static PhoneNumberAuthResponse fail() {
 
         return PhoneNumberAuthResponse.builder()
-                .isSuccess(true)
+                .isSuccess(false)
                 .build();
     }
 }

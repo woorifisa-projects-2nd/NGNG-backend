@@ -9,6 +9,7 @@ import com.ngng.api.user.user.service.PhoneNumberAuthService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,9 +32,9 @@ public class JoinAuthController {
 
         if (!response.isSuccess()) {
 
-            log.error("Faild Auth PhoneNumber , name - {}",request.name());
+            log.error("Failed Auth PhoneNumber , name - {}",request.name());
 
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build(); // 서버(데이터베이스)의 데이터와 충돌(쭝복)이 발생했다는 409 코드
         }
 
         log.info("Success  Auth PhoneNumber , name - {}",request.name());
@@ -50,7 +51,7 @@ public class JoinAuthController {
 
             log.error("Faild Auth email , name - {}",request.name());
 
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build(); // 서버(데이터베이스)의 데이터와 충돌(쭝복)이 발생했다는 409 코드
         }
 
         log.info("Success  Auth email , name - {}",request.name());

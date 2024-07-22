@@ -52,6 +52,8 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 	implementation "io.projectreactor:reactor-core"
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {

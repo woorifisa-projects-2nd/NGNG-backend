@@ -145,7 +145,7 @@ public class ProductController {
     @PutMapping(path = "/{productId}")
     @Parameter(name = "id", description = "상품 id")
     @Operation(summary = "상품 정보 수정", description = "id값과 전달받은 값으로 특정 상품의 정보를 수정합니다.")
-    public ResponseEntity<Long> update(@PathVariable("productId") Long productId, @RequestBody UpdateProductRequestDTO request){
+    public ResponseEntity<ReadProductResponseDTO> update(@PathVariable("productId") Long productId, @RequestBody UpdateProductRequestDTO request){
         return ResponseEntity.ok(productService.update(productId, request));
     }
 

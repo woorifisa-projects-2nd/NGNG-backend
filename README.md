@@ -27,49 +27,84 @@
 ![image](https://github.com/woorifisa-projects-2nd/NGNG-chat-server/assets/62551858/57b35b0f-2966-49f8-a3ef-d30a87605977)
 ![image (1)](https://github.com/woorifisa-projects-2nd/NGNG-chat-server/assets/62551858/3b81650b-e00c-4172-95f3-27770b843b19)(https://www.erdcloud.com/d/akdosZBK9b5xTTRDd)
 
-# 3. 기술 및 채택 이유
-효과, 다른 기술과 비교
----
-- Java 17
-- Spring boot 3
-- Spring Security
-- MySQL
-- Elasticsearch
-- Logstash
-- Github
-- Notion, Slack
-- Jenkins, AWS EC2, AWS RDS
-- 커밋 컨벤션 
-- 코드 컨벤션
+# 3. 기술 스택
+## Front-End
+![Next](https://img.shields.io/badge/Next.js-000?logo=nextdotjs&logoColor=fff&style=for-the-badge)
+![Tailwind_CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Context API](https://img.shields.io/badge/Context%20API-blue?style=for-the-badge)
+![SWR](https://img.shields.io/badge/SWR-blue?style=for-the-badge)
+
+## Back-End
+![java](https://img.shields.io/badge/java-007396?style=for-the-badge&logo=OpenJDK&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-green?style=for-the-badge&logo=spring&logoColor=white)
+![Spring Security](https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=Spring-Security&logoColor=white)
+![Elasticsearch](https://img.shields.io/badge/Elasticsearch-005571?style=for-the-badge&logo=Elasticsearch&logoColor=white)
+![Logstash](https://img.shields.io/badge/Logstash-005571?style=for-the-badge&logo=Logstash&logoColor=white)
+![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
+![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)
+![JUnit5](https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=JUnit5&logoColor=white)
+
+## Infra
+![EC2](https://img.shields.io/badge/Amazon%20EC2-FF9900?style=for-the-badge&logo=Amazon%20EC2&logoColor=white)
+![S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=for-the-badge&logo=Amazon%20S3&logoColor=white)
+![Amazon RDS](https://img.shields.io/badge/Amazon%20RDS-blue?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white)
+![docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+
+## Co-work tool
+![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white)
+![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
+
+# 4. 주요 기능
+## 회원가입
+- 전환번호 인증, 이메일 인증을 통한 회원가입
+  | | |
+  |---|---|
+  | ![image](https://github.com/user-attachments/assets/8bd39b41-b879-4933-8edc-81ccb635a629) | ![image](https://github.com/user-attachments/assets/7a45d203-46b6-4f63-896a-2a0c3606db58) |
+
+## 로그인 / JWT
+- 
+  | |
+  |---|
+  | ![로그인](https://github.com/user-attachments/assets/83aa6a62-1042-4700-9b8d-37ca2900025c) |
   
-# 4. 주요 기능 + 사진 추가하기
-- 회원가입
-- 로그인 / JWT
-- 로그아웃
-- 상품페이지
-- 마이페이지 / 포인트
-- 신고기능
-- 관리자페이지
+## 상품페이지
+- 판매글 등록과 함께 채팅방 생성
+  | |
+  |---|
+  | ![상품정보](https://github.com/user-attachments/assets/b6db18bc-bdaa-4222-8bee-9e95ec279bbc) |
+
+## 마이페이지 / 포인트
+- 마이페이지 구매, 판매, 포인트 관리 및 거래 진행
+  | | |
+  |---|---|
+  | ![마이페이지](https://github.com/user-attachments/assets/fb2438f4-a4e6-4e0a-b9f4-4211952e6171) | ![포인트](https://github.com/user-attachments/assets/a680d588-3120-41df-9e9a-338354f3e8db) |
+
+## 신고기능
+- 신고는 게시글, 사용자, 거래에 대한 신고를 진행 / 신고 내용은 관리자가 확인하고 패널티를 부여
+  | |
+  |---|
+  | ![신고하기](https://github.com/user-attachments/assets/02f143cf-4a0b-486d-8f7b-285ffb0444e4) | 
+
+## 관리자페이지
+- 패널티 시스템은 3아웃 패널티 제도로 7일, 30일, 영구정지의 단계로 적용
+  | |
+  |---|
+  | ![패널티](https://github.com/user-attachments/assets/a36ac0a2-da85-4c37-99b2-ca64f3e867f1) |
+
 
 # 5. 결과 및 성과
 
-- 로그인 관련 추가?
+- 키워드를 기준으로 문서를 탐색하는 역색인 방식인 Elasticsearch를 적용해 상품 개수가 많아지더라도 빠른 검색 속도 제공
+- 상품 조회 API에 Redis 캐시를 적용해 다수의 사용자가 동시에 요청할 경우 DB부하를 줄여 응답속도 개선
 
-# 6. 그외 향후 계획, 배운 점 문제 해결 과정, 개선점
-- refresh token?
-- 조회 성능 개선
-- 테스트 코드
-- 로그
+# 6. 팀원 구성
 
-# 7. 트러블 슈팅
--
-
-# 8. 팀원 구성
-
-- 김주찬 100%
-- 문지환 100%
-- 송원섭 100%
-- 조명하 100%
+| [김주찬](https://github.com/rlawncks125) | [문지환](https://github.com/mnjihwan) | [송원섭](https://github.com/sws6641) | [조명하](https://github.com/chomyungha51) |
+|---|---|---|---|
+| - 판매, 구매 이력 조회<br> - 페이지 기능 개발<br> - 인프라 구축<br> - 로깅 | - 인증, 인가 프로세스 개발<br> - 검색 기능 개발<br> - 사용자 조회, 수정 개발 | - 관리자 기능 개발<br>(신고, 상품, 사용자, 로그)<br> - 신고하기 기능 개발<br> - 로깅 | - 오픈채팅, 1:1채팅  기능 개발<br> - 상품 등록, 판매 기능 개발<br> - 프론트 다크모드, PWA 개발 |
 
 ---
-by [@김주찬](https://github.com/rlawncks125), [@문지환](https://github.com/mnjihwan), [@송원섭](https://github.com/sws6641), [@조명하](https://github.com/chomyungha51)

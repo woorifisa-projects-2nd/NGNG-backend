@@ -1,8 +1,6 @@
 package com.ngng.api.global.security.jwt.util;
 
-import com.ngng.api.global.security.jwt.custom.CustomUserDetails;
-import com.ngng.api.global.security.jwt.entity.Token;
-import com.ngng.api.global.security.jwt.repository.TokenRepository;
+import com.ngng.api.global.security.custom.CustomUserDetails;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -15,15 +13,12 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final TokenRepository tokenRepository;
     private final Key key;
 
     public JwtTokenProvider(@Value("${jwt.secret.key}")
-                            String secretKey,
-                            TokenRepository tokenRepository) {
+                            String secretKey) {
 
         this.key = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
-        this.tokenRepository = tokenRepository;
     }
 
     @Value("${jwt.expiration.access}")
@@ -33,6 +28,7 @@ public class JwtTokenProvider {
 
     public String createAccessToken(CustomUserDetails userDetails) {
 
+        // accessToken은 Authorization Header를 통해 주고받기 때문에 Bearer 라는 접두사를 붙혀서 만듦
         String PREFIX_TOKEN = "Bearer ";
         Date now = new Date();
 
@@ -51,7 +47,7 @@ public class JwtTokenProvider {
         Date now = new Date();
 
         // refreshToken은 cookie로 저장되고 사용되기 때문에 Bearer 접두사를 붙힐 필요가 없음
-        String refreshToken = Jwts.builder()
+        return Jwts.builder()
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + refreshTokenExpirationMs))
                 .setSubject(userDetails.getUsername())
@@ -59,14 +55,5 @@ public class JwtTokenProvider {
                 .claim("type", "refresh")
                 .signWith(key)
                 .compact();
-
-        Token token = Token.builder()
-                .tokenName(refreshToken)
-                .build();
-
-        // refreshToken은 로그인 할 때 발급되기 때문에 repository에 저장하고 이를 확인하여 현재 로그인중임을 확인
-        tokenRepository.save(token);
-
-        return refreshToken;
     }
 }

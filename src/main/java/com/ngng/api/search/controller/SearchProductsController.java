@@ -22,9 +22,9 @@ public class SearchProductsController {
     @GetMapping("/{keyword}/{page}")
     public ResponseEntity<?> findBySearch(@PathVariable String keyword, @PathVariable int page) {
 
-        keyword = URLDecoder.decode(keyword, StandardCharsets.UTF_8);
-
-        SearchProductsResponse response = searchProductsService.findBySearch(keyword, page);
+        keyword = URLDecoder.decode(keyword, StandardCharsets.UTF_8); // 한글 검색 시 문자가 깨져서 들어오기 때문에 UTF-8로 다시 디코딩
+        SearchProductsResponse response = searchProductsService.findBySearchKeyword(keyword, page);
 
         return ResponseEntity.ok().body(response);
-    }}
+    }
+}

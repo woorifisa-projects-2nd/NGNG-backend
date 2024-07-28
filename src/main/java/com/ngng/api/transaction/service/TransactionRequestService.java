@@ -1,15 +1,13 @@
 package com.ngng.api.transaction.service;
 
-import com.ngng.api.product.dto.request.UpdateProductRequestDTO;
-import com.ngng.api.product.entity.Product;
-import com.ngng.api.product.repository.ProductRepository;
-import com.ngng.api.product.service.ProductService;
+import com.ngng.api.product.product.entity.Product;
+import com.ngng.api.product.product.service.ProductService;
 import com.ngng.api.transaction.dto.CreateTransactionDetailsRequestDTO;
 import com.ngng.api.transaction.dto.CreateTransactionRequestDTO;
 import com.ngng.api.transaction.dto.TransactionRequestDTO;
 import com.ngng.api.transaction.entity.TransactionRequest;
 import com.ngng.api.transaction.repository.TransactionRequestRepository;
-import com.ngng.api.user.entity.User;
+import com.ngng.api.user.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

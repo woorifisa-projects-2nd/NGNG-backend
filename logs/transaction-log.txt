@@ -1,0 +1,4 @@
+2024-04-29 16:33:25.399 INFO  [Test worker] transaction-log - Success Decline TransactionRequest id: 9
+2024-04-29 16:33:25.473 INFO  [Test worker] transaction-log - Success Update TransactionDetails id: 3 Status :3 
+2024-04-29 16:33:25.540 INFO  [Test worker] transaction-log - Success Create TransactionRequest id: -1
+2024-04-29 16:33:25.621 INFO  [Test worker] transaction-log - Success Create TransactionDetails id: 18 Seller : 2  Consumer : 3 

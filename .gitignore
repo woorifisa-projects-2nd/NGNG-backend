@@ -38,3 +38,7 @@ out/
 .vscode/
 
 src/main/resources/*.yml
+
+
+### logs ###
+logs/

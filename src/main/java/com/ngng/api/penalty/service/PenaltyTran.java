@@ -6,11 +6,11 @@ import com.ngng.api.penalty.entity.Penalty;
 import com.ngng.api.penalty.entity.PenaltyLevel;
 import com.ngng.api.penalty.repository.PenaltyLevelRepository;
 import com.ngng.api.penalty.repository.PenaltyRepository;
-import com.ngng.api.product.entity.Product;
-import com.ngng.api.product.repository.ProductRepository;
-import com.ngng.api.report.entity.Report;
-import com.ngng.api.report.repository.ReportRepository;
-import com.ngng.api.report.service.ReportService;
+import com.ngng.api.product.product.entity.Product;
+import com.ngng.api.product.product.repository.ProductRepository;
+import com.ngng.api.report.report.entity.Report;
+import com.ngng.api.report.report.repository.ReportRepository;
+import com.ngng.api.report.report.service.ReportService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -69,6 +69,7 @@ public class PenaltyTran {
                 .penaltyLevel(PenaltyLevel.builder()
                         .penaltyLevelId(penaltyLevel.getPenaltyLevelId())
                         .penaltyLevelName(penaltyLevel.getPenaltyLevelName())
+                        .penaltyLevelDays(penaltyLevel.getPenaltyLevelDays())
                         .build()
                 )
                 .reportId(createPenaltyRequestDTO.getReportId())
